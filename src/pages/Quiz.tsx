@@ -58,7 +58,7 @@ export default function Quiz() {
             <QuizResults products={PRODUCTS} profile={profile} onRestart={handleRestart} />
             <div className="text-center mt-4">
               <button onClick={handleGoToComparator} className="text-sm text-teal-600 hover:text-teal-700 font-medium">
-                Przejdz do porownywarki z tymi filtrami &rarr;
+                Przejdź do porównywarki z tymi filtrami &rarr;
               </button>
             </div>
           </div>

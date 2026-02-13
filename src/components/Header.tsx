@@ -26,9 +26,9 @@ export default function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
-            <Link to="/porownaj" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Porownywarka</Link>
+            <Link to="/porownaj" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Porównywarka</Link>
             <Link to="/quiz" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Quiz</Link>
-            <Link to="/jak-dziala" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Jak to dziala</Link>
+            <Link to="/jak-dziala" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Jak to działa</Link>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -68,9 +68,9 @@ export default function Header() {
                 className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </form>
-            <Link to="/porownaj" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Porownywarka</Link>
+            <Link to="/porownaj" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Porównywarka</Link>
             <Link to="/quiz" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Quiz</Link>
-            <Link to="/jak-dziala" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Jak to dziala</Link>
+            <Link to="/jak-dziala" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Jak to działa</Link>
           </div>
         )}
       </div>

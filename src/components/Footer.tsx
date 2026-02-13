@@ -12,15 +12,15 @@ export default function Footer() {
               </div>
               <span className="font-semibold text-white text-lg">HairCare</span>
             </div>
-            <p className="text-sm text-gray-400">Profesjonalna porownywarka kosmetykow do wlosow. Porownuj sklady, ceny i opinie w jednym miejscu.</p>
+            <p className="text-sm text-gray-400">Profesjonalna porównywarka kosmetyków do włosów. Porównuj składy, ceny i opinie w jednym miejscu.</p>
           </div>
 
           <div>
             <h3 className="font-semibold text-white mb-3 text-sm">Nawigacja</h3>
             <ul className="space-y-2">
-              <li><Link to="/porownaj" className="text-sm hover:text-teal-400 transition-colors">Porownywarka</Link></li>
+              <li><Link to="/porownaj" className="text-sm hover:text-teal-400 transition-colors">Porównywarka</Link></li>
               <li><Link to="/quiz" className="text-sm hover:text-teal-400 transition-colors">Quiz</Link></li>
-              <li><Link to="/jak-dziala" className="text-sm hover:text-teal-400 transition-colors">Jak to dziala</Link></li>
+              <li><Link to="/jak-dziala" className="text-sm hover:text-teal-400 transition-colors">Jak to działa</Link></li>
             </ul>
           </div>
 

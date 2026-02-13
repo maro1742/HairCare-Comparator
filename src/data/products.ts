@@ -16,7 +16,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens', 'sulfates'],
     claims: ['bonding', 'cruelty_free'],
     inci: 'Aqua, Sodium Lauroyl Methyl Isethionate, Cocamidopropyl Betaine, Disodium Laureth Sulfosuccinate, Glycerin, Polyquaternium-10, Bis-Aminopropyl Diglycol Dimaleate, Panthenol, Aloe Barbadensis Leaf Juice, Citric Acid, Sodium Benzoate, Potassium Sorbate, Parfum',
-    images: 'https://picsum.photos/seed/olaplex-no4/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop',
     popularity: 92,
     offers: [
       { merchant: 'notino', price_pln: 159.00, url: 'https://example.com/out/notino/olaplex-no4?aff=demo123', last_checked: '2026-02-12' },
@@ -36,7 +36,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: ['keratin'],
     inci: 'Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Glycol Distearate, Sodium Chloride, Glycerin, Polyquaternium-10, Hydrolyzed Wheat Protein, Niacinamide, Salicylic Acid, Citric Acid, Sodium Benzoate, Parfum',
-    images: 'https://picsum.photos/seed/kerastase-bain-satin/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=faceskerastase-bain-satin/400/400',
     popularity: 85,
     offers: [
       { merchant: 'notino', price_pln: 124.00, url: 'https://example.com/out/notino/kerastase-bain-satin?aff=demo123', last_checked: '2026-02-12' }
@@ -55,7 +55,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens', 'sulfates'],
     claims: ['bonding', 'cruelty_free'],
     inci: 'Aqua, Cetearyl Alcohol, PPG-3 Benzyl Ether Myristate, Behentrimonium Methosulfate, Bis-Aminopropyl Diglycol Dimaleate, Panthenol, Glycerin, Aloe Barbadensis Leaf Juice, Citric Acid, Parfum',
-    images: 'https://picsum.photos/seed/olaplex-no5/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesolaplex-no5/400/400',
     popularity: 90,
     offers: [
       { merchant: 'notino', price_pln: 155.00, url: 'https://example.com/out/notino/olaplex-no5?aff=demo123', last_checked: '2026-02-12' },
@@ -75,7 +75,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: ['protein'],
     inci: 'Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Glycerin, Sodium Chloride, Hydrolyzed Wheat Protein, Quinoa Protein, Lactic Acid, Dimethicone, Parfum',
-    images: 'https://picsum.photos/seed/loreal-absolut-repair/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesloreal-absolut-repair/400/400',
     popularity: 82,
     offers: [
       { merchant: 'notino', price_pln: 89.00, url: 'https://example.com/out/notino/loreal-absolut-repair?aff=demo123', last_checked: '2026-02-12' }
@@ -94,7 +94,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['sulfates'],
     claims: ['bonding'],
     inci: 'Aqua, Sodium Lauroyl Methyl Isethionate, Cocamidopropyl Betaine, Glycerin, Citric Acid, Dimethicone, Polyquaternium-10, Sodium Benzoate, Parfum',
-    images: 'https://picsum.photos/seed/redken-acidic/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesredken-acidic/400/400',
     popularity: 80,
     offers: [
       { merchant: 'notino', price_pln: 99.00, url: 'https://example.com/out/notino/redken-acidic?aff=demo123', last_checked: '2026-02-12' },
@@ -114,7 +114,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['sulfates', 'parabens'],
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Disodium Laureth Sulfosuccinate, Cocamidopropyl Betaine, Glycerin, Roucou Oil, Tocopherol, Citric Acid, Sodium Benzoate, Parfum',
-    images: 'https://picsum.photos/seed/davines-oi/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-oi/400/400',
     popularity: 78,
     offers: [
       { merchant: 'notino', price_pln: 109.00, url: 'https://example.com/out/notino/davines-oi?aff=demo123', last_checked: '2026-02-12' }
@@ -133,7 +133,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens'],
     claims: ['cruelty_free'],
     inci: 'Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Argania Spinosa Kernel Oil, Glycerin, Keratin, Dimethicone, Parfum',
-    images: 'https://picsum.photos/seed/moroccanoil-hydrating/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesmoroccanoil-hydrating/400/400',
     popularity: 88,
     offers: [
       { merchant: 'notino', price_pln: 119.00, url: 'https://example.com/out/notino/moroccanoil?aff=demo123', last_checked: '2026-02-12' },
@@ -153,7 +153,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['silicones'],
     claims: [],
     inci: 'Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Niacinamide, Caffeine, Biotin, Peppermint Oil, Glycerin, Citric Acid, Parfum',
-    images: 'https://picsum.photos/seed/nioxin-system2/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesnioxin-system2/400/400',
     popularity: 75,
     offers: [
       { merchant: 'notino', price_pln: 79.00, url: 'https://example.com/out/notino/nioxin-system2?aff=demo123', last_checked: '2026-02-12' }
@@ -172,7 +172,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens', 'silicones'],
     claims: [],
     inci: 'Aqua, Sodium Laureth Sulfate, Piroctone Olamine, Salicylic Acid, Selenium Disulfide, Glycerin, Cocamidopropyl Betaine, Niacinamide, Parfum',
-    images: 'https://picsum.photos/seed/vichy-dercos/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesvichy-dercos/400/400',
     popularity: 83,
     offers: [
       { merchant: 'notino', price_pln: 59.00, url: 'https://example.com/out/notino/vichy-dercos?aff=demo123', last_checked: '2026-02-12' }
@@ -191,7 +191,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens'],
     claims: [],
     inci: 'Aqua, Sodium Laureth Sulfate, Zinc Pyrithione, Kelual DS, Cocamidopropyl Betaine, Glycerin, Citric Acid, Parfum',
-    images: 'https://picsum.photos/seed/ducray-squanorm/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesducray-squanorm/400/400',
     popularity: 70,
     offers: [
       { merchant: 'notino', price_pln: 54.00, url: 'https://example.com/out/notino/ducray-squanorm?aff=demo123', last_checked: '2026-02-12' }
@@ -210,7 +210,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: ['protein'],
     inci: 'Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Glycol Distearate, Silk Amino Acids, Dimethicone, Glycerin, Parfum',
-    images: 'https://picsum.photos/seed/wella-fusion/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=faceswella-fusion/400/400',
     popularity: 76,
     offers: [
       { merchant: 'notino', price_pln: 69.00, url: 'https://example.com/out/notino/wella-fusion?aff=demo123', last_checked: '2026-02-12' },
@@ -230,7 +230,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: ['protein'],
     inci: 'Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Hydrolyzed Keratin, Panthenol, Dimethicone, Glycerin, Parfum',
-    images: 'https://picsum.photos/seed/schwarzkopf-bc/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesschwarzkopf-bc/400/400',
     popularity: 72,
     offers: [
       { merchant: 'notino', price_pln: 55.00, url: 'https://example.com/out/notino/schwarzkopf-bc?aff=demo123', last_checked: '2026-02-12' }
@@ -249,7 +249,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: [],
     inci: 'Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Violet Pigment, Glycerin, Citric Acid, Dimethicone, Parfum',
-    images: 'https://picsum.photos/seed/matrix-so-silver/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesmatrix-so-silver/400/400',
     popularity: 68,
     offers: [
       { merchant: 'notino', price_pln: 59.00, url: 'https://example.com/out/notino/matrix-so-silver?aff=demo123', last_checked: '2026-02-12' }
@@ -268,7 +268,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: [],
     inci: 'Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Glycerin, Aminexil, Arginine, Citric Acid, Sodium Benzoate, Parfum',
-    images: 'https://picsum.photos/seed/kerastase-specifique/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=faceskerastase-specifique/400/400',
     popularity: 79,
     offers: [
       { merchant: 'notino', price_pln: 132.00, url: 'https://example.com/out/notino/kerastase-specifique?aff=demo123', last_checked: '2026-02-12' }
@@ -287,7 +287,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: ['protein'],
     inci: 'Aqua, Cetearyl Alcohol, Behentrimonium Chloride, Glycerin, Hydrolyzed Wheat Protein, Quinoa Protein, Dimethicone, Parfum',
-    images: 'https://picsum.photos/seed/loreal-absolut-cond/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesloreal-absolut-cond/400/400',
     popularity: 80,
     offers: [
       { merchant: 'notino', price_pln: 95.00, url: 'https://example.com/out/notino/loreal-absolut-cond?aff=demo123', last_checked: '2026-02-12' }
@@ -306,7 +306,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['sulfates'],
     claims: ['bonding'],
     inci: 'Aqua, Cetearyl Alcohol, Behentrimonium Chloride, Citric Acid, Glycerin, Amodimethicone, Panthenol, Parfum',
-    images: 'https://picsum.photos/seed/redken-acidic-cond/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesredken-acidic-cond/400/400',
     popularity: 78,
     offers: [
       { merchant: 'notino', price_pln: 105.00, url: 'https://example.com/out/notino/redken-acidic-cond?aff=demo123', last_checked: '2026-02-12' }
@@ -325,7 +325,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens'],
     claims: ['cruelty_free'],
     inci: 'Aqua, Cetearyl Alcohol, Behentrimonium Chloride, Argania Spinosa Kernel Oil, Glycerin, Dimethicone, Panthenol, Parfum',
-    images: 'https://picsum.photos/seed/moroccanoil-cond/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesmoroccanoil-cond/400/400',
     popularity: 86,
     offers: [
       { merchant: 'notino', price_pln: 125.00, url: 'https://example.com/out/notino/moroccanoil-cond?aff=demo123', last_checked: '2026-02-12' },
@@ -345,7 +345,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['sulfates', 'parabens'],
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Cetearyl Alcohol, Glycerin, Roucou Oil, Tocopherol, Behentrimonium Chloride, Citric Acid, Parfum',
-    images: 'https://picsum.photos/seed/davines-oi-cond/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-oi-cond/400/400',
     popularity: 76,
     offers: [
       { merchant: 'notino', price_pln: 115.00, url: 'https://example.com/out/notino/davines-oi-cond?aff=demo123', last_checked: '2026-02-12' }
@@ -364,7 +364,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: ['keratin', 'protein'],
     inci: 'Aqua, Cetearyl Alcohol, Behentrimonium Chloride, Glycerin, Hydrolyzed Wheat Protein, Royal Jelly, Dimethicone, Parfum',
-    images: 'https://picsum.photos/seed/kerastase-masquintense/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=faceskerastase-masquintense/400/400',
     popularity: 87,
     offers: [
       { merchant: 'notino', price_pln: 195.00, url: 'https://example.com/out/notino/kerastase-masquintense?aff=demo123', last_checked: '2026-02-12' },
@@ -384,7 +384,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens', 'sulfates'],
     claims: ['bonding', 'cruelty_free'],
     inci: 'Aqua, Bis-Aminopropyl Diglycol Dimaleate, Propylene Glycol, Cetearyl Alcohol, Behentrimonium Methosulfate, Cetyl Alcohol, Phenoxyethanol, Glycerin, Parfum',
-    images: 'https://picsum.photos/seed/olaplex-no3/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesolaplex-no3/400/400',
     popularity: 95,
     offers: [
       { merchant: 'notino', price_pln: 139.00, url: 'https://example.com/out/notino/olaplex-no3?aff=demo123', last_checked: '2026-02-12' },
@@ -405,7 +405,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens'],
     claims: ['protein', 'cruelty_free'],
     inci: 'Aqua, Cetearyl Alcohol, Behentrimonium Chloride, Argania Spinosa Kernel Oil, Shea Butter, Keratin, Panthenol, Dimethicone, Parfum',
-    images: 'https://picsum.photos/seed/moroccanoil-mask/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesmoroccanoil-mask/400/400',
     popularity: 84,
     offers: [
       { merchant: 'notino', price_pln: 179.00, url: 'https://example.com/out/notino/moroccanoil-mask?aff=demo123', last_checked: '2026-02-12' }
@@ -424,7 +424,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: ['protein'],
     inci: 'Aqua, Cetearyl Alcohol, Behentrimonium Chloride, Silk Amino Acids, Glycerin, Dimethicone, Panthenol, Parfum',
-    images: 'https://picsum.photos/seed/wella-fusion-mask/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=faceswella-fusion-mask/400/400',
     popularity: 74,
     offers: [
       { merchant: 'notino', price_pln: 85.00, url: 'https://example.com/out/notino/wella-fusion-mask?aff=demo123', last_checked: '2026-02-12' }
@@ -443,7 +443,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['sulfates'],
     claims: ['bonding'],
     inci: 'Aqua, Cetearyl Alcohol, Behentrimonium Chloride, Citric Acid, Glycerin, Amodimethicone, Panthenol, Tocopherol, Parfum',
-    images: 'https://picsum.photos/seed/redken-acidic-mask/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesredken-acidic-mask/400/400',
     popularity: 77,
     offers: [
       { merchant: 'notino', price_pln: 115.00, url: 'https://example.com/out/notino/redken-acidic-mask?aff=demo123', last_checked: '2026-02-12' }
@@ -462,7 +462,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['silicones', 'sulfates', 'parabens'],
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Propanediol, Biotinoyl Tripeptide-1, Acetyl Tetrapeptide-3, Trifolium Pratense Flower Extract, Caffeine, Glycerin, Piroctone Olamine',
-    images: 'https://picsum.photos/seed/ordinary-peptide/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesordinary-peptide/400/400',
     popularity: 89,
     offers: [
       { merchant: 'notino', price_pln: 75.00, url: 'https://example.com/out/notino/ordinary-peptide?aff=demo123', last_checked: '2026-02-12' }
@@ -481,7 +481,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens'],
     claims: ['cruelty_free'],
     inci: 'Cyclomethicone, Dimethicone, Argania Spinosa Kernel Oil, Linseed Extract, Parfum, CI 26100, CI 47000',
-    images: 'https://picsum.photos/seed/moroccanoil-oil/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesmoroccanoil-oil/400/400',
     popularity: 93,
     offers: [
       { merchant: 'notino', price_pln: 89.00, url: 'https://example.com/out/notino/moroccanoil-oil?aff=demo123', last_checked: '2026-02-12' },
@@ -501,7 +501,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens', 'sulfates'],
     claims: ['bonding', 'cruelty_free'],
     inci: 'Dodecane, Coco-Caprylate/Caprate, Bis-Aminopropyl Diglycol Dimaleate, Dimethicone, Moringa Oleifera Seed Oil, Tocopheryl Acetate, Parfum',
-    images: 'https://picsum.photos/seed/olaplex-no7/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesolaplex-no7/400/400',
     popularity: 88,
     offers: [
       { merchant: 'notino', price_pln: 139.00, url: 'https://example.com/out/notino/olaplex-no7?aff=demo123', last_checked: '2026-02-12' }
@@ -520,7 +520,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['silicones'],
     claims: [],
     inci: 'Aqua, Aminexil, Caffeine, Ginger Extract, Edelweiss Stem Cells, Glycerin, Niacinamide, Citric Acid',
-    images: 'https://picsum.photos/seed/kerastase-genesis/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=faceskerastase-genesis/400/400',
     popularity: 81,
     offers: [
       { merchant: 'notino', price_pln: 249.00, url: 'https://example.com/out/notino/kerastase-genesis?aff=demo123', last_checked: '2026-02-12' }
@@ -539,7 +539,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['silicones', 'parabens'],
     claims: [],
     inci: 'Aqua, Alcohol Denat, Aminexil, Arginine, SP94 Molecule, Glycerin, Parfum',
-    images: 'https://picsum.photos/seed/vichy-aminexil/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesvichy-aminexil/400/400',
     popularity: 82,
     offers: [
       { merchant: 'notino', price_pln: 155.00, url: 'https://example.com/out/notino/vichy-aminexil?aff=demo123', last_checked: '2026-02-12' }
@@ -558,7 +558,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['silicones'],
     claims: ['biotin'],
     inci: 'Aqua, Niacinamide, Biotin, Caffeine, Panthenol, Glycerin, Alcohol Denat, Parfum',
-    images: 'https://picsum.photos/seed/nioxin-night/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesnioxin-night/400/400',
     popularity: 71,
     offers: [
       { merchant: 'notino', price_pln: 189.00, url: 'https://example.com/out/notino/nioxin-night?aff=demo123', last_checked: '2026-02-12' }
@@ -577,7 +577,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['silicones', 'sulfates', 'parabens'],
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Glycerin, Anagain, Baicapil, Biotin, Caffeine, Niacinamide, Panthenol, Citric Acid',
-    images: 'https://picsum.photos/seed/hairlust-grow/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=faceshairlust-grow/400/400',
     popularity: 77,
     offers: [
       { merchant: 'hairlust', price_pln: 149.00, url: 'https://example.com/out/hairlust/grow-perfect?aff=demo123', last_checked: '2026-02-12' }
@@ -596,7 +596,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: ['vegan', 'biotin'],
     inci: 'Biotin, Zinc, Selenium, Folic Acid, Vitamin B12, Vitamin D, Coconut Oil, Pectin',
-    images: 'https://picsum.photos/seed/hairlust-gummies/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=faceshairlust-gummies/400/400',
     popularity: 73,
     offers: [
       { merchant: 'hairlust', price_pln: 129.00, url: 'https://example.com/out/hairlust/gummies?aff=demo123', last_checked: '2026-02-12' }
@@ -615,7 +615,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: ['biotin'],
     inci: 'Millet Extract, Biotin, Pantothenic Acid, L-Cystine, Wheat Germ Oil, Gelatin',
-    images: 'https://picsum.photos/seed/priorin/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facespriorin/400/400',
     popularity: 69,
     offers: [
       { merchant: 'notino', price_pln: 95.00, url: 'https://example.com/out/notino/priorin?aff=demo123', last_checked: '2026-02-12' }
@@ -634,7 +634,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['sulfates', 'parabens', 'silicones'],
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Sodium Cocoyl Isethionate, Cocamidopropyl Betaine, Glycerin, Cocos Nucifera Oil, Silk Protein, Hibiscus Sabdariffa Extract, Panthenol',
-    images: 'https://picsum.photos/seed/shea-moisture/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesshea-moisture/400/400',
     popularity: 81,
     offers: [
       { merchant: 'notino', price_pln: 49.00, url: 'https://example.com/out/notino/shea-moisture?aff=demo123', last_checked: '2026-02-12' }
@@ -653,7 +653,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['sulfates', 'silicones', 'parabens'],
     claims: [],
     inci: 'Aqua, Glycerin, Butyrospermum Parkii Butter, Cetearyl Alcohol, Behentrimonium Chloride, Shea Oil, Macadamia Oil, Parfum',
-    images: 'https://picsum.photos/seed/cantu-shea/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facescantu-shea/400/400',
     popularity: 79,
     offers: [
       { merchant: 'notino', price_pln: 35.00, url: 'https://example.com/out/notino/cantu-shea?aff=demo123', last_checked: '2026-02-12' }
@@ -672,7 +672,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: ['keratin', 'protein'],
     inci: 'Aqua, Cetearyl Alcohol, Behentrimonium Chloride, Ceramide R, Vita-Ciment, Glycerin, Dimethicone, Parfum',
-    images: 'https://picsum.photos/seed/kerastase-force/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=faceskerastase-force/400/400',
     popularity: 84,
     offers: [
       { merchant: 'notino', price_pln: 205.00, url: 'https://example.com/out/notino/kerastase-force?aff=demo123', last_checked: '2026-02-12' },
@@ -692,7 +692,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens'],
     claims: [],
     inci: 'Aqua, Alcohol Denat, VP/VA Copolymer, PEG-12 Dimethicone, Panthenol, Parfum',
-    images: 'https://picsum.photos/seed/got2b-volume/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesgot2b-volume/400/400',
     popularity: 65,
     offers: [
       { merchant: 'notino', price_pln: 25.00, url: 'https://example.com/out/notino/got2b-volume?aff=demo123', last_checked: '2026-02-12' }
@@ -711,7 +711,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: [],
     inci: 'Cyclopentasiloxane, Dimethicone, Camellia Oil, Argan Oil, Maize Oil, Pracaxi Oil, Tocopherol, Parfum',
-    images: 'https://picsum.photos/seed/kerastase-elixir/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=faceskerastase-elixir/400/400',
     popularity: 86,
     offers: [
       { merchant: 'notino', price_pln: 195.00, url: 'https://example.com/out/notino/kerastase-elixir?aff=demo123', last_checked: '2026-02-12' },
@@ -731,7 +731,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['silicones', 'sulfates', 'parabens'],
     claims: ['vegan'],
     inci: 'Aqua, Viburnum Prunifolium Bark Extract, Ginkgo Biloba, Biotin, Grape Seed Extract, Glycerin',
-    images: 'https://picsum.photos/seed/phyto-cyane/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesphyto-cyane/400/400',
     popularity: 72,
     offers: [
       { merchant: 'notino', price_pln: 165.00, url: 'https://example.com/out/notino/phyto-cyane?aff=demo123', last_checked: '2026-02-12' }
@@ -750,7 +750,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: [],
     inci: 'Aqua, Sodium Laureth Sulfate, Sodium Lauryl Sulfate, Zinc Pyrithione, Cocamidopropyl Betaine, Glycol Distearate, Dimethicone, Citrus Limon Extract, Parfum',
-    images: 'https://picsum.photos/seed/head-shoulders/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=faceshead-shoulders/400/400',
     popularity: 74,
     offers: [
       { merchant: 'notino', price_pln: 22.00, url: 'https://example.com/out/notino/head-shoulders?aff=demo123', last_checked: '2026-02-12' }
@@ -769,7 +769,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens'],
     claims: ['cruelty_free'],
     inci: 'Aqua, Cetearyl Alcohol, Behentrimonium Chloride, Glycerin, Australian Macadamia Nut Oil, Aloe Vera, Jojoba Oil, Dimethicone, Parfum',
-    images: 'https://picsum.photos/seed/aussie-miracle/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesaussie-miracle/400/400',
     popularity: 71,
     offers: [
       { merchant: 'notino', price_pln: 29.00, url: 'https://example.com/out/notino/aussie-miracle?aff=demo123', last_checked: '2026-02-12' }
@@ -788,7 +788,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens'],
     claims: [],
     inci: 'Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Gossypium Herbaceum Seed Extract, Glycerin, Citric Acid, Parfum',
-    images: 'https://picsum.photos/seed/matrix-volumebloom/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesmatrix-volumebloom/400/400',
     popularity: 67,
     offers: [
       { merchant: 'notino', price_pln: 55.00, url: 'https://example.com/out/notino/matrix-volumebloom?aff=demo123', last_checked: '2026-02-12' }
@@ -807,7 +807,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['sulfates', 'parabens'],
     claims: [],
     inci: 'Aqua, Sodium Cocoyl Isethionate, Cocamidopropyl Betaine, Glycerin, Tocopherol, Resveratrol, Citric Acid, Parfum',
-    images: 'https://picsum.photos/seed/loreal-vitamino/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesloreal-vitamino/400/400',
     popularity: 78,
     offers: [
       { merchant: 'notino', price_pln: 75.00, url: 'https://example.com/out/notino/loreal-vitamino?aff=demo123', last_checked: '2026-02-12' },
@@ -827,7 +827,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['silicones', 'sulfates', 'parabens'],
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Cetearyl Alcohol, Glycerin, Shea Butter, Hydrolyzed Pea Protein, Coconut Oil, Tocopherol, Citric Acid',
-    images: 'https://picsum.photos/seed/hairlust-split-fix/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=faceshairlust-split-fix/400/400',
     popularity: 74,
     offers: [
       { merchant: 'hairlust', price_pln: 119.00, url: 'https://example.com/out/hairlust/split-fix?aff=demo123', last_checked: '2026-02-12' }
@@ -846,7 +846,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: [],
     claims: ['protein'],
     inci: 'Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Hyaluronic Acid, Edelweiss Flower Extract, Ultraviolet Pigment, Glycerin, Parfum',
-    images: 'https://picsum.photos/seed/kerastase-blond/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=faceskerastase-blond/400/400',
     popularity: 83,
     offers: [
       { merchant: 'notino', price_pln: 135.00, url: 'https://example.com/out/notino/kerastase-blond?aff=demo123', last_checked: '2026-02-12' }
@@ -865,7 +865,7 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['silicones'],
     claims: [],
     inci: 'Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Caffeine, Niacinamide, Zinc PCA, White Tea Extract, Glycerin, Parfum',
-    images: 'https://picsum.photos/seed/plantur39/400/400',
+    images: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesplantur39/400/400',
     popularity: 70,
     offers: [
       { merchant: 'notino', price_pln: 42.00, url: 'https://example.com/out/notino/plantur39?aff=demo123', last_checked: '2026-02-12' }

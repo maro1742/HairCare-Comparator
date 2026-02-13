@@ -44,7 +44,7 @@ export default function Product() {
         <Header />
         <main className="max-w-7xl mx-auto px-4 py-16 text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Produkt nie znaleziony</h1>
-          <Link to="/porownaj" className="text-teal-600 hover:text-teal-700">Wroc do porownywarki</Link>
+          <Link to="/porownaj" className="text-teal-600 hover:text-teal-700">Wróć do porównywarki</Link>
         </main>
         <Footer />
       </>
@@ -58,7 +58,7 @@ export default function Product() {
 
   return (
     <>
-      <SEO title={`${product.brand} ${product.name}`} description={`${product.brand} ${product.name} — sprawdz sklad INCI, ceny i opinie.`} />
+      <SEO title={`${product.brand} ${product.name}`} description={`${product.brand} ${product.name} — sprawdź skład INCI, ceny i opinie.`} />
       <Header />
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-gray-50 rounded-2xl overflow-hidden mb-8">
@@ -99,7 +99,7 @@ export default function Product() {
         )}
 
         <section className="mb-8">
-          <h2 className="font-semibold text-gray-900 mb-3">Sklad (INCI)</h2>
+          <h2 className="font-semibold text-gray-900 mb-3">Skład (INCI)</h2>
           <div className="bg-gray-50 rounded-xl p-4 mb-3">
             <p className="text-xs text-gray-600 font-mono leading-relaxed">{ingredientList.join(', ')}</p>
           </div>

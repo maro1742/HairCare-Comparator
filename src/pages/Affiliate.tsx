@@ -19,7 +19,7 @@ export default function Affiliate() {
 
           <section>
             <h2 className="text-lg font-semibold text-gray-900 mb-2">Transparentnosc</h2>
-            <p>Wszystkie linki afiliacyjne sa wyraznie oznaczone. Nasze rekomendacje sa oparte wylacznie na algorytmie dopasowania skladow i cech produktow, a nie na wysokosci prowizji od poszczegolnych sklepow.</p>
+            <p>Wszystkie linki afiliacyjne sa wyraznie oznaczone. Nasze rekomendacje sa oparte wylacznie na algorytmie dopasowania składów i cech produktow, a nie na wysokosci prowizji od poszczegolnych sklepow.</p>
           </section>
 
           <section>
@@ -29,7 +29,7 @@ export default function Affiliate() {
 
           <section>
             <h2 className="text-lg font-semibold text-gray-900 mb-2">Wspolpraca z markami</h2>
-            <p>Jezeli reprezentujesz marke kosmetykow do wlosow i chcialbys dodac swoje produkty do naszej porownywarki, chetnie porozmawiamy o wspolpracy. Kazdy produkt przechodzi taka sama analize skladu INCI.</p>
+            <p>Jezeli reprezentujesz marke kosmetykow do wlosow i chcialbys dodac swoje produkty do naszej porownywarki, chetnie porozmawiamy o wspolpracy. Kazdy produkt przechodzi taka sama analizę składu INCI.</p>
           </section>
         </div>
 
@@ -37,7 +37,7 @@ export default function Affiliate() {
           <h3 className="font-semibold text-gray-900 mb-2">Masz pytania?</h3>
           <p className="text-sm text-gray-600 mb-4">Skontaktuj sie z nami, jezeli masz pytania dotyczace wspolpracy lub programu afiliacyjnego.</p>
           <Link to="/porownaj" className="inline-flex items-center px-4 py-2 bg-teal-500 text-white text-sm font-medium rounded-lg hover:bg-teal-600 transition-colors">
-            Przejdz do porownywarki
+            Przejdź do porównywarki
           </Link>
         </div>
       </main>

@@ -96,7 +96,7 @@ export default function FilterPanel({ isOpen, onClose }: FilterPanelProps) {
       </div>
 
       <div>
-        <h4 className="text-sm font-medium text-gray-700 mb-2">Bez skladnikow</h4>
+        <h4 className="text-sm font-medium text-gray-700 mb-2">Bez składników</h4>
         <div className="flex flex-wrap gap-2">
           {(Object.entries(FREE_FROM_LABELS) as [FreeFrom, string][]).map(([key, label]) => (
             <button

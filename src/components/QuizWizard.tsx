@@ -18,7 +18,7 @@ const STEPS = [
   { key: 'hair_goals', title: 'Jaki jest glowny problem Twoich wlosow?', subtitle: 'Mozesz wybrac kilka opcji', multi: true },
   { key: 'hair_type', title: 'Jaki typ wlosow masz?', subtitle: 'Mozesz wybrac kilka opcji', multi: true },
   { key: 'scalp_type', title: 'Jak opisalbys/opisalabys swoja skore glowy?', subtitle: 'Wybierz jedna opcje', multi: false },
-  { key: 'avoid_ingredients', title: 'Jakie skladniki chcesz unikac?', subtitle: 'Mozesz wybrac kilka lub pominac', multi: true },
+  { key: 'avoid_ingredients', title: 'Jakie składniki chcesz unikać?', subtitle: 'Mozesz wybrac kilka lub pominac', multi: true },
   { key: 'prefers_vegan', title: 'Preferencje dodatkowe', subtitle: '', multi: false },
 ] as const;
 

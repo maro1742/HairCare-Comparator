@@ -8,7 +8,7 @@ import { CATEGORIES } from '../data/categories';
 export default function Landing() {
   return (
     <>
-      <SEO title="Profesjonalne kosmetyki do wlosow" description="Porownywarka kosmetykow do wlosow — sprawdz sklad, ceny i dopasowanie do Twoich potrzeb." />
+      <SEO title="Profesjonalne kosmetyki do włosów" description="Porównywarka kosmetyków do włosów — sprawdź skład, ceny i dopasowanie do Twoich potrzeb." />
       <Header />
       <main>
         {/* Hero */}
@@ -16,10 +16,10 @@ export default function Landing() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
             <div className="max-w-2xl">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-                Profesjonalne kosmetyki do wlosow — <span className="text-teal-600">salon w domu</span>
+                Profesjonalne kosmetyki do włosów - <span className="text-teal-600">efekt zabiegu salonowego w domu</span>
               </h1>
               <p className="mt-4 text-lg text-gray-600 leading-relaxed">
-                Wybierz produkt w 30 sekund. Filtry, sklad i realne ceny w jednym miejscu.
+                Wybierz produkt w 30 sekund. Filtry, skład i realne ceny w jednym miejscu.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Link
@@ -32,7 +32,7 @@ export default function Landing() {
                   to="/porownaj"
                   className="inline-flex items-center justify-center px-6 py-3 border-2 border-teal-500 text-teal-600 font-medium rounded-lg hover:bg-teal-50 transition-colors"
                 >
-                  Przejdz do porownywarki
+                  Przejdź do porównywarki
                 </Link>
               </div>
             </div>
@@ -50,7 +50,7 @@ export default function Landing() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 text-sm">Sklad INCI i flagi</h3>
+                  <h3 className="font-semibold text-gray-900 text-sm">Skład INCI i flagi</h3>
                   <p className="text-xs text-gray-500 mt-0.5">Np. bez silikonow, bez sulfatow — wszystko widoczne</p>
                 </div>
               </div>
@@ -61,8 +61,8 @@ export default function Landing() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 text-sm">Ceny z kilku sklepow</h3>
-                  <p className="text-xs text-gray-500 mt-0.5">Data aktualizacji widoczna przy kazdej ofercie</p>
+                  <h3 className="font-semibold text-gray-900 text-sm">Ceny z kilku sklepów</h3>
+                  <p className="text-xs text-gray-500 mt-0.5">Wybierz najkorzystniejszą ofertę</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -72,8 +72,8 @@ export default function Landing() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 text-sm">Jasne oznaczenie linkow</h3>
-                  <p className="text-xs text-gray-500 mt-0.5">Linki afiliacyjne zawsze oznaczone — transparentnosc</p>
+                  <h3 className="font-semibold text-gray-900 text-sm">Szeroki wybór ofert</h3>
+                  <p className="text-xs text-gray-500 mt-0.5">Zaufaj sprawdzonym dostawcom</p>
                 </div>
               </div>
             </div>
@@ -95,12 +95,12 @@ export default function Landing() {
         {/* How it works */}
         <section className="bg-gray-50 py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-10 text-center">Jak to dziala?</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-10 text-center">Jak to działa?</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
-                { num: '1', title: 'Odpowiesz na kilka pytan', desc: 'Krotki quiz o Twoich wlosach i preferencjach — zajmie mniej niz minute.' },
-                { num: '2', title: 'Otrzymasz TOP produkty', desc: 'Algorytm dopasuje najlepsze kosmetyki do Twojego profilu wlosow.' },
-                { num: '3', title: 'Porownujesz ceny i kupujesz', desc: 'Sprawdzasz ceny w roznych sklepach i kupujesz tam, gdzie najtaniej.' },
+                { num: '1', title: 'Odpowiedz na kilka pytań', desc: 'Krótki quiz o Twoich włosach i preferencjach — zajmie mniej niż minutę.' },
+                { num: '2', title: 'Otrzymaj TOP produkty', desc: 'Algorytm dopasuje najlepsze kosmetyki do Twojego profilu włosów.' },
+                { num: '3', title: 'Porównaj ceny i kupuj', desc: 'Sprawdź ceny w różnych sklepach i kupuj tam, gdzie najtaniej.' },
               ].map(step => (
                 <div key={step.num} className="text-center">
                   <div className="w-12 h-12 bg-teal-500 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
@@ -113,7 +113,7 @@ export default function Landing() {
             </div>
             <div className="text-center mt-8">
               <Link to="/jak-dziala" className="text-sm text-teal-600 hover:text-teal-700 font-medium">
-                Dowiedz sie wiecej &rarr;
+                Dowiedz się więcej &rarr;
               </Link>
             </div>
           </div>

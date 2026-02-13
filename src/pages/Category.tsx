@@ -40,7 +40,7 @@ export default function Category() {
         <Header />
         <main className="max-w-7xl mx-auto px-4 py-16 text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Kategoria nie znaleziona</h1>
-          <Link to="/porownaj" className="text-teal-600 hover:text-teal-700">Wroc do porownywarki</Link>
+          <Link to="/porownaj" className="text-teal-600 hover:text-teal-700">Wróć do porównywarki</Link>
         </main>
         <Footer />
       </>
