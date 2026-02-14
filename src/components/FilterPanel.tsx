@@ -24,7 +24,7 @@ export default function FilterPanel({ isOpen, onClose }: FilterPanelProps) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h3 className="font-semibold text-gray-900">Filtry</h3>
-        <button onClick={clearFilters} className="text-sm text-teal-600 hover:text-teal-700">Wyczysc</button>
+        <button onClick={clearFilters} className="text-sm text-teal-600 hover:text-teal-700">Wyczyść</button>
       </div>
 
       <div>
@@ -62,7 +62,7 @@ export default function FilterPanel({ isOpen, onClose }: FilterPanelProps) {
       </div>
 
       <div>
-        <h4 className="text-sm font-medium text-gray-700 mb-2">Typ wlosow</h4>
+        <h4 className="text-sm font-medium text-gray-700 mb-2">Typ włosów</h4>
         <div className="space-y-1.5">
           {(Object.entries(HAIR_TYPE_LABELS) as [HairType, string][]).map(([key, label]) => (
             <label key={key} className="flex items-center gap-2 cursor-pointer">
@@ -79,7 +79,7 @@ export default function FilterPanel({ isOpen, onClose }: FilterPanelProps) {
       </div>
 
       <div>
-        <h4 className="text-sm font-medium text-gray-700 mb-2">Skora glowy</h4>
+        <h4 className="text-sm font-medium text-gray-700 mb-2">Skóra głowy</h4>
         <div className="space-y-1.5">
           {(Object.entries(SCALP_TYPE_LABELS) as [ScalpType, string][]).map(([key, label]) => (
             <label key={key} className="flex items-center gap-2 cursor-pointer">
@@ -102,11 +102,10 @@ export default function FilterPanel({ isOpen, onClose }: FilterPanelProps) {
             <button
               key={key}
               onClick={() => toggleArrayFilter('avoid_ingredients', key)}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
-                filters.avoid_ingredients.includes(key)
+              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${filters.avoid_ingredients.includes(key)
                   ? 'bg-teal-500 text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
+                }`}
             >
               {label}
             </button>

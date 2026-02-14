@@ -12,25 +12,27 @@ export default function Landing() {
       <Header />
       <main>
         {/* Hero */}
-        <section className="bg-gradient-to-b from-teal-50 to-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-            <div className="max-w-2xl">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-                Profesjonalne kosmetyki do włosów - <span className="text-teal-600">efekt zabiegu salonowego w domu</span>
+        <section className="relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background z-0" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 relative z-10">
+            <div className="max-w-3xl">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary leading-tight tracking-tight mb-6">
+                Profesjonalna pielęgnacja <br />
+                <span className="text-secondary italic">w Twoim domu</span>
               </h1>
-              <p className="mt-4 text-lg text-gray-600 leading-relaxed">
-                Wybierz produkt w 30 sekund. Filtry, skład i realne ceny w jednym miejscu.
+              <p className="text-lg sm:text-xl text-primary/70 leading-relaxed max-w-2xl mb-10">
+                Wybierz idealny produkt w 30 sekund. Analizujemy składy, porównujemy ceny i dopasowujemy kosmetyki do porowatości Twoich włosów.
               </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   to="/quiz"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-teal-500 text-white font-medium rounded-lg hover:bg-teal-600 transition-colors shadow-md"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-primary text-white font-semibold rounded-2xl hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
                 >
-                  Zrob quiz (30 sek)
+                  Zrób quiz (30 sek)
                 </Link>
                 <Link
                   to="/porownaj"
-                  className="inline-flex items-center justify-center px-6 py-3 border-2 border-teal-500 text-teal-600 font-medium rounded-lg hover:bg-teal-50 transition-colors"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-white border border-primary/10 text-primary font-semibold rounded-2xl hover:bg-background transition-all shadow-sm hover:shadow-md"
                 >
                   Przejdź do porównywarki
                 </Link>
@@ -40,40 +42,40 @@ export default function Landing() {
         </section>
 
         {/* Trust Strip */}
-        <section className="border-y border-gray-100 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center shrink-0">
-                  <svg className="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <section className="border-y border-primary/5 bg-white/50 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+              <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-white transition-colors duration-300">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 text-primary">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 text-sm">Skład INCI i flagi</h3>
-                  <p className="text-xs text-gray-500 mt-0.5">Np. bez silikonow, bez sulfatow — wszystko widoczne</p>
+                  <h3 className="font-bold text-primary text-lg mb-1">Skład INCI i flagi</h3>
+                  <p className="text-sm text-primary/60 leading-relaxed">Przejrzyste oznaczenia: bez silikonów, bez sulfatów, wegańskie.</p>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center shrink-0">
-                  <svg className="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-white transition-colors duration-300">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 text-primary">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 text-sm">Ceny z kilku sklepów</h3>
-                  <p className="text-xs text-gray-500 mt-0.5">Wybierz najkorzystniejszą ofertę</p>
+                  <h3 className="font-bold text-primary text-lg mb-1">Ceny z wielu sklepów</h3>
+                  <p className="text-sm text-primary/60 leading-relaxed">Automatycznie wyszukujemy najlepsze oferty w sieci.</p>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center shrink-0">
-                  <svg className="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-white transition-colors duration-300">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 text-primary">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 text-sm">Szeroki wybór ofert</h3>
-                  <p className="text-xs text-gray-500 mt-0.5">Zaufaj sprawdzonym dostawcom</p>
+                  <h3 className="font-bold text-primary text-lg mb-1">Szeroki wybór</h3>
+                  <p className="text-sm text-primary/60 leading-relaxed">Baza produktów stale rośnie, by dać Ci pełny obraz rynku.</p>
                 </div>
               </div>
             </div>
@@ -81,10 +83,10 @@ export default function Landing() {
         </section>
 
         {/* Categories */}
-        <section className="py-16">
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Wybierz kategorie</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <h2 className="text-3xl font-bold text-primary mb-12 text-center tracking-tight">Wybierz kategorię</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {CATEGORIES.map(cat => (
                 <CategoryCard key={cat.slug} category={cat} />
               ))}
@@ -93,27 +95,30 @@ export default function Landing() {
         </section>
 
         {/* How it works */}
-        <section className="bg-gray-50 py-16">
+        <section className="bg-white py-20 border-t border-primary/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-10 text-center">Jak to działa?</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <h2 className="text-3xl font-bold text-primary mb-16 text-center tracking-tight">Jak to działa?</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+              {/* Connecting line for desktop */}
+              <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-transparent via-primary/20 to-transparent dashed-line" />
+
               {[
                 { num: '1', title: 'Odpowiedz na kilka pytań', desc: 'Krótki quiz o Twoich włosach i preferencjach — zajmie mniej niż minutę.' },
                 { num: '2', title: 'Otrzymaj TOP produkty', desc: 'Algorytm dopasuje najlepsze kosmetyki do Twojego profilu włosów.' },
                 { num: '3', title: 'Porównaj ceny i kupuj', desc: 'Sprawdź ceny w różnych sklepach i kupuj tam, gdzie najtaniej.' },
-              ].map(step => (
-                <div key={step.num} className="text-center">
-                  <div className="w-12 h-12 bg-teal-500 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
-                    {step.num}
+              ].map((step, idx) => (
+                <div key={idx} className="relative z-10 flex flex-col items-center text-center group">
+                  <div className="w-24 h-24 bg-background rounded-full flex items-center justify-center mb-6 shadow-md border-4 border-white group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-4xl font-bold text-primary/80">{step.num}</span>
                   </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">{step.title}</h3>
-                  <p className="text-sm text-gray-600">{step.desc}</p>
+                  <h3 className="text-xl font-bold text-primary mb-3">{step.title}</h3>
+                  <p className="text-sm text-primary/60 leading-relaxed max-w-xs">{step.desc}</p>
                 </div>
               ))}
             </div>
-            <div className="text-center mt-8">
-              <Link to="/jak-dziala" className="text-sm text-teal-600 hover:text-teal-700 font-medium">
-                Dowiedz się więcej &rarr;
+            <div className="text-center mt-16">
+              <Link to="/jak-dziala" className="inline-flex items-center text-secondary hover:text-primary font-medium transition-colors border-b border-secondary/20 hover:border-primary pb-0.5">
+                Dowiedz się więcej o algorytmie &rarr;
               </Link>
             </div>
           </div>

@@ -71,16 +71,15 @@ export default function QuizWizard({ onComplete }: QuizWizardProps) {
     switch (step) {
       case 0:
         return (
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {(Object.entries(HAIR_GOAL_LABELS) as [HairGoal, string][]).map(([key, label]) => (
               <button
                 key={key}
                 onClick={() => toggleMulti('hair_goals', key)}
-                className={`p-3 rounded-xl text-sm font-medium text-left transition-all ${
-                  state.hair_goals.includes(key)
-                    ? 'bg-teal-500 text-white shadow-md'
-                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
-                }`}
+                className={`p-4 rounded-2xl text-sm font-medium text-left transition-all border ${state.hair_goals.includes(key)
+                    ? 'bg-primary text-white border-primary shadow-lg transform scale-[1.02]'
+                    : 'bg-white text-primary/80 border-primary/5 hover:bg-background hover:border-primary/20'
+                  }`}
               >
                 {label}
               </button>
@@ -89,16 +88,15 @@ export default function QuizWizard({ onComplete }: QuizWizardProps) {
         );
       case 1:
         return (
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {(Object.entries(HAIR_TYPE_LABELS) as [HairType, string][]).map(([key, label]) => (
               <button
                 key={key}
                 onClick={() => toggleMulti('hair_type', key)}
-                className={`p-3 rounded-xl text-sm font-medium text-left transition-all ${
-                  state.hair_type.includes(key)
-                    ? 'bg-teal-500 text-white shadow-md'
-                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
-                }`}
+                className={`p-4 rounded-2xl text-sm font-medium text-left transition-all border ${state.hair_type.includes(key)
+                    ? 'bg-primary text-white border-primary shadow-lg transform scale-[1.02]'
+                    : 'bg-white text-primary/80 border-primary/5 hover:bg-background hover:border-primary/20'
+                  }`}
               >
                 {label}
               </button>
@@ -112,11 +110,10 @@ export default function QuizWizard({ onComplete }: QuizWizardProps) {
               <button
                 key={key}
                 onClick={() => setState({ ...state, scalp_type: key })}
-                className={`w-full p-3 rounded-xl text-sm font-medium text-left transition-all ${
-                  state.scalp_type === key
-                    ? 'bg-teal-500 text-white shadow-md'
-                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
-                }`}
+                className={`w-full p-4 rounded-2xl text-sm font-medium text-left transition-all border ${state.scalp_type === key
+                    ? 'bg-primary text-white border-primary shadow-lg transform scale-[1.02]'
+                    : 'bg-white text-primary/80 border-primary/5 hover:bg-background hover:border-primary/20'
+                  }`}
               >
                 {label}
               </button>
@@ -125,16 +122,15 @@ export default function QuizWizard({ onComplete }: QuizWizardProps) {
         );
       case 3:
         return (
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {(Object.entries(FREE_FROM_LABELS) as [FreeFrom, string][]).map(([key, label]) => (
               <button
                 key={key}
                 onClick={() => toggleMulti('avoid_ingredients', key)}
-                className={`p-3 rounded-xl text-sm font-medium text-left transition-all ${
-                  state.avoid_ingredients.includes(key)
-                    ? 'bg-teal-500 text-white shadow-md'
-                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
-                }`}
+                className={`p-4 rounded-2xl text-sm font-medium text-left transition-all border ${state.avoid_ingredients.includes(key)
+                    ? 'bg-primary text-white border-primary shadow-lg transform scale-[1.02]'
+                    : 'bg-white text-primary/80 border-primary/5 hover:bg-background hover:border-primary/20'
+                  }`}
               >
                 {label}
               </button>
@@ -144,16 +140,19 @@ export default function QuizWizard({ onComplete }: QuizWizardProps) {
       case 4:
         return (
           <div>
-            <label className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
+            <label className="flex items-center gap-4 p-5 bg-white border border-primary/5 rounded-2xl cursor-pointer hover:bg-background hover:border-primary/20 transition-all shadow-sm">
+              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${state.prefers_vegan ? 'border-primary bg-primary' : 'border-primary/20'}`}>
+                {state.prefers_vegan && <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
+              </div>
               <input
                 type="checkbox"
                 checked={state.prefers_vegan}
                 onChange={() => setState({ ...state, prefers_vegan: !state.prefers_vegan })}
-                className="w-5 h-5 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                className="hidden"
               />
               <div>
-                <p className="font-medium text-gray-900">Chce produkty weganskie</p>
-                <p className="text-sm text-gray-500">Pokaz tylko produkty oznaczone jako weganskie i cruelty-free</p>
+                <p className="font-semibold text-primary">Chcę produkty wegańskie</p>
+                <p className="text-sm text-primary/60 mt-0.5">Pokaż tylko produkty oznaczone jako wegańskie i cruelty-free</p>
               </div>
             </label>
           </div>
@@ -164,41 +163,43 @@ export default function QuizWizard({ onComplete }: QuizWizardProps) {
   };
 
   return (
-    <div className="max-w-lg mx-auto">
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-xs font-medium text-teal-600 uppercase tracking-wider">Krok {step + 1} z {STEPS.length}</span>
-          <span className="text-xs text-gray-400">{Math.round(progress)}%</span>
+    <div className="max-w-xl mx-auto">
+      <div className="mb-8">
+        <div className="flex justify-between items-center mb-3">
+          <span className="text-xs font-semibold text-primary/60 uppercase tracking-widest">Krok {step + 1} z {STEPS.length}</span>
+          <span className="text-xs font-medium text-primary/40">{Math.round(progress)}%</span>
         </div>
-        <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div className="w-full h-1.5 bg-primary/10 rounded-full overflow-hidden">
           <div
-            className="h-full bg-teal-500 rounded-full transition-all duration-300"
+            className="h-full bg-primary rounded-full transition-all duration-500 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
       </div>
 
-      <h2 className="text-xl font-semibold text-gray-900 mb-1">{STEPS[step].title}</h2>
-      {STEPS[step].subtitle && (
-        <p className="text-sm text-gray-500 mb-6">{STEPS[step].subtitle}</p>
-      )}
-
       <div className="mb-8">
+        <h2 className="text-2xl font-bold text-primary mb-2 tracking-tight">{STEPS[step].title}</h2>
+        {STEPS[step].subtitle && (
+          <p className="text-primary/60">{STEPS[step].subtitle}</p>
+        )}
+      </div>
+
+      <div className="mb-10 min-h-[300px]">
         {renderStep()}
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between border-t border-primary/5 pt-6">
         <button
           onClick={() => setStep(Math.max(0, step - 1))}
           disabled={step === 0}
-          className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
+          className="px-6 py-3 text-sm font-medium text-primary/60 hover:text-primary transition-colors disabled:opacity-30 disabled:cursor-not-allowed uppercase tracking-wide"
         >
           Wstecz
         </button>
         <button
           onClick={handleNext}
           disabled={!canProceed()}
-          className="px-6 py-2.5 bg-teal-500 text-white text-sm font-medium rounded-lg hover:bg-teal-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="px-8 py-3 bg-primary text-white text-sm font-bold rounded-xl hover:bg-primary/90 transition-all custom-shadow hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none transform active:scale-95"
         >
           {step === STEPS.length - 1 ? 'Zobacz wyniki' : 'Dalej'}
         </button>

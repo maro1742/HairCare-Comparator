@@ -53,7 +53,7 @@ export default function Comparator() {
 
   return (
     <>
-      <SEO title="Porównywarka kosmetykow" description="Porownaj kosmetyki do wlosow — filtruj po składzie, typie wlosow i cenie." />
+      <SEO title="Porównywarka kosmetyków" description="Porównaj kosmetyki do włosów — filtruj po składzie, typie włosów i cenie." />
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex flex-col gap-4 mb-6">
@@ -73,7 +73,7 @@ export default function Comparator() {
           <div className="flex items-center justify-between">
             <FilterChips />
             <Link to="/quiz" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-teal-50 text-teal-700 rounded-lg text-sm font-medium hover:bg-teal-100 transition-colors">
-              Zrob quiz &rarr; ustaw filtry
+              Zrób quiz &rarr; ustaw filtry
             </Link>
           </div>
         </div>
@@ -103,9 +103,9 @@ export default function Comparator() {
           <div className="flex-1 min-w-0">
             {filtered.length === 0 ? (
               <div className="text-center py-16">
-                <p className="text-gray-500 mb-2">Brak wynikow — sprobuj poluzowac filtry.</p>
+                <p className="text-gray-500 mb-2">Brak wyników — spróbuj poluzować filtry.</p>
                 <button onClick={() => useStore.getState().clearFilters()} className="text-sm text-teal-600 hover:text-teal-700">
-                  Wyczysc filtry
+                  Wyczyść filtry
                 </button>
               </div>
             ) : (

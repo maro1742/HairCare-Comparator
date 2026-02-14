@@ -17,9 +17,10 @@ export default function Category() {
 
   const categoryProducts = useMemo(() => {
     if (!slug) return [];
-    const prods = PRODUCTS.filter(p => getCategoryForProduct(p).includes(slug));
+    let prods = PRODUCTS.filter(p => getCategoryForProduct(p).includes(slug));
 
     if (filters.sort_by === 'price') {
+      prods = prods.filter(p => p.offers.length > 0);
       prods.sort((a, b) => Math.min(...a.offers.map(o => o.price_pln)) - Math.min(...b.offers.map(o => o.price_pln)));
     } else if (filters.sort_by === 'popularity') {
       prods.sort((a, b) => b.popularity - a.popularity);

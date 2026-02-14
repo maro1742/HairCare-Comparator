@@ -13,18 +13,20 @@ import AnalyticsDebug from './components/AnalyticsDebug';
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/porownaj" element={<Comparator />} />
-        <Route path="/kategoria/:slug" element={<Category />} />
-        <Route path="/produkt/:slug" element={<Product />} />
-        <Route path="/quiz" element={<Quiz />} />
-        <Route path="/jak-dziala" element={<HowItWorks />} />
-        <Route path="/polityka-prywatnosci" element={<Privacy />} />
-        <Route path="/cookies" element={<Cookies />} />
-        <Route path="/wspolpraca-affiliate" element={<Affiliate />} />
-      </Routes>
-      <AnalyticsDebug />
+      <div className="min-h-screen bg-background text-primary font-sans">
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/porownaj" element={<Comparator />} />
+          <Route path="/kategoria/:slug" element={<Category />} />
+          <Route path="/produkt/:slug" element={<Product />} />
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/jak-dziala" element={<HowItWorks />} />
+          <Route path="/polityka-prywatnosci" element={<Privacy />} />
+          <Route path="/cookies" element={<Cookies />} />
+          <Route path="/wspolpraca-affiliate" element={<Affiliate />} />
+        </Routes>
+        <AnalyticsDebug />
+      </div>
     </BrowserRouter>
   );
 }
