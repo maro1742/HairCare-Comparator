@@ -17,7 +17,7 @@ export default function Landing() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 relative z-10">
             <div className="max-w-3xl">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary leading-tight tracking-tight mb-6">
-                Profesjonalna pielęgnacja <br />
+                Profesjonalna pielęgnacja włosów<br />
                 <span className="text-secondary italic">w Twoim domu</span>
               </h1>
               <p className="text-lg sm:text-xl text-primary/70 leading-relaxed max-w-2xl mb-10">
