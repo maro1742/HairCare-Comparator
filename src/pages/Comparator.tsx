@@ -7,22 +7,43 @@ import FilterChips from '../components/FilterChips';
 import SortDropdown from '../components/SortDropdown';
 import ProductCard from '../components/ProductCard';
 import SEO from '../components/SEO';
-import { PRODUCTS } from '../data/products';
+import { PRODUCTS as MOCK_PRODUCTS } from '../data/products';
 import { useStore } from '../store/useStore';
+import { getAllProducts } from '../services/productService';
+import type { Product } from '../types';
 import { matchScore } from '../lib/scoring';
 import { formatDate } from '../lib/format';
 import { trackEvents } from '../lib/track';
 
 export default function Comparator() {
+  const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
+  const [isLoading, setIsLoading] = useState(true);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const filters = useStore((s) => s.filters);
 
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const all = await getAllProducts();
+        setProducts(all);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadProducts();
+  }, []);
+
   const searchQuery = searchParams.get('q')?.toLowerCase() || '';
 
+  const availableBrands = useMemo(() => {
+    return Array.from(new Set(products.map(p => p.brand).filter(Boolean)));
+  }, [products]);
+
   const filtered = useMemo(() => {
-    const result = PRODUCTS.filter(p => {
+    const result = products.filter(p => {
       if (searchQuery && !`${p.brand} ${p.name}`.toLowerCase().includes(searchQuery)) return false;
+      if (filters.brands.length > 0 && !filters.brands.includes(p.brand)) return false;
       if (filters.categories.length > 0 && !filters.categories.includes(p.category)) return false;
       if (filters.vegan_only && !p.claims.includes('vegan')) return false;
 
@@ -80,7 +101,7 @@ export default function Comparator() {
 
         <div className="flex gap-6">
           <div className="hidden lg:block">
-            <FilterPanel />
+            <FilterPanel availableBrands={availableBrands} />
           </div>
 
           {filtersOpen && (
@@ -95,13 +116,17 @@ export default function Comparator() {
                     </svg>
                   </button>
                 </div>
-                <FilterPanel />
+                <FilterPanel availableBrands={availableBrands} />
               </div>
             </div>
           )}
 
           <div className="flex-1 min-w-0">
-            {filtered.length === 0 ? (
+            {isLoading ? (
+              <div className="flex justify-center py-16">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
+              </div>
+            ) : filtered.length === 0 ? (
               <div className="text-center py-16">
                 <p className="text-gray-500 mb-2">Brak wyników — spróbuj poluzować filtry.</p>
                 <button onClick={() => useStore.getState().clearFilters()} className="text-sm text-teal-600 hover:text-teal-700">

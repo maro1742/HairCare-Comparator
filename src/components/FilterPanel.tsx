@@ -5,9 +5,10 @@ import type { HairGoal, HairType, ScalpType, FreeFrom } from '../types';
 interface FilterPanelProps {
   isOpen?: boolean;
   onClose?: () => void;
+  availableBrands: string[];
 }
 
-export default function FilterPanel({ isOpen, onClose }: FilterPanelProps) {
+export default function FilterPanel({ isOpen, onClose, availableBrands }: FilterPanelProps) {
   const filters = useStore((s) => s.filters);
   const updateFilter = useStore((s) => s.updateFilter);
   const clearFilters = useStore((s) => s.clearFilters);
@@ -103,8 +104,8 @@ export default function FilterPanel({ isOpen, onClose }: FilterPanelProps) {
               key={key}
               onClick={() => toggleArrayFilter('avoid_ingredients', key)}
               className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${filters.avoid_ingredients.includes(key)
-                  ? 'bg-teal-500 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                ? 'bg-teal-500 text-white'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
             >
               {label}
@@ -124,6 +125,25 @@ export default function FilterPanel({ isOpen, onClose }: FilterPanelProps) {
           <span className="text-sm text-gray-700">Tylko wegańskie</span>
         </label>
       </div>
+
+      {availableBrands.length > 0 && (
+        <div>
+          <h4 className="text-sm font-medium text-gray-700 mb-2">Marka</h4>
+          <div className="space-y-1.5 max-h-48 overflow-y-auto pr-2 scrollbar-thin">
+            {availableBrands.sort().map((brand) => (
+              <label key={brand} className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={filters.brands.includes(brand)}
+                  onChange={() => toggleArrayFilter('brands', brand)}
+                  className="w-4 h-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                />
+                <span className="text-sm text-gray-700 truncate">{brand}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div>
         <h4 className="text-sm font-medium text-gray-700 mb-2">Cena (PLN)</h4>

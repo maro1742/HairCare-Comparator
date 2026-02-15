@@ -18,6 +18,7 @@ export interface Product {
 
   offers: Offer[];
   updated_at: string;
+  description?: string;
 }
 
 export interface Offer {
