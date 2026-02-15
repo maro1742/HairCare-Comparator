@@ -1,22 +1,27 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @theme {
-  --color-primary: #1A3C34; /* Deep Forest Green */
-  --color-secondary: #8C6A5D; /* Warm Earth/Brown */
-  --color-background: #F5F5F0; /* Soft Beige */
-  --color-surface: #FFFFFF; /* Pure White */
-  --color-accent: #D4A373; /* Soft Gold/Sand */
-  
+  --color-primary: #1A3C34;
+  /* Deep Forest Green */
+  --color-secondary: #8C6A5D;
+  /* Warm Earth/Brown */
+  --color-background: #F5F5F0;
+  /* Soft Beige */
+  --color-surface: #FFFFFF;
+  /* Pure White */
+  --color-accent: #D4A373;
+  /* Soft Gold/Sand */
+
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Playfair Display', serif; /* Optional for headings if needed later */
+  --font-display: 'Playfair Display', serif;
+  /* Optional for headings if needed later */
 
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
 }
 
-/* Import Inter font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
+/* Main styles */
 html {
   scroll-behavior: smooth;
 }

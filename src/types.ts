@@ -13,8 +13,11 @@ export interface Product {
 
   inci: string;
   ingredient_flags: IngredientFlags;
-  images: string;
+  images: string[];
   popularity: number;
+  cosmetic_function?: string;
+  usage?: string;
+  ingredient_categories?: string[];
 
   offers: Offer[];
   updated_at: string;

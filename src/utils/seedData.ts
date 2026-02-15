@@ -54,7 +54,7 @@ async function seed() {
     console.log('Starting seed process...');
 
     for (const product of SEED_PRODUCTS) {
-        const { data, error } = await supabase
+        const { error } = await supabase
             .from('products_bielenda')
             .insert([product])
             .select();

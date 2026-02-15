@@ -48,7 +48,7 @@ export default function QuizResults({ products, profile, onRestart }: QuizResult
               <div className="flex gap-4">
                 <Link to={`/produkt/${product.slug}`} className="shrink-0">
                   <img
-                    src={product.images}
+                    src={product.images[0]}
                     alt={`${product.brand} ${product.name}`}
                     className="w-20 h-20 rounded-lg object-cover bg-gray-50"
                   />
@@ -86,7 +86,7 @@ export default function QuizResults({ products, profile, onRestart }: QuizResult
                       onClick={() => trackEvents.outbound_click(product.id, bestOffer.merchant, 'quiz_results', i, bestOffer.price_pln)}
                       className="px-4 py-2 bg-teal-500 text-white text-sm font-medium rounded-lg hover:bg-teal-600 transition-colors"
                     >
-                      Najtansza oferta
+                      Najtańsza oferta
                     </a>
                   </div>
                 </div>
@@ -101,13 +101,13 @@ export default function QuizResults({ products, profile, onRestart }: QuizResult
           to="/porownaj"
           className="w-full sm:w-auto px-6 py-3 bg-teal-500 text-white text-sm font-medium rounded-lg hover:bg-teal-600 transition-colors text-center"
         >
-          Zastosuj filtry w porownywarce
+          Zastosuj filtry w porównywarce
         </Link>
         <button
           onClick={onRestart}
           className="w-full sm:w-auto px-6 py-3 border border-gray-200 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors"
         >
-          Zmien odpowiedzi
+          Zmień odpowiedzi
         </button>
       </div>
     </div>

@@ -33,7 +33,7 @@ export async function fetchBielendaProducts(categoryName?: string): Promise<DBPr
         throw new Error('Could not fetch products from the database.');
     }
 
-    return (data || []) as Product[];
+    return (data || []) as DBProduct[];
 }
 
 /**
@@ -131,7 +131,7 @@ function mapToUIProduct(p: DBProduct): UIProduct {
         scalp_fit,
         free_from: [],
         claims: [],
-        inci: '',
+        inci: p.inci || '',
         ingredient_flags: {
             has_silicones: false,
             has_sulfates: false,
@@ -139,8 +139,11 @@ function mapToUIProduct(p: DBProduct): UIProduct {
             has_drying_alcohols: false,
             has_fragrance: false
         },
-        images: p.image_url,
+        images: p.image_url ? [p.image_url] : [],
         popularity: 70, // Default for new products
+        cosmetic_function: p.cosmetic_function,
+        usage: p.usage,
+        ingredient_categories: p.ingredient_categories ? p.ingredient_categories.split(',').map(s => s.trim()) : [],
         offers: [
             {
                 merchant: 'other',
@@ -173,5 +176,24 @@ export async function getAllProducts(): Promise<UIProduct[]> {
     } catch (e) {
         console.error('Error in getAllProducts:', e);
         return MOCK_PRODUCTS;
+    }
+}
+/**
+ * Fetches a single product by its slug (Mock or Supabase)
+ */
+export async function getProductBySlug(slug: string): Promise<UIProduct | null> {
+    // 1. Check Mock Products
+    const mockMatch = MOCK_PRODUCTS.find(p => p.slug === slug);
+    if (mockMatch) return mockMatch;
+
+    // 2. Check Supabase Products
+    try {
+        // We fetch all and find the match. In a larger app, we'd store slug in DB
+        // or search by name transform.
+        const all = await getAllProducts();
+        return all.find(p => p.slug === slug) || null;
+    } catch (e) {
+        console.error('Error fetching product by slug:', e);
+        return null;
     }
 }

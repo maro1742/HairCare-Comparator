@@ -31,7 +31,7 @@ export default function ProductCard({ product, filters, position }: ProductCardP
         <Link to={`/produkt/${product.slug}`} className="shrink-0">
           <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden bg-background relative">
             <img
-              src={product.images}
+              src={product.images[0]}
               alt={`${product.brand} ${product.name}`}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               loading="lazy"

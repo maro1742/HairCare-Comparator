@@ -15,10 +15,10 @@ interface QuizState {
 }
 
 const STEPS = [
-  { key: 'hair_goals', title: 'Jaki jest glowny problem Twoich wlosow?', subtitle: 'Mozesz wybrac kilka opcji', multi: true },
-  { key: 'hair_type', title: 'Jaki typ wlosow masz?', subtitle: 'Mozesz wybrac kilka opcji', multi: true },
-  { key: 'scalp_type', title: 'Jak opisalbys/opisalabys swoja skore glowy?', subtitle: 'Wybierz jedna opcje', multi: false },
-  { key: 'avoid_ingredients', title: 'Jakie składniki chcesz unikać?', subtitle: 'Mozesz wybrac kilka lub pominac', multi: true },
+  { key: 'hair_goals', title: 'Jaki jest główny problem Twoich włosów?', subtitle: 'Możesz wybrać kilka opcji', multi: true },
+  { key: 'hair_type', title: 'Jaki typ włosów masz?', subtitle: 'Możesz wybrać kilka opcji', multi: true },
+  { key: 'scalp_type', title: 'Jak opisałbyś/opisałabyś swoją skórę głowy?', subtitle: 'Wybierz jedną opcję', multi: false },
+  { key: 'avoid_ingredients', title: 'Jakie składniki chcesz unikać?', subtitle: 'Możesz wybrać kilka lub pominąć', multi: true },
   { key: 'prefers_vegan', title: 'Preferencje dodatkowe', subtitle: '', multi: false },
 ] as const;
 
@@ -77,8 +77,8 @@ export default function QuizWizard({ onComplete }: QuizWizardProps) {
                 key={key}
                 onClick={() => toggleMulti('hair_goals', key)}
                 className={`p-4 rounded-2xl text-sm font-medium text-left transition-all border ${state.hair_goals.includes(key)
-                    ? 'bg-primary text-white border-primary shadow-lg transform scale-[1.02]'
-                    : 'bg-white text-primary/80 border-primary/5 hover:bg-background hover:border-primary/20'
+                  ? 'bg-primary text-white border-primary shadow-lg transform scale-[1.02]'
+                  : 'bg-white text-primary/80 border-primary/5 hover:bg-background hover:border-primary/20'
                   }`}
               >
                 {label}
@@ -94,8 +94,8 @@ export default function QuizWizard({ onComplete }: QuizWizardProps) {
                 key={key}
                 onClick={() => toggleMulti('hair_type', key)}
                 className={`p-4 rounded-2xl text-sm font-medium text-left transition-all border ${state.hair_type.includes(key)
-                    ? 'bg-primary text-white border-primary shadow-lg transform scale-[1.02]'
-                    : 'bg-white text-primary/80 border-primary/5 hover:bg-background hover:border-primary/20'
+                  ? 'bg-primary text-white border-primary shadow-lg transform scale-[1.02]'
+                  : 'bg-white text-primary/80 border-primary/5 hover:bg-background hover:border-primary/20'
                   }`}
               >
                 {label}
@@ -111,8 +111,8 @@ export default function QuizWizard({ onComplete }: QuizWizardProps) {
                 key={key}
                 onClick={() => setState({ ...state, scalp_type: key })}
                 className={`w-full p-4 rounded-2xl text-sm font-medium text-left transition-all border ${state.scalp_type === key
-                    ? 'bg-primary text-white border-primary shadow-lg transform scale-[1.02]'
-                    : 'bg-white text-primary/80 border-primary/5 hover:bg-background hover:border-primary/20'
+                  ? 'bg-primary text-white border-primary shadow-lg transform scale-[1.02]'
+                  : 'bg-white text-primary/80 border-primary/5 hover:bg-background hover:border-primary/20'
                   }`}
               >
                 {label}
@@ -128,8 +128,8 @@ export default function QuizWizard({ onComplete }: QuizWizardProps) {
                 key={key}
                 onClick={() => toggleMulti('avoid_ingredients', key)}
                 className={`p-4 rounded-2xl text-sm font-medium text-left transition-all border ${state.avoid_ingredients.includes(key)
-                    ? 'bg-primary text-white border-primary shadow-lg transform scale-[1.02]'
-                    : 'bg-white text-primary/80 border-primary/5 hover:bg-background hover:border-primary/20'
+                  ? 'bg-primary text-white border-primary shadow-lg transform scale-[1.02]'
+                  : 'bg-white text-primary/80 border-primary/5 hover:bg-background hover:border-primary/20'
                   }`}
               >
                 {label}

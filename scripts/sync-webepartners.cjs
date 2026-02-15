@@ -47,6 +47,47 @@ function mapCategory(name, description) {
     return 'other'; // default or unmapped
 }
 
+function extractFromDescription(html, sectionTitle) {
+    if (!html) return '';
+
+    const lowerHtml = html.toLowerCase();
+    const searchTerms = sectionTitle.toLowerCase().split('|');
+
+    let startIndex = -1;
+    let titleLength = 0;
+
+    for (const term of searchTerms) {
+        const idx = lowerHtml.indexOf(term);
+        if (idx !== -1) {
+            startIndex = idx;
+            titleLength = term.length;
+            break;
+        }
+    }
+
+    if (startIndex === -1) return '';
+
+    // Find the end of the header tag (e.g., </strong> or ###)
+    let contentStart = html.indexOf('>', startIndex);
+    if (contentStart === -1 || contentStart > startIndex + titleLength + 10) {
+        contentStart = startIndex + titleLength;
+    } else {
+        contentStart += 1;
+    }
+
+    // Find the next likely header or the end of a major block
+    // We look for ### or <h[1-6] or <strong> that looks like a header (contains one of the typical section start words)
+    const nextHeaderRegex = /(?:###|<h[1-6][^>]*>|<strong>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania))/i;
+    const rest = html.substring(contentStart);
+    const nextMatch = rest.match(nextHeaderRegex);
+
+    let contentEnd = nextMatch ? nextMatch.index : rest.length;
+    let content = rest.substring(0, contentEnd);
+
+    // Clean up content
+    return content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
 async function sync() {
     try {
         console.log('Fetching XML from:', XML_URL);
@@ -62,34 +103,52 @@ async function sync() {
         const productsToInsert = [];
 
         for (const offer of offers) {
-            // Filter only hair products if possible, or just Bielenda
-            // Looking at the feed, it seems it contains various Bielenda products.
             const name = offer.name;
             const description = offer.description;
             const shopCategory = offer.shopcategory || '';
 
-            // We only care about hair products for this specific task
             if (!shopCategory.toLowerCase().includes('włosy') && !name.toLowerCase().includes('włosów')) {
                 continue;
             }
 
             const category = mapCategory(name, description);
-
-            // Skip 'other' if we want only the 5 main categories, or keep it.
-            // User asked to map to: Suche, Wypadanie, Łupież, Kręcone, Farbowane.
             if (category === 'other') continue;
 
             const price = parseFloat(offer.price.replace(',', '.'));
 
+            // Extraction patterns
+            const usage = extractFromDescription(description, 'Jak mnie stosować|Sposób użycia|Stosowanie') ||
+                extractFromDescription(description, 'Jak używać');
+
+            const cosmeticFunction = extractFromDescription(description, 'Co mogę Ci zaoferować|Działanie|Jak działa') ||
+                extractFromDescription(description, 'Dlaczego warto');
+
+            const ingredientCats = extractFromDescription(description, 'Odkryj moje wnętrze|Składniki aktywne|W moim składzie znajdziesz');
+
+            const inciMatch = description.match(/(?:INCI|Skład \(INCI\)|Skład):?\s*<\/strong>\s*([\s\S]*?)(?=<br|$)/i);
+            const inci = inciMatch ? inciMatch[1].replace(/<[^>]+>/g, ' ').trim() : '';
+
+            if (productsToInsert.length < 3) {
+                console.log(`Debug extraction for "${name}":`);
+                console.log(`  Usage: ${usage.substring(0, 50)}...`);
+                console.log(`  Function: ${cosmeticFunction.substring(0, 50)}...`);
+                console.log(`  INCI: ${inci.substring(0, 50)}...`);
+            }
+
             productsToInsert.push({
-                id: generateUUID(offer.id), // XML ID is numeric, table expects UUID
+                id: generateUUID(offer.id),
                 name: name,
                 price: price,
                 category: category,
                 image_url: offer.image,
                 affiliate_link: offer.url,
-                brand: offer.producer || 'Bielenda', // Default to Bielenda if missing
-                description: description
+                brand: offer.producer || 'Bielenda',
+                description: description,
+                // New premium fields
+                cosmetic_function: cosmeticFunction,
+                usage: usage,
+                ingredient_categories: ingredientCats,
+                inci: inci
             });
         }
 

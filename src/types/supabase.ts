@@ -7,4 +7,8 @@ export interface Product {
     affiliate_link: string;
     brand?: string;
     description?: string;
+    cosmetic_function?: string;
+    usage?: string;
+    ingredient_categories?: string; // Stored as comma-separated or JSON string
+    inci?: string;
 }

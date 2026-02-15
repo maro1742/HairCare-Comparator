@@ -42,14 +42,14 @@ export default function Quiz() {
 
   return (
     <>
-      <SEO title="Quiz - Dopasuj kosmetyki" description="Odpowiedz na 5 pytan i znajdz kosmetyki idealne dla Twoich wlosow." />
+      <SEO title="Quiz - Dopasuj kosmetyki" description="Odpowiedz na 5 pytań i znajdź kosmetyki idealne dla Twoich włosów." />
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {!profile ? (
           <div>
             <div className="text-center mb-8">
-              <h1 className="text-2xl sm:text-3xl font-bold text-teal-600 mb-2">Twoj profil wlosow</h1>
-              <p className="text-gray-500">Odpowiedz na 5 pytan, a dopasujemy kosmetyki do Twoich potrzeb</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-teal-600 mb-2">Twój profil włosów</h1>
+              <p className="text-gray-500">Odpowiedz na 5 pytań, a dopasujemy kosmetyki do Twoich potrzeb</p>
             </div>
             <QuizWizard onComplete={handleComplete} />
           </div>

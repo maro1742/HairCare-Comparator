@@ -1,23 +1,40 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ProductCard from '../components/ProductCard';
 import SEO from '../components/SEO';
-import { PRODUCTS } from '../data/products';
 import { CATEGORIES, categoryBySlug, getCategoryForProduct } from '../data/categories';
 import { useStore } from '../store/useStore';
 import { matchScore } from '../lib/scoring';
 import { trackEvents } from '../lib/track';
+import { getAllProducts } from '../services/productService';
+import type { Product as UIProduct } from '../types';
 
 export default function Category() {
   const { slug } = useParams<{ slug: string }>();
   const filters = useStore((s) => s.filters);
   const category = categoryBySlug(slug || '');
 
+  const [allProducts, setAllProducts] = useState<UIProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      setIsLoading(true);
+      try {
+        const prods = await getAllProducts();
+        setAllProducts(prods);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    load();
+  }, []);
+
   const categoryProducts = useMemo(() => {
     if (!slug) return [];
-    let prods = PRODUCTS.filter(p => getCategoryForProduct(p).includes(slug));
+    let prods = allProducts.filter(p => getCategoryForProduct(p).includes(slug));
 
     if (filters.sort_by === 'price') {
       prods = prods.filter(p => p.offers.length > 0);
@@ -29,11 +46,26 @@ export default function Category() {
     }
 
     return prods;
-  }, [slug, filters]);
+  }, [slug, filters, allProducts]);
 
   useEffect(() => {
-    trackEvents.view_list('category_' + slug, categoryProducts.length);
-  }, [slug, categoryProducts.length]);
+    if (!isLoading) {
+      trackEvents.view_list('category_' + slug, categoryProducts.length);
+    }
+  }, [slug, categoryProducts.length, isLoading]);
+
+  if (isLoading) {
+    return (
+      <>
+        <Header />
+        <main className="max-w-7xl mx-auto px-4 py-32 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto"></div>
+          <p className="text-gray-500 mt-4">Ładowanie produktów...</p>
+        </main>
+        <Footer />
+      </>
+    );
+  }
 
   if (!category) {
     return (
@@ -94,7 +126,7 @@ export default function Category() {
                 const bestOffer = p.offers.reduce((a, b) => a.price_pln < b.price_pln ? a : b);
                 return (
                   <Link key={p.id} to={`/produkt/${p.slug}`} className="bg-white rounded-xl border border-gray-100 p-4 hover:shadow-md transition-shadow">
-                    <img src={p.images} alt={p.name} className="w-full h-40 object-cover rounded-lg bg-gray-50 mb-3" />
+                    <img src={p.images[0]} alt={p.name} className="w-full h-40 object-cover rounded-lg bg-gray-50 mb-3" />
                     <p className="text-xs text-gray-400 uppercase">{p.brand}</p>
                     <h3 className="font-semibold text-gray-900 text-sm">{p.name}</h3>
                     <p className="text-teal-600 font-bold mt-1">od {new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(bestOffer.price_pln)}</p>
