@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAllProducts } from '../services/productService';
 import type { Product } from '../types';
+import { useStore } from '../store/useStore';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,6 +11,8 @@ export default function Header() {
   const [suggestions, setSuggestions] = useState<Product[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const comparisonCount = useStore((s) => s.comparisonProductIds.length);
 
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -83,12 +86,15 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">HC</span>
-            </div>
-            <span className="font-semibold text-gray-900 text-lg hidden sm:block">HairCare</span>
+            <img
+              src="/logo.png"
+              alt="HairMatch"
+              className="h-[4.5rem] w-auto drop-shadow-md"
+              style={{ filter: 'contrast(1.05) brightness(0.98)' }}
+            />
+            <span className="font-bold text-gray-900 text-xl hidden sm:block">HairMatch</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
@@ -98,6 +104,20 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
+            {/* Comparison Button - Desktop */}
+            {comparisonCount > 0 && (
+              <Link
+                to="/porownanie"
+                className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-teal-50 text-teal-700 rounded-lg hover:bg-teal-100 transition-colors relative"
+                title="Porównaj produkty"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                <span className="text-sm font-medium">{comparisonCount}</span>
+              </Link>
+            )}
+
             <div className="hidden sm:block relative" ref={containerRef}>
               <form onSubmit={handleSearch} className="flex items-center">
                 <input
@@ -159,6 +179,14 @@ export default function Header() {
                 className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </form>
+            {comparisonCount > 0 && (
+              <Link to="/porownanie" onClick={() => setMenuOpen(false)} className="flex items-center justify-between px-4 py-2 text-sm text-teal-600 hover:bg-teal-50 font-medium">
+                <span>Porównanie ({comparisonCount})</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </Link>
+            )}
             <Link to="/porownaj" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Porównywarka</Link>
             <Link to="/quiz" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Quiz</Link>
             <Link to="/jak-dziala" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Jak to działa</Link>

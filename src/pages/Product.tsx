@@ -17,6 +17,9 @@ export default function Product() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const filters = useStore((s) => s.filters);
+  const comparisonProductIds = useStore((s) => s.comparisonProductIds);
+  const addToComparison = useStore((s) => s.addToComparison);
+  const removeFromComparison = useStore((s) => s.removeFromComparison);
 
   const [product, setProduct] = useState<UIProduct | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -100,9 +103,35 @@ export default function Product() {
             </svg>
           </button>
           <span className="text-sm font-bold text-gray-500 uppercase tracking-widest">Szczegóły Produktu</span>
-          <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-            <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+          <button
+            onClick={() => {
+              if (product) {
+                const isInComparison = comparisonProductIds.includes(product.id);
+                const isComparisonFull = comparisonProductIds.length >= 4;
+                if (isInComparison) {
+                  removeFromComparison(product.id);
+                } else if (!isComparisonFull) {
+                  addToComparison(product.id);
+                }
+              }
+            }}
+            disabled={product && !comparisonProductIds.includes(product.id) && comparisonProductIds.length >= 4}
+            className={`p-2 rounded-full transition-colors ${product && comparisonProductIds.includes(product.id)
+                ? 'bg-teal-100 text-teal-600'
+                : comparisonProductIds.length >= 4
+                  ? 'text-gray-300 cursor-not-allowed'
+                  : 'hover:bg-gray-100 text-gray-700'
+              }`}
+            title={
+              product && comparisonProductIds.includes(product.id)
+                ? 'Usuń z porównania'
+                : comparisonProductIds.length >= 4
+                  ? 'Limit 4 produktów'
+                  : 'Dodaj do porównania'
+            }
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </button>
         </div>

@@ -11,6 +11,12 @@ interface StoreState {
   updateFilter: <K extends keyof Filters>(key: K, value: Filters[K]) => void;
   clearFilters: () => void;
 
+  comparisonProductIds: string[];
+  addToComparison: (productId: string) => void;
+  removeFromComparison: (productId: string) => void;
+  clearComparison: () => void;
+  isInComparison: (productId: string) => boolean;
+
   analyticsQueue: AnalyticsEvent[];
   addAnalyticsEvent: (event: AnalyticsEvent) => void;
   clearAnalyticsQueue: () => void;
@@ -31,7 +37,7 @@ const DEFAULT_FILTERS: Filters = {
 
 export const useStore = create<StoreState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       userProfile: null,
       setUserProfile: (profile) => set({ userProfile: profile }),
 
@@ -42,6 +48,20 @@ export const useStore = create<StoreState>()(
           filters: { ...state.filters, [key]: value }
         })),
       clearFilters: () => set({ filters: DEFAULT_FILTERS }),
+
+      comparisonProductIds: [],
+      addToComparison: (productId) =>
+        set((state) => {
+          if (state.comparisonProductIds.includes(productId)) return state;
+          if (state.comparisonProductIds.length >= 4) return state;
+          return { comparisonProductIds: [...state.comparisonProductIds, productId] };
+        }),
+      removeFromComparison: (productId) =>
+        set((state) => ({
+          comparisonProductIds: state.comparisonProductIds.filter(id => id !== productId)
+        })),
+      clearComparison: () => set({ comparisonProductIds: [] }),
+      isInComparison: (productId: string): boolean => get().comparisonProductIds.includes(productId),
 
       analyticsQueue: [],
       addAnalyticsEvent: (event) =>
@@ -54,7 +74,8 @@ export const useStore = create<StoreState>()(
       name: 'haircare-store',
       partialize: (state) => ({
         userProfile: state.userProfile,
-        filters: state.filters
+        filters: state.filters,
+        comparisonProductIds: state.comparisonProductIds
       })
     }
   )

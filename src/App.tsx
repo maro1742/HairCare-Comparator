@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Landing from './pages/Landing';
 import Comparator from './pages/Comparator';
+import Comparison from './pages/Comparison';
 import Category from './pages/Category';
 import Product from './pages/Product';
 import Quiz from './pages/Quiz';
@@ -17,6 +18,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/porownaj" element={<Comparator />} />
+          <Route path="/porownanie" element={<Comparison />} />
           <Route path="/kategoria/:slug" element={<Category />} />
           <Route path="/produkt/:slug" element={<Product />} />
           <Route path="/quiz" element={<Quiz />} />
