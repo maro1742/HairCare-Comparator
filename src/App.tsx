@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Landing from './pages/Landing';
 import Comparator from './pages/Comparator';
+import Comparison from './pages/Comparison';
 import Category from './pages/Category';
 import Product from './pages/Product';
 import Quiz from './pages/Quiz';
@@ -8,6 +9,7 @@ import HowItWorks from './pages/HowItWorks';
 import Privacy from './pages/Privacy';
 import Cookies from './pages/Cookies';
 import Affiliate from './pages/Affiliate';
+import ComparisonBar from './components/ComparisonBar';
 import AnalyticsDebug from './components/AnalyticsDebug';
 
 export default function App() {
@@ -17,6 +19,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/porownaj" element={<Comparator />} />
+          <Route path="/porownanie" element={<Comparison />} />
           <Route path="/kategoria/:slug" element={<Category />} />
           <Route path="/produkt/:slug" element={<Product />} />
           <Route path="/quiz" element={<Quiz />} />
@@ -25,6 +28,7 @@ export default function App() {
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/wspolpraca-affiliate" element={<Affiliate />} />
         </Routes>
+        <ComparisonBar />
         <AnalyticsDebug />
       </div>
     </BrowserRouter>

@@ -5,6 +5,7 @@ import { matchScore } from '../lib/scoring';
 import { CLAIM_LABELS, FREE_FROM_LABELS } from '../lib/constants';
 import MatchLabel from './MatchLabel';
 import { trackEvents } from '../lib/track';
+import { useStore } from '../store/useStore';
 
 interface ProductCardProps {
   product: Product;
@@ -19,6 +20,22 @@ export default function ProductCard({ product, filters, position }: ProductCardP
     ...product.claims.map(c => CLAIM_LABELS[c]).filter(Boolean),
     ...product.free_from.map(f => FREE_FROM_LABELS[f]).filter(Boolean)
   ].slice(0, 3);
+
+  const compareList = useStore((s) => s.compareList);
+  const addToCompare = useStore((s) => s.addToCompare);
+  const removeFromCompare = useStore((s) => s.removeFromCompare);
+  const isInCompare = compareList.some((p) => p.id === product.id);
+  const compareFull = compareList.length >= 4;
+
+  const handleCompareToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isInCompare) {
+      removeFromCompare(product.id);
+    } else {
+      addToCompare(product);
+    }
+  };
 
   const handleOutboundClick = (e: React.MouseEvent, merchant: string, price: number) => {
     e.stopPropagation();
@@ -64,15 +81,38 @@ export default function ProductCard({ product, filters, position }: ProductCardP
 
           <div className="flex items-center justify-between mt-4 sm:mt-0 pt-2 border-t border-primary/5">
             <span className="text-xl font-bold text-primary">{formatPrice(bestOffer.price_pln)}</span>
-            <a
-              href={bestOffer.url}
-              target="_blank"
-              rel="nofollow sponsored noopener"
-              onClick={(e) => handleOutboundClick(e, bestOffer.merchant, bestOffer.price_pln)}
-              className="inline-flex items-center px-5 py-2 bg-primary text-white text-sm font-medium rounded-xl hover:bg-primary/90 transition-all shadow-md hover:shadow-lg transform active:scale-95"
-            >
-              Do sklepu
-            </a>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleCompareToggle}
+                disabled={!isInCompare && compareFull}
+                title={isInCompare ? 'Usuń z porównania' : compareFull ? 'Maksymalnie 4 produkty' : 'Dodaj do porównania'}
+                className={`inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-xl transition-all border ${
+                  isInCompare
+                    ? 'bg-teal-50 text-teal-700 border-teal-200 hover:bg-teal-100'
+                    : compareFull
+                      ? 'bg-gray-50 text-gray-400 border-gray-200 cursor-not-allowed'
+                      : 'bg-white text-primary/70 border-primary/10 hover:border-teal-300 hover:text-teal-700 hover:bg-teal-50'
+                }`}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {isInCompare ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  )}
+                </svg>
+                <span className="hidden sm:inline">{isInCompare ? 'W porównaniu' : 'Porównaj'}</span>
+              </button>
+              <a
+                href={bestOffer.url}
+                target="_blank"
+                rel="nofollow sponsored noopener"
+                onClick={(e) => handleOutboundClick(e, bestOffer.merchant, bestOffer.price_pln)}
+                className="inline-flex items-center px-5 py-2 bg-primary text-white text-sm font-medium rounded-xl hover:bg-primary/90 transition-all shadow-md hover:shadow-lg transform active:scale-95"
+              >
+                Do sklepu
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAllProducts } from '../services/productService';
+import { useStore } from '../store/useStore';
 import type { Product } from '../types';
 
 export default function Header() {
@@ -13,6 +14,7 @@ export default function Header() {
 
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
+  const compareCount = useStore((s) => s.compareList.length);
 
   useEffect(() => {
     async function load() {
@@ -93,6 +95,14 @@ export default function Header() {
 
           <nav className="hidden md:flex items-center gap-6">
             <Link to="/porownaj" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Porównywarka</Link>
+            <Link to="/porownanie" className="relative text-sm text-gray-600 hover:text-teal-600 transition-colors">
+              Porównanie
+              {compareCount > 0 && (
+                <span className="absolute -top-2 -right-4 w-4 h-4 bg-teal-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  {compareCount}
+                </span>
+              )}
+            </Link>
             <Link to="/quiz" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Quiz</Link>
             <Link to="/jak-dziala" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Jak to działa</Link>
           </nav>
@@ -160,6 +170,9 @@ export default function Header() {
               />
             </form>
             <Link to="/porownaj" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Porównywarka</Link>
+            <Link to="/porownanie" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">
+              Porównanie {compareCount > 0 && `(${compareCount})`}
+            </Link>
             <Link to="/quiz" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Quiz</Link>
             <Link to="/jak-dziala" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Jak to działa</Link>
           </div>

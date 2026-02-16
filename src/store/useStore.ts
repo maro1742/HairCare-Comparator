@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { UserProfile, Filters, AnalyticsEvent } from '../types';
+import type { Product, UserProfile, Filters, AnalyticsEvent } from '../types';
+
+const MAX_COMPARE = 4;
 
 interface StoreState {
   userProfile: UserProfile | null;
@@ -10,6 +12,12 @@ interface StoreState {
   setFilters: (filters: Filters) => void;
   updateFilter: <K extends keyof Filters>(key: K, value: Filters[K]) => void;
   clearFilters: () => void;
+
+  compareList: Product[];
+  addToCompare: (product: Product) => void;
+  removeFromCompare: (productId: string) => void;
+  clearCompare: () => void;
+  isInCompare: (productId: string) => boolean;
 
   analyticsQueue: AnalyticsEvent[];
   addAnalyticsEvent: (event: AnalyticsEvent) => void;
@@ -43,6 +51,22 @@ export const useStore = create<StoreState>()(
         })),
       clearFilters: () => set({ filters: DEFAULT_FILTERS }),
 
+      compareList: [],
+      addToCompare: (product) =>
+        set((state) => {
+          if (state.compareList.length >= MAX_COMPARE) return state;
+          if (state.compareList.some((p) => p.id === product.id)) return state;
+          return { compareList: [...state.compareList, product] };
+        }),
+      removeFromCompare: (productId) =>
+        set((state) => ({
+          compareList: state.compareList.filter((p) => p.id !== productId)
+        })),
+      clearCompare: () => set({ compareList: [] }),
+      isInCompare: (productId) => {
+        return useStore.getState().compareList.some((p) => p.id === productId);
+      },
+
       analyticsQueue: [],
       addAnalyticsEvent: (event) =>
         set((state) => ({
@@ -54,7 +78,8 @@ export const useStore = create<StoreState>()(
       name: 'haircare-store',
       partialize: (state) => ({
         userProfile: state.userProfile,
-        filters: state.filters
+        filters: state.filters,
+        compareList: state.compareList
       })
     }
   )
