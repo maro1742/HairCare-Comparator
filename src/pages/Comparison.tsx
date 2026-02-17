@@ -16,6 +16,7 @@ export default function Comparison() {
 
     const [products, setProducts] = useState<Product[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isClearing, setIsClearing] = useState(false);
 
     useEffect(() => {
         async function loadProducts() {
@@ -61,13 +62,21 @@ export default function Comparison() {
                         {products.length > 0 && (
                             <button
                                 onClick={() => {
-                                    if (confirm('Czy na pewno chcesz wyczyścić wszystkie produkty z porównania?')) {
+                                    if (isClearing) {
                                         clearComparison();
+                                        setIsClearing(false);
+                                    } else {
+                                        setIsClearing(true);
+                                        // Reset after 3 seconds
+                                        setTimeout(() => setIsClearing(false), 3000);
                                     }
                                 }}
-                                className="px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium"
+                                className={`px-4 py-2 text-sm rounded-lg transition-all font-medium ${isClearing
+                                        ? 'bg-red-600 text-white shadow-lg scale-105 active:scale-95'
+                                        : 'text-red-600 hover:bg-red-50'
+                                    }`}
                             >
-                                Wyczyść wszystko
+                                {isClearing ? 'Kliknij, aby potwierdzić' : 'Wyczyść wszystko'}
                             </button>
                         )}
                     </div>

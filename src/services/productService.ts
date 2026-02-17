@@ -8,59 +8,49 @@ import { PRODUCTS as MOCK_PRODUCTS } from '../data/products';
  * @param categoryName Optional category to filter by
  * @returns A promise that resolves to an array of Bielenda products
  */
-export async function fetchBielendaProducts(categoryName?: string): Promise<DBProduct[]> {
-    let query = supabase
-        .from('products_bielenda')
-        .select('*');
+/**
+ * Fetches products from both Bielenda and DSD Deluxe tables, optionally filtered by category.
+ */
+export async function fetchDbProducts(categoryName?: string): Promise<DBProduct[]> {
+    const tables = ['products_bielenda', 'products_dsd_deluxe', 'products_natura'];
 
-    if (categoryName) {
-        const categoryMap: Record<string, string> = {
-            'suche-zniszczone': 'Suche',
-            'wypadanie-cienkie': 'Wypadanie',
-            'lupiez-przetluszczanie': 'Łupież',
-            'krecone': 'Kręcone',
-            'farbowane-rozjasniane': 'Farbowane'
-        };
+    const results = await Promise.all(tables.map(async (table) => {
+        let query = supabase.from(table).select('*');
 
-        const dbCategory = categoryMap[categoryName] || categoryName;
-        query = query.eq('category', dbCategory);
-    }
+        if (categoryName) {
+            const categoryMap: Record<string, string> = {
+                'suche-zniszczone': 'Suche',
+                'wypadanie-cienkie': 'Wypadanie',
+                'lupiez-przetluszczanie': 'Łupież',
+                'krecone': 'Kręcone',
+                'farbowane-rozjasniane': 'Farbowane'
+            };
+            const dbCategory = categoryMap[categoryName] || categoryName;
+            query = query.eq('category', dbCategory);
+        }
 
-    const { data, error } = await query;
+        const { data, error } = await query;
+        if (error) {
+            console.error(`Error fetching products from ${table}:`, error);
+            return [];
+        }
+        return data || [];
+    }));
 
-    if (error) {
-        console.error('Error fetching Bielenda products:', error);
-        throw new Error('Could not fetch products from the database.');
-    }
-
-    return (data || []) as DBProduct[];
+    return results.flat() as DBProduct[];
 }
+
+// Keep original name for compatibility if used elsewhere, but point to new generic function
+export const fetchBielendaProducts = fetchDbProducts;
 
 /**
  * Legacy function for generic products (kept for compatibility if needed)
  */
+/**
+ * Legacy function for generic products (kept for compatibility if needed)
+ */
 export async function getProductsByCategory(categoryName: string): Promise<any[]> {
-    const categoryMap: Record<string, string> = {
-        'suche-zniszczone': 'Suche',
-        'wypadanie-cienkie': 'Wypadanie',
-        'lupiez-przetluszczanie': 'Łupież',
-        'krecone': 'Kręcone',
-        'farbowane-rozjasniane': 'Farbowane'
-    };
-
-    const dbCategory = categoryMap[categoryName] || categoryName;
-
-    const { data, error } = await supabase
-        .from('products_bielenda')
-        .select('*')
-        .eq('category', dbCategory);
-
-    if (error) {
-        console.error('Error fetching products by category:', error);
-        throw new Error(`Could not fetch products for category: ${categoryName}`);
-    }
-
-    return data || [];
+    return fetchDbProducts(categoryName);
 }
 
 /**
@@ -69,20 +59,27 @@ export async function getProductsByCategory(categoryName: string): Promise<any[]
  * @param query The search term
  * @returns A promise that resolves to an array of matching products
  */
+/**
+ * Searches for products based on a query string across all product tables.
+ */
 export async function searchProducts(query: string): Promise<DBProduct[]> {
     if (!query) return [];
 
-    const { data, error } = await supabase
-        .from('products_bielenda')
-        .select('*')
-        .or(`name.ilike.%${query}%,description.ilike.%${query}%,brand.ilike.%${query}%`);
+    const tables = ['products_bielenda', 'products_dsd_deluxe', 'products_natura'];
+    const results = await Promise.all(tables.map(async (table) => {
+        const { data, error } = await supabase
+            .from(table)
+            .select('*')
+            .or(`name.ilike.%${query}%,description.ilike.%${query}%,brand.ilike.%${query}%`);
 
-    if (error) {
-        console.error('Error searching products:', error);
-        throw new Error('Could not search products.');
-    }
+        if (error) {
+            console.error(`Error searching ${table}:`, error);
+            return [];
+        }
+        return data || [];
+    }));
 
-    return (data || []) as DBProduct[];
+    return results.flat() as DBProduct[];
 }
 
 /**
@@ -160,18 +157,13 @@ function mapToUIProduct(p: DBProduct): UIProduct {
 /**
  * Fetches all products (Mock + Supabase)
  */
+/**
+ * Fetches all products (Mock + all Supabase tables)
+ */
 export async function getAllProducts(): Promise<UIProduct[]> {
     try {
-        const { data: dbProducts, error } = await supabase
-            .from('products_bielenda')
-            .select('*');
-
-        if (error) {
-            console.error('Error fetching Supabase products:', error);
-            return MOCK_PRODUCTS;
-        }
-
-        const mapped = (dbProducts || []).map(mapToUIProduct);
+        const dbProducts = await fetchDbProducts();
+        const mapped = dbProducts.map(mapToUIProduct);
         return [...MOCK_PRODUCTS, ...mapped];
     } catch (e) {
         console.error('Error in getAllProducts:', e);

@@ -84,23 +84,20 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+    <header className="sticky top-0 z-50 bg-[#0f172a] border-b border-white/10 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center gap-2">
-            <img
-              src="/logo.png"
-              alt="HairMatch"
-              className="h-[4.5rem] w-auto drop-shadow-md"
-              style={{ filter: 'contrast(1.05) brightness(0.98)' }}
-            />
-            <span className="font-bold text-gray-900 text-xl hidden sm:block">HairMatch</span>
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 bg-teal-500 rounded-xl flex items-center justify-center shadow-lg shadow-teal-500/20 group-hover:scale-105 transition-transform">
+              <span className="text-white font-extrabold text-base tracking-tighter">HC</span>
+            </div>
+            <span className="font-bold text-white text-2xl tracking-tight hidden sm:block">HairCare</span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6">
-            <Link to="/porownaj" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Porównywarka</Link>
-            <Link to="/quiz" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Quiz</Link>
-            <Link to="/jak-dziala" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">Jak to działa</Link>
+          <nav className="hidden md:flex items-center gap-8">
+            <Link to="/porownaj" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Porównywarka</Link>
+            <Link to="/quiz" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Quiz</Link>
+            <Link to="/jak-dziala" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Jak to działa</Link>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -127,7 +124,7 @@ export default function Header() {
                   onChange={(e) => onInputChange(e.target.value)}
                   onKeyDown={handleKeyDown}
                   onFocus={() => searchQuery.length >= 2 && setShowSuggestions(true)}
-                  className="w-48 lg:w-64 px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  className="w-48 lg:w-64 px-4 py-2 text-sm bg-slate-800/50 border border-white/10 text-white placeholder-slate-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all"
                 />
               </form>
 
@@ -154,7 +151,7 @@ export default function Header() {
             </div>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden p-2 text-gray-600 hover:text-teal-600"
+              className="md:hidden p-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
               aria-label="Menu"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -169,14 +166,14 @@ export default function Header() {
         </div>
 
         {menuOpen && (
-          <div className="md:hidden pb-4 border-t border-gray-100">
-            <form onSubmit={handleSearch} className="px-2 pt-3 pb-2">
+          <div className="md:hidden pb-6 border-t border-white/10 px-4">
+            <form onSubmit={handleSearch} className="pt-4 pb-4">
               <input
                 type="text"
                 placeholder="Szukaj produktu..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full px-4 py-3 text-sm bg-slate-800 border border-white/10 text-white placeholder-slate-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </form>
             {comparisonCount > 0 && (
@@ -187,9 +184,9 @@ export default function Header() {
                 </svg>
               </Link>
             )}
-            <Link to="/porownaj" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Porównywarka</Link>
-            <Link to="/quiz" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Quiz</Link>
-            <Link to="/jak-dziala" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Jak to działa</Link>
+            <Link to="/porownaj" onClick={() => setMenuOpen(false)} className="block py-3 text-base text-slate-300 hover:text-white border-b border-white/5">Porównywarka</Link>
+            <Link to="/quiz" onClick={() => setMenuOpen(false)} className="block py-3 text-base text-slate-300 hover:text-white border-b border-white/5">Quiz</Link>
+            <Link to="/jak-dziala" onClick={() => setMenuOpen(false)} className="block py-3 text-base text-slate-300 hover:text-white">Jak to działa</Link>
           </div>
         )}
       </div>
