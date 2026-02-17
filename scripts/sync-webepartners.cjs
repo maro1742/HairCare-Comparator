@@ -67,17 +67,17 @@ function extractFromDescription(html, sectionTitle) {
 
     if (startIndex === -1) return '';
 
-    // Find the end of the header tag (e.g., </strong> or ###)
+    // Find the end of the header tag (e.g., </strong>, </h3>, </b>, or ###)
     let contentStart = html.indexOf('>', startIndex);
-    if (contentStart === -1 || contentStart > startIndex + titleLength + 10) {
+    if (contentStart === -1 || contentStart > startIndex + titleLength + 20) {
         contentStart = startIndex + titleLength;
     } else {
         contentStart += 1;
     }
 
     // Find the next likely header or the end of a major block
-    // We look for ### or <h[1-6] or <strong> that looks like a header (contains one of the typical section start words)
-    const nextHeaderRegex = /(?:###|<h[1-6][^>]*>|<strong>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania))/i;
+    // We look for ### or <h[1-6] or <strong> or <b> that looks like a header (contains one of the typical section start words)
+    const nextHeaderRegex = /(?:###|<h[1-6][^>]*>|<strong[^>]*>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania|Dla|UWAGA|Protip)|<b[^>]*>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania))/i;
     const rest = html.substring(contentStart);
     const nextMatch = rest.match(nextHeaderRegex);
 
@@ -125,7 +125,9 @@ async function sync() {
 
             const ingredientCats = extractFromDescription(description, 'Odkryj moje wnętrze|Składniki aktywne|W moim składzie znajdziesz');
 
-            const inciMatch = description.match(/(?:INCI|Skład \(INCI\)|Skład):?\s*<\/strong>\s*([\s\S]*?)(?=<br|$)/i);
+            const inciMatch = description.match(/(?:INCI|Skład \(INCI\)|Skład):?\s*<\/strong>[:\s]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
+                description.match(/(?:INCI|Skład \(INCI\)|Skład):?\s*<\/h[1-6]>[:\s]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
+                description.match(/(?:INCI|Skład \(INCI\)|Skład):?[:\s]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i);
             const inci = inciMatch ? inciMatch[1].replace(/<[^>]+>/g, ' ').trim() : '';
 
             if (productsToInsert.length < 3) {

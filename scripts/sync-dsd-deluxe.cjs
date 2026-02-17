@@ -46,6 +46,43 @@ function mapCategory(name, description) {
     return 'other';
 }
 
+function extractFromDescription(html, sectionTitle) {
+    if (!html) return '';
+
+    const lowerHtml = html.toLowerCase();
+    const searchTerms = sectionTitle.toLowerCase().split('|');
+
+    let startIndex = -1;
+    let titleLength = 0;
+
+    for (const term of searchTerms) {
+        const idx = lowerHtml.indexOf(term);
+        if (idx !== -1) {
+            startIndex = idx;
+            titleLength = term.length;
+            break;
+        }
+    }
+
+    if (startIndex === -1) return '';
+
+    let contentStart = html.indexOf('>', startIndex);
+    if (contentStart === -1 || contentStart > startIndex + titleLength + 20) {
+        contentStart = startIndex + titleLength;
+    } else {
+        contentStart += 1;
+    }
+
+    const nextHeaderRegex = /(?:###|<h[1-6][^>]*>|<strong[^>]*>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania|Dla|UWAGA|Protip)|<b[^>]*>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania))/i;
+    const rest = html.substring(contentStart);
+    const nextMatch = rest.match(nextHeaderRegex);
+
+    let contentEnd = nextMatch ? nextMatch.index : rest.length;
+    let content = rest.substring(0, contentEnd);
+
+    return content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
 async function sync() {
     try {
         console.log('Fetching DSD Deluxe XML from:', XML_URL);
@@ -93,6 +130,20 @@ async function sync() {
                 imageUrl = FALLBACK_LOGO;
             }
 
+            // Extraction patterns
+            const usage = extractFromDescription(description, 'Jak aplikować|Jak stosować|Sposób użycia|Stosowanie|Usage') ||
+                extractFromDescription(description, 'Jak używać');
+
+            const cosmeticFunction = extractFromDescription(description, 'Działanie|Rezultaty|Funkcja|Action') ||
+                extractFromDescription(description, 'Dlaczego warto');
+
+            const ingredientCats = extractFromDescription(description, 'Składniki aktywne|Active ingredients|W składzie');
+
+            const inciMatch = description.match(/(?:INCI|Skład \(INCI\)|Skład):?\s*<\/strong>[:\s]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
+                description.match(/(?:INCI|Skład \(INCI\)|Skład):?\s*<\/h[1-6]>[:\s]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
+                description.match(/(?:INCI|Skład \(INCI\)|Skład):?[:\s]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i);
+            const inci = inciMatch ? inciMatch[1].replace(/<[^>]+>/g, ' ').trim() : '';
+
             productsToInsert.push({
                 id: generateUUID(offer.id || name),
                 name: name,
@@ -102,11 +153,10 @@ async function sync() {
                 affiliate_link: offer.url,
                 brand: offer.producer || 'DSD de Luxe',
                 description: description,
-                // These might need manual extraction adjustment later if DSD structure differs significantly
-                cosmetic_function: '',
-                usage: '',
-                ingredient_categories: '',
-                inci: ''
+                cosmetic_function: cosmeticFunction,
+                usage: usage,
+                ingredient_categories: ingredientCats,
+                inci: inci
             });
         }
 
