@@ -7,7 +7,6 @@ import FilterChips from '../components/FilterChips';
 import SortDropdown from '../components/SortDropdown';
 import ProductCard from '../components/ProductCard';
 import SEO from '../components/SEO';
-import { PRODUCTS as MOCK_PRODUCTS } from '../data/products';
 import { useStore } from '../store/useStore';
 import { getAllProducts } from '../services/productService';
 import type { Product } from '../types';
@@ -16,7 +15,7 @@ import { formatDate } from '../lib/format';
 import { trackEvents } from '../lib/track';
 
 export default function Comparator() {
-  const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
+  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [searchParams] = useSearchParams();
@@ -137,7 +136,7 @@ export default function Comparator() {
               <>
                 <div className="space-y-4">
                   {filtered.map((product, i) => (
-                    <ProductCard key={product.id} product={product} filters={filters} position={i} />
+                    <ProductCard key={product.id} product={product} position={i} />
                   ))}
                 </div>
                 <p className="text-xs text-gray-400 mt-6 text-center">

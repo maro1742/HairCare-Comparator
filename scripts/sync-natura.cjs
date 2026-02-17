@@ -73,14 +73,14 @@ function extractFromDescription(html, sectionTitle) {
         contentStart += 1;
     }
 
-    const nextHeaderRegex = /(?:###|<h[1-6][^>]*>|<strong[^>]*>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania|Dla|UWAGA|Protip)|<b[^>]*>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania))/i;
+    const nextHeaderRegex = /(?:###|<h[1-6][^>]*>|<strong[^>]*>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania|Dla|UWAGA|Protip|INCI|Ingredients)|<b[^>]*>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania|INCI|Ingredients))/i;
     const rest = html.substring(contentStart);
     const nextMatch = rest.match(nextHeaderRegex);
 
     let contentEnd = nextMatch ? nextMatch.index : rest.length;
     let content = rest.substring(0, contentEnd);
 
-    return content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    return content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').replace(/^[:\s-]+/, '').trim();
 }
 
 async function sync() {
@@ -142,18 +142,18 @@ async function sync() {
             if (!imageUrl) imageUrl = FALLBACK_LOGO;
 
             // Extraction patterns
-            const usage = extractFromDescription(description, 'Jak stosować|Sposób użycia|Stosowanie|Aplikacja') ||
+            const usage = extractFromDescription(description, 'Jak stosować|Sposób użycia|Stosowanie|Aplikacja|Usage') ||
                 extractFromDescription(description, 'Jak używać');
 
-            const cosmeticFunction = extractFromDescription(description, 'Działanie|Rezultaty|Właściwości') ||
+            const cosmeticFunction = extractFromDescription(description, 'Działanie|Rezultaty|Właściwości|Funkcja') ||
                 extractFromDescription(description, 'Dlaczego warto');
 
             const ingredientCats = extractFromDescription(description, 'Składniki aktywne|Active ingredients|W składzie');
 
-            const inciMatch = description.match(/(?:INCI|Skład \(INCI\)|Skład):?\s*<\/strong>[:\s]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
-                description.match(/(?:INCI|Skład \(INCI\)|Skład):?\s*<\/h[1-6]>[:\s]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
-                description.match(/(?:INCI|Skład \(INCI\)|Skład):?[:\s]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i);
-            const inci = inciMatch ? inciMatch[1].replace(/<[^>]+>/g, ' ').trim() : '';
+            const inciMatch = description.match(/(?:INCI|Skład \(INCI\)|Skład|Ingredients):?\s*<\/strong>[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
+                description.match(/(?:INCI|Skład \(INCI\)|Skład|Ingredients):?\s*<\/h[1-6]>[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
+                description.match(/(?:INCI|Skład \(INCI\)|Skład|Ingredients):?[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i);
+            const inci = inciMatch ? inciMatch[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : '';
 
             productsToInsert.push({
                 id: generateUUID(offer.id || name),

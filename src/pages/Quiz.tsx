@@ -5,13 +5,16 @@ import Footer from '../components/Footer';
 import QuizWizard from '../components/QuizWizard';
 import QuizResults from '../components/QuizResults';
 import SEO from '../components/SEO';
-import { PRODUCTS } from '../data/products';
+import { getAllProducts } from '../services/productService';
+import type { Product as UIProduct } from '../types';
 import { useStore } from '../store/useStore';
 import { trackEvents } from '../lib/track';
 import type { UserProfile } from '../types';
 
 export default function Quiz() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [products, setProducts] = useState<UIProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const setUserProfile = useStore((s) => s.setUserProfile);
   const updateFilter = useStore((s) => s.updateFilter);
   const navigate = useNavigate();
@@ -29,6 +32,15 @@ export default function Quiz() {
       hair_type: p.hair_type,
       scalp_type: p.scalp_type,
     });
+
+    // Load products if not loaded
+    if (products.length === 0) {
+      setIsLoading(true);
+      getAllProducts().then(all => {
+        setProducts(all);
+        setIsLoading(false);
+      });
+    }
   };
 
   const handleRestart = () => {
@@ -55,7 +67,13 @@ export default function Quiz() {
           </div>
         ) : (
           <div>
-            <QuizResults products={PRODUCTS} profile={profile} onRestart={handleRestart} />
+            {isLoading ? (
+              <div className="flex justify-center py-16">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
+              </div>
+            ) : (
+              <QuizResults products={products} profile={profile} onRestart={handleRestart} />
+            )}
             <div className="text-center mt-4">
               <button onClick={handleGoToComparator} className="text-sm text-teal-600 hover:text-teal-700 font-medium">
                 Przejdź do porównywarki z tymi filtrami &rarr;

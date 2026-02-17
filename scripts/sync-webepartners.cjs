@@ -77,15 +77,15 @@ function extractFromDescription(html, sectionTitle) {
 
     // Find the next likely header or the end of a major block
     // We look for ### or <h[1-6] or <strong> or <b> that looks like a header (contains one of the typical section start words)
-    const nextHeaderRegex = /(?:###|<h[1-6][^>]*>|<strong[^>]*>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania|Dla|UWAGA|Protip)|<b[^>]*>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania))/i;
+    const nextHeaderRegex = /(?:###|<h[1-6][^>]*>|<strong[^>]*>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania|Dla|UWAGA|Protip|INCI|Ingredients)|<b[^>]*>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania|INCI|Ingredients))/i;
     const rest = html.substring(contentStart);
     const nextMatch = rest.match(nextHeaderRegex);
 
     let contentEnd = nextMatch ? nextMatch.index : rest.length;
     let content = rest.substring(0, contentEnd);
 
-    // Clean up content
-    return content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    // Clean up content: remove HTML, normalize space, remove leading punctuation
+    return content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').replace(/^[:\s-]+/, '').trim();
 }
 
 async function sync() {
@@ -117,18 +117,24 @@ async function sync() {
             const price = parseFloat(offer.price.replace(',', '.'));
 
             // Extraction patterns
-            const usage = extractFromDescription(description, 'Jak mnie stosować|Sposób użycia|Stosowanie') ||
+            const usage = extractFromDescription(description, 'Jak mnie stosować|Sposób użycia|Stosowanie|Aplikacja|Usage') ||
                 extractFromDescription(description, 'Jak używać');
 
-            const cosmeticFunction = extractFromDescription(description, 'Co mogę Ci zaoferować|Działanie|Jak działa') ||
+            const cosmeticFunction = extractFromDescription(description, 'Co mogę Ci zaoferować|Działanie|Jak działa|Właściwości') ||
                 extractFromDescription(description, 'Dlaczego warto');
 
             const ingredientCats = extractFromDescription(description, 'Odkryj moje wnętrze|Składniki aktywne|W moim składzie znajdziesz');
 
-            const inciMatch = description.match(/(?:INCI|Skład \(INCI\)|Skład):?\s*<\/strong>[:\s]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
-                description.match(/(?:INCI|Skład \(INCI\)|Skład):?\s*<\/h[1-6]>[:\s]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
-                description.match(/(?:INCI|Skład \(INCI\)|Skład):?[:\s]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i);
-            const inci = inciMatch ? inciMatch[1].replace(/<[^>]+>/g, ' ').trim() : '';
+            const inciMatch = description.match(/(?:\bINCI\b|Skład \(INCI\)|Skład|Ingredients):?\s*<\/strong>[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
+                description.match(/(?:\bINCI\b|Skład \(INCI\)|Skład|Ingredients):?\s*<\/h[1-6]>[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
+                description.match(/(?:\bINCI\b|Skład \(INCI\)|Skład|Ingredients):?[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i);
+
+            let inci = inciMatch ? inciMatch[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : '';
+
+            // Post-process INCI to remove headers and validate content
+            if (inci && (inci.toLowerCase().startsWith('nikon') || inci.toLowerCase().startsWith('nikom'))) {
+                inci = ''; // Filter out false positives like "Składnikom..."
+            }
 
             if (productsToInsert.length < 3) {
                 console.log(`Debug extraction for "${name}":`);

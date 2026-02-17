@@ -98,7 +98,7 @@ export default function Category() {
 
         <div className="space-y-4 mb-12">
           {categoryProducts.map((product, i) => (
-            <ProductCard key={product.id} product={product} filters={filters} position={i} />
+            <ProductCard key={product.id} product={product} position={i} />
           ))}
           {categoryProducts.length === 0 && (
             <p className="text-center text-gray-500 py-8">Brak produktow w tej kategorii.</p>

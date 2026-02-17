@@ -4,6 +4,8 @@ import { getAllProducts } from '../services/productService';
 import type { Product } from '../types';
 import { useStore } from '../store/useStore';
 
+import logo from '../assets/logo-wlosowa.png';
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -84,20 +86,19 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0f172a] border-b border-white/10 shadow-lg">
+    <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-24">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-teal-500 rounded-xl flex items-center justify-center shadow-lg shadow-teal-500/20 group-hover:scale-105 transition-transform">
-              <span className="text-white font-extrabold text-base tracking-tighter">HC</span>
+            <div className="w-32 h-16 flex items-center transition-transform group-hover:scale-105">
+              <img src={logo} alt="Włosowa - Dobieramy pielęgnację" className="w-full h-full object-contain" />
             </div>
-            <span className="font-bold text-white text-2xl tracking-tight hidden sm:block">HairCare</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
-            <Link to="/porownaj" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Porównywarka</Link>
-            <Link to="/quiz" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Quiz</Link>
-            <Link to="/jak-dziala" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Jak to działa</Link>
+            <Link to="/porownaj" className="text-sm font-bold text-gray-600 hover:text-primary transition-colors uppercase tracking-wider">Porównywarka</Link>
+            <Link to="/quiz" className="text-sm font-bold text-gray-600 hover:text-primary transition-colors uppercase tracking-wider">Quiz</Link>
+            <Link to="/jak-dziala" className="text-sm font-bold text-gray-600 hover:text-primary transition-colors uppercase tracking-wider">Jak to działa</Link>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -105,13 +106,13 @@ export default function Header() {
             {comparisonCount > 0 && (
               <Link
                 to="/porownanie"
-                className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-teal-50 text-teal-700 rounded-lg hover:bg-teal-100 transition-colors relative"
+                className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-primary/5 text-primary rounded-lg hover:bg-primary/10 transition-colors relative"
                 title="Porównaj produkty"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
-                <span className="text-sm font-medium">{comparisonCount}</span>
+                <span className="text-sm font-bold">{comparisonCount}</span>
               </Link>
             )}
 
@@ -124,7 +125,7 @@ export default function Header() {
                   onChange={(e) => onInputChange(e.target.value)}
                   onKeyDown={handleKeyDown}
                   onFocus={() => searchQuery.length >= 2 && setShowSuggestions(true)}
-                  className="w-48 lg:w-64 px-4 py-2 text-sm bg-slate-800/50 border border-white/10 text-white placeholder-slate-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 transition-all"
+                  className="w-48 lg:w-64 px-4 py-2 text-sm bg-gray-50 border border-gray-100 text-gray-900 placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                 />
               </form>
 
@@ -139,7 +140,7 @@ export default function Header() {
                         setShowSuggestions(false);
                       }}
                       onMouseEnter={() => setSelectedIndex(i)}
-                      className={`w-full text-left px-3 py-2 text-sm flex flex-col gap-0.5 transition-colors ${i === selectedIndex ? 'bg-teal-50' : 'hover:bg-gray-50'
+                      className={`w-full text-left px-3 py-2 text-sm flex flex-col gap-0.5 transition-colors ${i === selectedIndex ? 'bg-primary/5' : 'hover:bg-gray-50'
                         }`}
                     >
                       <span className="font-medium text-gray-900 truncate">{p.name}</span>
@@ -151,7 +152,7 @@ export default function Header() {
             </div>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden p-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+              className="md:hidden p-2 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
               aria-label="Menu"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -166,27 +167,27 @@ export default function Header() {
         </div>
 
         {menuOpen && (
-          <div className="md:hidden pb-6 border-t border-white/10 px-4">
+          <div className="md:hidden pb-6 border-t border-gray-50 px-4">
             <form onSubmit={handleSearch} className="pt-4 pb-4">
               <input
                 type="text"
                 placeholder="Szukaj produktu..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-3 text-sm bg-slate-800 border border-white/10 text-white placeholder-slate-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-100 text-gray-900 placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </form>
             {comparisonCount > 0 && (
-              <Link to="/porownanie" onClick={() => setMenuOpen(false)} className="flex items-center justify-between px-4 py-2 text-sm text-teal-600 hover:bg-teal-50 font-medium">
+              <Link to="/porownanie" onClick={() => setMenuOpen(false)} className="flex items-center justify-between px-4 py-2 text-sm text-primary hover:bg-primary/5 font-bold rounded-lg mb-2">
                 <span>Porównanie ({comparisonCount})</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </Link>
             )}
-            <Link to="/porownaj" onClick={() => setMenuOpen(false)} className="block py-3 text-base text-slate-300 hover:text-white border-b border-white/5">Porównywarka</Link>
-            <Link to="/quiz" onClick={() => setMenuOpen(false)} className="block py-3 text-base text-slate-300 hover:text-white border-b border-white/5">Quiz</Link>
-            <Link to="/jak-dziala" onClick={() => setMenuOpen(false)} className="block py-3 text-base text-slate-300 hover:text-white">Jak to działa</Link>
+            <Link to="/porownaj" onClick={() => setMenuOpen(false)} className="block py-3 text-base font-medium text-gray-600 hover:text-primary border-b border-gray-50">Porównywarka</Link>
+            <Link to="/quiz" onClick={() => setMenuOpen(false)} className="block py-3 text-base font-medium text-gray-600 hover:text-primary border-b border-gray-50">Quiz</Link>
+            <Link to="/jak-dziala" onClick={() => setMenuOpen(false)} className="block py-3 text-base font-medium text-gray-600 hover:text-primary">Jak to działa</Link>
           </div>
         )}
       </div>

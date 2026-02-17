@@ -2,16 +2,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @theme {
-  --color-primary: #1A3C34;
-  /* Deep Forest Green */
-  --color-secondary: #8C6A5D;
-  /* Warm Earth/Brown */
-  --color-background: #F5F5F0;
-  /* Soft Beige */
+  --color-primary: #4A225D;
+  /* Royal Purple */
+  --color-secondary: #7C3AED;
+  /* Vibrant Violet */
+  --color-background: #F8F7FA;
+  /* Clean Light Grey/Violet */
   --color-surface: #FFFFFF;
   /* Pure White */
-  --color-accent: #D4A373;
-  /* Soft Gold/Sand */
+  --color-accent: #EAB308;
+  /* Golden Accent */
+  --color-accent-dark: #A16207;
+  /* Darker Gold */
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Playfair Display', serif;

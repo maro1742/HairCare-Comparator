@@ -22,10 +22,15 @@ export interface Product {
   offers: Offer[];
   updated_at: string;
   description?: string;
+  capacity?: string;
+  rating?: {
+    average: number;
+    count: number;
+  };
 }
 
 export interface Offer {
-  merchant: 'notino' | 'hairstore' | 'hairlust' | 'other';
+  merchant: string;
   price_pln: number;
   url: string;
   last_checked: string;
