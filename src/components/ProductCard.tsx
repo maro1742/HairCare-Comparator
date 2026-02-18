@@ -40,7 +40,7 @@ export default function ProductCard({ product, position }: ProductCardProps) {
     .join(', ');
 
   return (
-    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 p-4 sm:p-6 group flex flex-col sm:flex-row gap-6">
+    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 p-4 sm:p-6 group flex flex-col sm:flex-row gap-6 relative">
 
       {/* 1. ZDJĘCIE (Image) */}
       <Link
@@ -54,19 +54,6 @@ export default function ProductCard({ product, position }: ProductCardProps) {
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             loading="lazy"
           />
-          {/* COMPARISON OVERLAY BUTTON */}
-          <button
-            onClick={handleComparisonToggle}
-            title={isInComparison ? "Usuń z porównania" : "Dodaj do porównania"}
-            className={`absolute top-3 right-3 p-2 rounded-xl transition-all shadow-lg z-10 border sm:hidden ${isInComparison
-              ? 'bg-accent border-accent text-accent-dark'
-              : 'bg-white/90 border-gray-100 text-gray-400 hover:text-primary hover:bg-white'
-              }`}
-          >
-            <svg className={`w-5 h-5 ${isInComparison ? 'fill-current' : 'fill-none'}`} stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>
-          </button>
         </div>
       </Link>
 
@@ -85,26 +72,11 @@ export default function ProductCard({ product, position }: ProductCardProps) {
                 </span>
               )}
             </div>
-            <div className="flex items-start justify-between gap-4">
-              <Link to={`/produkt/${product.slug}`} className="flex-1">
-                <h3 className="font-extrabold text-gray-900 text-lg sm:text-2xl leading-tight hover:text-primary transition-colors line-clamp-2">
-                  {product.name}
-                </h3>
-              </Link>
-              {/* DESKTOP COMPARISON TOGGLE */}
-              <button
-                onClick={handleComparisonToggle}
-                title={isInComparison ? "Usuń z porównania" : "Dodaj do porównania"}
-                className={`hidden sm:flex p-2 rounded-xl transition-all border shrink-0 ${isInComparison
-                  ? 'bg-accent/10 border-accent text-accent-dark'
-                  : 'bg-gray-50 border-gray-200 text-gray-400 hover:text-gray-600 hover:bg-gray-100'
-                  }`}
-              >
-                <svg className={`w-5 h-5 ${isInComparison ? 'fill-current' : 'fill-none'}`} stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </button>
-            </div>
+            <Link to={`/produkt/${product.slug}`}>
+              <h3 className="font-extrabold text-gray-900 text-lg sm:text-2xl leading-tight hover:text-primary transition-colors line-clamp-2">
+                {product.name}
+              </h3>
+            </Link>
           </div>
 
           {/* 5. OPINIE (StarRating) */}
@@ -166,6 +138,20 @@ export default function ProductCard({ product, position }: ProductCardProps) {
           </div>
         </div>
       </div>
+
+      {/* COMPARISON TOGGLE BUTTON - CORNER */}
+      <button
+        onClick={handleComparisonToggle}
+        title={isInComparison ? "Usuń z porównania" : "Dodaj do porównania"}
+        className={`absolute top-4 right-4 sm:top-6 sm:right-6 p-2.5 rounded-xl transition-all border shadow-sm z-10 flex items-center justify-center ${isInComparison
+          ? 'bg-accent border-accent text-accent-dark shadow-md'
+          : 'bg-white/80 border-gray-100 text-gray-400 hover:text-primary hover:bg-white hover:border-gray-200'
+          }`}
+      >
+        <svg className={`w-5 h-5 ${isInComparison ? 'fill-current' : 'fill-none'}`} stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      </button>
     </div>
   );
 }
