@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Product } from '../types';
 import { formatPrice } from '../lib/format';
@@ -12,6 +13,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, position }: ProductCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const addToComparison = useStore((s) => s.addToComparison);
   const removeFromComparison = useStore((s) => s.removeFromComparison);
   const isInComparison = useStore((s) => s.isInComparison(product.id));
@@ -87,11 +89,25 @@ export default function ProductCard({ product, position }: ProductCardProps) {
           )}
 
           {/* 6. FUNKCJA PRODUKTU & 7. TYP WŁOSÓW */}
-          <div className="flex flex-wrap gap-2 pt-1">
+          <div className="flex flex-wrap items-center gap-2 pt-1">
             {product.cosmetic_function && (
-              <span className="px-3 py-1 bg-accent/5 text-accent-dark rounded-full text-[10px] font-black uppercase tracking-wider border border-accent/10">
-                {product.cosmetic_function}
-              </span>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <span className={`px-3 py-1 bg-accent/5 text-accent-dark border border-accent/10 rounded-full text-[10px] font-black uppercase tracking-wider transition-all duration-300 ${isExpanded ? 'whitespace-normal rounded-xl' : 'line-clamp-1 max-w-[300px]'}`}>
+                  {product.cosmetic_function}
+                </span>
+                {product.cosmetic_function.length > 40 && (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsExpanded(!isExpanded);
+                    }}
+                    className="text-[10px] font-black uppercase tracking-wider text-primary hover:text-secondary transition-colors cursor-pointer shrink-0 py-1"
+                  >
+                    {isExpanded ? 'Zwiń' : '...więcej'}
+                  </button>
+                )}
+              </div>
             )}
             {hairTypes && (
               <span className="px-3 py-1 bg-primary/5 text-primary rounded-full text-[10px] font-black uppercase tracking-wider border border-primary/10">

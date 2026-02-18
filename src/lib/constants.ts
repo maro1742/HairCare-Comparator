@@ -48,7 +48,9 @@ export const CATEGORY_LABELS: Record<string, string> = {
   mask: 'Maska',
   serum: 'Serum',
   scalp_tonic: 'Tonik do skóry głowy',
-  supplement: 'Suplement'
+  supplement: 'Suplement',
+  styling: 'Stylizacja',
+  other: 'Inne'
 };
 
 export const SORT_OPTIONS = [

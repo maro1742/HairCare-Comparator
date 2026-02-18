@@ -166,11 +166,37 @@ export default function Product() {
   const claimBadges = product.claims.map(c => CLAIM_LABELS[c]).filter(Boolean);
   const freeBadges = product.free_from.map(f => FREE_FROM_LABELS[f]).filter(Boolean);
 
+  const structuredData = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": product.name,
+    "image": product.images,
+    "description": cleanDescription || product.description,
+    "brand": {
+      "@type": "Brand",
+      "name": product.brand
+    },
+    "offers": product.offers.map(offer => ({
+      "@type": "Offer",
+      "url": offer.url,
+      "priceCurrency": "PLN",
+      "price": offer.price_pln,
+      "availability": "https://schema.org/InStock"
+    })),
+    "aggregateRating": product.rating ? {
+      "@type": "AggregateRating",
+      "ratingValue": product.rating.average.toFixed(1),
+      "reviewCount": product.rating.count
+    } : undefined
+  };
+
   return (
     <div className="bg-white min-h-screen">
       <SEO
         title={`${product.brand} ${product.name}`}
-        description={`${product.brand} ${product.name} — sprawdź skład INCI, ceny i opinie.`}
+        description={`${product.brand} ${product.name} — sprawdź skład INCI, ceny i opinie. Analiza składników dla Twoich włosów.`}
+        ogImage={product.images[0]}
+        structuredData={structuredData}
       />
 
       {/* Top Navigation Bar */}
@@ -213,148 +239,152 @@ export default function Product() {
       </nav>
 
       <main className="max-w-4xl mx-auto px-4 pt-20 pb-24">
-        {/* SHARED HEADER (Mobile: stack top, Desktop: split right) */}
-        <div className="flex flex-col sm:flex-row gap-8 mb-12">
+        <article>
+          <header>
+            {/* SHARED HEADER (Mobile: stack top, Desktop: split right) */}
+            <div className="flex flex-col sm:flex-row gap-8 mb-12">
 
-          {/* MOBILE ORDER: BRAND -> NAME -> RATING -> IMAGE */}
-          <div className="sm:hidden space-y-2 mb-4">
-            <p className="text-[12px] font-black text-primary uppercase tracking-[0.2em]">{product.brand}</p>
-            <h1 className="text-2xl font-extrabold text-gray-900 leading-tight">{product.name}</h1>
-            {product.rating && <StarRating average={product.rating.average} count={product.rating.count} size="sm" />}
-          </div>
-
-          {/* IMAGE (Left on desktop, middle sequence on mobile) */}
-          <div className="w-full sm:w-1/2">
-            <ProductCarousel images={product.images} alt={`${product.brand} ${product.name}`} />
-          </div>
-
-          {/* DESKTOP INFO (Shown right of image on desktop) */}
-          <div className="flex-1 flex flex-col justify-center">
-            {/* Desktop only title/rating */}
-            <div className="hidden sm:block mb-6">
-              <p className="text-[14px] font-black text-primary uppercase tracking-[0.2em] mb-2">{product.brand}</p>
-              <h1 className="text-4xl font-extrabold text-gray-900 leading-tight mb-4">{product.name}</h1>
-              {product.rating && <StarRating average={product.rating.average} count={product.rating.count} size="lg" />}
-            </div>
-
-            <div className="flex flex-wrap gap-2 mb-6">
-              {claimBadges.map((b, i) => (
-                <span key={i} className="flex items-center gap-1.5 px-3 py-1.5 bg-accent/10 text-accent-dark rounded-full text-xs font-bold shadow-sm">
-                  <span className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" />
-                  {b}
-                </span>
-              ))}
-              {freeBadges.map((b, i) => (
-                <span key={i} className="px-3 py-1.5 bg-gray-50 text-gray-600 rounded-full text-xs font-bold border border-gray-100">
-                  {b}
-                </span>
-              ))}
-            </div>
-
-            {/* Match Section banner */}
-            {bullets.length > 0 && (
-              <div className="bg-primary/5 rounded-3xl p-6 border border-primary/10">
-                <h2 className="text-sm font-black text-gray-900 mb-4 flex items-center gap-2">
-                  <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                  </svg>
-                  Dlaczego pasuje?
-                </h2>
-                <ul className="space-y-3">
-                  {bullets.map((b, i) => (
-                    <li key={i} className="flex items-start gap-3 text-[13px] font-medium text-gray-700 leading-snug">
-                      <span className="mt-1.5 w-1 h-1 bg-primary rounded-full shrink-0" />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
+              {/* MOBILE ORDER: BRAND -> NAME -> RATING -> IMAGE */}
+              <div className="sm:hidden space-y-2 mb-4">
+                <p className="text-[12px] font-black text-primary uppercase tracking-[0.2em]">{product.brand}</p>
+                <h1 className="text-2xl font-extrabold text-gray-900 leading-tight">{product.name}</h1>
+                {product.rating && <StarRating average={product.rating.average} count={product.rating.count} size="sm" />}
               </div>
+
+              {/* IMAGE (Left on desktop, middle sequence on mobile) */}
+              <div className="w-full sm:w-1/2">
+                <ProductCarousel images={product.images} alt={`${product.brand} ${product.name}`} />
+              </div>
+
+              {/* DESKTOP INFO (Shown right of image on desktop) */}
+              <div className="flex-1 flex flex-col justify-center">
+                {/* Desktop only title/rating */}
+                <div className="hidden sm:block mb-6">
+                  <p className="text-[14px] font-black text-primary uppercase tracking-[0.2em] mb-2">{product.brand}</p>
+                  <h1 className="text-4xl font-extrabold text-gray-900 leading-tight mb-4">{product.name}</h1>
+                  {product.rating && <StarRating average={product.rating.average} count={product.rating.count} size="lg" />}
+                </div>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {claimBadges.map((b, i) => (
+                    <span key={i} className="flex items-center gap-1.5 px-3 py-1.5 bg-accent/10 text-accent-dark rounded-full text-xs font-bold shadow-sm">
+                      <span className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" />
+                      {b}
+                    </span>
+                  ))}
+                  {freeBadges.map((b, i) => (
+                    <span key={i} className="px-3 py-1.5 bg-gray-50 text-gray-600 rounded-full text-xs font-bold border border-gray-100">
+                      {b}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Match Section banner */}
+                {bullets.length > 0 && (
+                  <div className="bg-primary/5 rounded-3xl p-6 border border-primary/10">
+                    <h2 className="text-sm font-black text-gray-900 mb-4 flex items-center gap-2">
+                      <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                      Dlaczego pasuje?
+                    </h2>
+                    <ul className="space-y-3">
+                      {bullets.map((b, i) => (
+                        <li key={i} className="flex items-start gap-3 text-[13px] font-medium text-gray-700 leading-snug">
+                          <span className="mt-1.5 w-1 h-1 bg-primary rounded-full shrink-0" />
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+          </header>
+
+          {/* DETAILS SECTION (Consistent vertical order below header) */}
+          <div className="space-y-12">
+
+            {/* 1. Główne działanie (Move above description as requested) */}
+            {product.cosmetic_function && (
+              <section>
+                <div className="bg-accent/5 rounded-2xl p-6 border border-accent/10">
+                  <h2 className="text-xs font-black text-accent-dark uppercase tracking-widest mb-3">Główne działanie</h2>
+                  <p className="text-sm text-gray-700 leading-relaxed font-medium italic">
+                    {product.cosmetic_function}
+                  </p>
+                </div>
+              </section>
+            )}
+
+            {/* 2. Opis produktu */}
+            {cleanDescription && (
+              <section>
+                <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">O produkcie</h2>
+                <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                  <FormatText text={cleanDescription} />
+                </div>
+              </section>
+            )}
+
+            {/* 3. Sposób użycia */}
+            {product.usage && (
+              <section>
+                <h2 className="text-xs font-black text-primary uppercase tracking-widest mb-4">Sposób użycia</h2>
+                <div className="bg-primary/5 rounded-2xl p-6 border border-primary/10">
+                  <FormatText text={product.usage} />
+                </div>
+              </section>
+            )}
+
+            {/* 4. Składniki */}
+            <section>
+              <IngredientAnalysis inci={product.inci} categories={product.ingredient_categories} />
+            </section>
+
+            {/* 5. Najlepsze oferty */}
+            <section>
+              <div className="flex items-baseline justify-between mb-4">
+                <h2 className="text-xl font-black text-gray-900">Najlepsze oferty</h2>
+                <span className="text-xs text-gray-400 font-medium">Znaleziono {product.offers.length} oferty</span>
+              </div>
+              <OffersList offers={product.offers} productId={product.id} />
+              <p className="text-[10px] text-center text-gray-400 mt-6 max-w-sm mx-auto leading-relaxed">
+                Klikając w przycisk, zostaniesz bezpiecznie przeniesiony do strony sprzedawcy. Ceny mogą ulec zmianie.
+              </p>
+            </section>
+
+            {/* 6. Podobne produkty */}
+            {relatedProducts.length > 0 && (
+              <section>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-black text-gray-900">Podobne produkty</h2>
+                  <Link to="/porownaj" className="text-xs font-black text-primary uppercase tracking-wider">Zobacz wszystkie</Link>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  {relatedProducts.map(rp => (
+                    <Link
+                      key={rp.id}
+                      to={`/produkt/${rp.slug}`}
+                      className="group bg-white rounded-3xl border border-gray-100 p-3 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                    >
+                      <div className="relative aspect-square rounded-2xl bg-gray-50 overflow-hidden mb-3">
+                        <img
+                          src={rp.images[0]}
+                          alt={rp.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                      </div>
+                      <p className="text-[10px] font-black text-primary uppercase tracking-wider mb-1">{rp.brand}</p>
+                      <h3 className="text-xs font-bold text-gray-900 leading-tight mb-2 line-clamp-2 min-h-[2.5em]">{rp.name}</h3>
+                      <p className="text-xs font-black text-gray-900">{(rp.offers[0]?.price_pln || 0).toFixed(2)} zł</p>
+                    </Link>
+                  ))}
+                </div>
+              </section>
             )}
           </div>
-        </div>
-
-        {/* DETAILS SECTION (Consistent vertical order below header) */}
-        <div className="space-y-12">
-
-          {/* 1. Główne działanie (Move above description as requested) */}
-          {product.cosmetic_function && (
-            <section>
-              <div className="bg-accent/5 rounded-2xl p-6 border border-accent/10">
-                <h2 className="text-xs font-black text-accent-dark uppercase tracking-widest mb-3">Główne działanie</h2>
-                <p className="text-sm text-gray-700 leading-relaxed font-medium italic">
-                  {product.cosmetic_function}
-                </p>
-              </div>
-            </section>
-          )}
-
-          {/* 2. Opis produktu */}
-          {cleanDescription && (
-            <section>
-              <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">O produkcie</h2>
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-                <FormatText text={cleanDescription} />
-              </div>
-            </section>
-          )}
-
-          {/* 3. Sposób użycia */}
-          {product.usage && (
-            <section>
-              <h2 className="text-xs font-black text-primary uppercase tracking-widest mb-4">Sposób użycia</h2>
-              <div className="bg-primary/5 rounded-2xl p-6 border border-primary/10">
-                <FormatText text={product.usage} />
-              </div>
-            </section>
-          )}
-
-          {/* 4. Składniki */}
-          <section>
-            <IngredientAnalysis inci={product.inci} categories={product.ingredient_categories} />
-          </section>
-
-          {/* 5. Najlepsze oferty */}
-          <section>
-            <div className="flex items-baseline justify-between mb-4">
-              <h2 className="text-xl font-black text-gray-900">Najlepsze oferty</h2>
-              <span className="text-xs text-gray-400 font-medium">Znaleziono {product.offers.length} oferty</span>
-            </div>
-            <OffersList offers={product.offers} productId={product.id} />
-            <p className="text-[10px] text-center text-gray-400 mt-6 max-w-sm mx-auto leading-relaxed">
-              Klikając w przycisk, zostaniesz bezpiecznie przeniesiony do strony sprzedawcy. Ceny mogą ulec zmianie.
-            </p>
-          </section>
-
-          {/* 6. Podobne produkty */}
-          {relatedProducts.length > 0 && (
-            <section>
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-black text-gray-900">Podobne produkty</h2>
-                <Link to="/porownaj" className="text-xs font-black text-primary uppercase tracking-wider">Zobacz wszystkie</Link>
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {relatedProducts.map(rp => (
-                  <Link
-                    key={rp.id}
-                    to={`/produkt/${rp.slug}`}
-                    className="group bg-white rounded-3xl border border-gray-100 p-3 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-                  >
-                    <div className="relative aspect-square rounded-2xl bg-gray-50 overflow-hidden mb-3">
-                      <img
-                        src={rp.images[0]}
-                        alt={rp.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                    </div>
-                    <p className="text-[10px] font-black text-primary uppercase tracking-wider mb-1">{rp.brand}</p>
-                    <h3 className="text-xs font-bold text-gray-900 leading-tight mb-2 line-clamp-2 min-h-[2.5em]">{rp.name}</h3>
-                    <p className="text-xs font-black text-gray-900">{(rp.offers[0]?.price_pln || 0).toFixed(2)} zł</p>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          )}
-        </div>
+        </article>
       </main>
 
       <Footer />

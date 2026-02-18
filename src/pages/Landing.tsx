@@ -6,9 +6,26 @@ import SEO from '../components/SEO';
 import { CATEGORIES } from '../data/categories';
 
 export default function Landing() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "HairCare Comparator",
+    "alternateName": "Włosowa",
+    "url": "https://wlosowa.pl/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://wlosowa.pl/porownaj?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  };
+
   return (
     <>
-      <SEO title="Profesjonalne kosmetyki do włosów" description="Porównywarka kosmetyków do włosów — sprawdź skład, ceny i dopasowanie do Twoich potrzeb." />
+      <SEO
+        title="Profesjonalne kosmetyki do włosów"
+        description="Porównywarka kosmetyków do włosów — sprawdź skład, ceny i dopasowanie do Twoich potrzeb."
+        structuredData={structuredData}
+      />
       <Header />
       <main>
         {/* Hero */}

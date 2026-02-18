@@ -3,7 +3,7 @@ export interface Product {
   slug: string;
   brand: string;
   name: string;
-  category: 'shampoo' | 'conditioner' | 'mask' | 'serum' | 'scalp_tonic' | 'supplement';
+  category: 'shampoo' | 'conditioner' | 'mask' | 'serum' | 'scalp_tonic' | 'supplement' | 'styling' | 'other';
 
   hair_goals: HairGoal[];
   hair_type_fit: HairType[];

@@ -81,11 +81,26 @@ export default function Category() {
   }
 
   const relatedCategories = CATEGORIES.filter(c => c.slug !== slug).slice(0, 3);
+  const structuredData = {
+    "@context": "https://schema.org/",
+    "@type": "ItemList",
+    "name": category.name,
+    "description": category.description,
+    "itemListElement": categoryProducts.slice(0, 10).map((p, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "url": `https://wlosowa.pl/produkt/${p.slug}`
+    }))
+  };
   const topProducts = categoryProducts.slice(0, 3);
 
   return (
     <>
-      <SEO title={category.name} description={category.description} />
+      <SEO
+        title={category.name}
+        description={`${category.description} Sprawdź ranking i porównanie najlepszych produktów w kategorii ${category.name}.`}
+        structuredData={structuredData}
+      />
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className={`${category.color} rounded-2xl p-8 mb-8`}>

@@ -11,7 +11,7 @@ import type { Product as UIProduct, HairGoal, HairType, ScalpType } from '../typ
  * Fetches products from both Bielenda and DSD Deluxe tables, optionally filtered by category.
  */
 export async function fetchDbProducts(categoryName?: string): Promise<DBProduct[]> {
-    const tables = ['products_bielenda', 'products_dsd_deluxe', 'products_natura'];
+    const tables = ['products_bielenda', 'products_dsd_deluxe', 'products_natura', 'products_ceneo'];
 
     const results = await Promise.all(tables.map(async (table) => {
         let query = supabase.from(table).select('*');
@@ -88,12 +88,26 @@ function mapToUIProduct(p: DBProduct): UIProduct {
     const nameLower = p.name.toLowerCase();
 
     // Guess category from name
-    let category: UIProduct['category'] = 'shampoo';
-    if (nameLower.includes('odżywka') || nameLower.includes('conditioner')) category = 'conditioner';
-    else if (nameLower.includes('maska') || nameLower.includes('mask')) category = 'mask';
-    else if (nameLower.includes('serum') || nameLower.includes('olejek') || nameLower.includes('oil')) category = 'serum';
-    else if (nameLower.includes('wcierka') || nameLower.includes('tonik') || nameLower.includes('tonic')) category = 'scalp_tonic';
-    else if (nameLower.includes('suplement') || nameLower.includes('tabletki')) category = 'supplement';
+    let category: UIProduct['category'] = 'other';
+
+    // Priority check for technical products (force to 'other')
+    if (nameLower.includes('rozjaśniacz') || nameLower.includes('rozjaśniaj') || nameLower.includes('farba') || nameLower.includes('trwała ondulacja') || nameLower.includes('utleniacz') || nameLower.includes('aktywator') || nameLower.includes('developer')) {
+        category = 'other';
+    } else if (nameLower.includes('szampon') || nameLower.includes('shampoo') || nameLower.includes('wash') || nameLower.includes('cleanser')) {
+        category = 'shampoo';
+    } else if (nameLower.includes('odżywka') || nameLower.includes('conditioner')) {
+        category = 'conditioner';
+    } else if (nameLower.includes('maska') || nameLower.includes('mask')) {
+        category = 'mask';
+    } else if (nameLower.includes('serum') || nameLower.includes('olejek') || nameLower.includes('oil') || nameLower.includes('jedwab') || nameLower.includes('silk')) {
+        category = 'serum';
+    } else if (nameLower.includes('wcierka') || nameLower.includes('tonik') || nameLower.includes('tonic') || nameLower.includes('peeling') || nameLower.includes('scrub')) {
+        category = 'scalp_tonic';
+    } else if (nameLower.includes('suplement') || nameLower.includes('tabletki') || nameLower.includes('kapsułki') || nameLower.includes('capsules')) {
+        category = 'supplement';
+    } else if (nameLower.includes('żel') || nameLower.includes('gel') || nameLower.includes('spray') || nameLower.includes('lakier') || nameLower.includes('lacquer') || nameLower.includes('pianka') || nameLower.includes('mousse') || nameLower.includes('mgiełka') || nameLower.includes('mist') || nameLower.includes('pasta') || nameLower.includes('paste')) {
+        category = 'styling';
+    }
 
     const hair_goals: HairGoal[] = [];
     const hair_type_fit: HairType[] = [];
