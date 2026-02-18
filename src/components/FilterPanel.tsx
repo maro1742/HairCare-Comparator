@@ -8,7 +8,7 @@ interface FilterPanelProps {
   availableBrands: string[];
 }
 
-export default function FilterPanel({ isOpen, onClose, availableBrands }: FilterPanelProps) {
+export default function FilterPanel({ availableBrands }: FilterPanelProps) {
   const filters = useStore((s) => s.filters);
   const updateFilter = useStore((s) => s.updateFilter);
   const clearFilters = useStore((s) => s.clearFilters);
@@ -21,7 +21,7 @@ export default function FilterPanel({ isOpen, onClose, availableBrands }: Filter
     updateFilter(key, updated as never);
   };
 
-  const content = (
+  return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h3 className="font-semibold text-gray-900">Filtry</h3>
@@ -164,38 +164,6 @@ export default function FilterPanel({ isOpen, onClose, availableBrands }: Filter
             min={0}
           />
         </div>
-      </div>
-    </div>
-  );
-
-  // Mobile: bottom sheet overlay
-  if (typeof isOpen !== 'undefined') {
-    return (
-      <>
-        {isOpen && (
-          <div className="fixed inset-0 z-40 lg:hidden">
-            <div className="absolute inset-0 bg-black/40" onClick={onClose} />
-            <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl p-6 max-h-[80vh] overflow-y-auto animate-slide-up">
-              <div className="flex justify-end mb-2">
-                <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              {content}
-            </div>
-          </div>
-        )}
-      </>
-    );
-  }
-
-  // Desktop: sidebar
-  return (
-    <div className="hidden lg:block w-72 shrink-0">
-      <div className="sticky top-20 bg-white rounded-xl border border-gray-100 p-5 shadow-sm max-h-[calc(100vh-6rem)] overflow-y-auto">
-        {content}
       </div>
     </div>
   );

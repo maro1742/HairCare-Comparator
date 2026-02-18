@@ -40,6 +40,23 @@ export default function Comparator() {
   }, [products]);
 
   const filtered = useMemo(() => {
+    const hasActiveFilters =
+      filters.brands.length > 0 ||
+      filters.categories.length > 0 ||
+      filters.hair_goals.length > 0 ||
+      filters.hair_types.length > 0 ||
+      filters.scalp_types.length > 0 ||
+      filters.avoid_ingredients.length > 0 ||
+      filters.vegan_only ||
+      filters.price_min > 10 ||
+      filters.price_max < 500;
+
+    if (!searchQuery && !hasActiveFilters) {
+      return [...products]
+        .sort((a, b) => b.popularity - a.popularity)
+        .slice(0, 10);
+    }
+
     const result = products.filter(p => {
       if (searchQuery && !`${p.brand} ${p.name}`.toLowerCase().includes(searchQuery)) return false;
       if (filters.brands.length > 0 && !filters.brands.includes(p.brand)) return false;
@@ -48,7 +65,6 @@ export default function Comparator() {
 
       const bestPrice = Math.min(...p.offers.map(o => o.price_pln));
       if (bestPrice < filters.price_min || bestPrice > filters.price_max) return false;
-      if (filters.brands.length > 0 && !filters.brands.includes(p.brand)) return false;
 
       const score = matchScore(p, filters);
       if (score <= -900) return false;
@@ -65,7 +81,7 @@ export default function Comparator() {
     }
 
     return result;
-  }, [filters, searchQuery]);
+  }, [filters, searchQuery, products]);
 
   useEffect(() => {
     trackEvents.view_list('comparator', filtered.length);
@@ -99,8 +115,10 @@ export default function Comparator() {
         </div>
 
         <div className="flex gap-6">
-          <div className="hidden lg:block">
-            <FilterPanel availableBrands={availableBrands} />
+          <div className="hidden lg:block w-72 shrink-0">
+            <div className="sticky top-20 bg-white rounded-xl border border-gray-100 p-5 shadow-sm max-h-[calc(100vh-6rem)] overflow-y-auto">
+              <FilterPanel availableBrands={availableBrands} />
+            </div>
           </div>
 
           {filtersOpen && (
