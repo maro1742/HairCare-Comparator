@@ -138,6 +138,20 @@ function mapToUIProduct(p: DBProduct): UIProduct {
         if (match) capacity = match[1].trim();
     }
 
+    // Deterministic rating fallback (mocking "Google reviews" as requested)
+    const getMockRating = (id: string) => {
+        let hash = 0;
+        for (let i = 0; i < id.length; i++) {
+            hash = ((hash << 5) - hash) + id.charCodeAt(i);
+            hash |= 0;
+        }
+        const absHash = Math.abs(hash);
+        return {
+            average: 4.2 + (absHash % 8) / 10, // 4.2 to 4.9
+            count: 124 + (absHash % 376) // 124 to 500
+        };
+    };
+
     return {
         id: p.id,
         slug: p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
@@ -172,7 +186,8 @@ function mapToUIProduct(p: DBProduct): UIProduct {
         ],
         updated_at: new Date().toISOString().split('T')[0],
         description: p.description || 'Brak szczegółowego opisu produktu.',
-        capacity: capacity || undefined
+        capacity: capacity || undefined,
+        rating: getMockRating(p.id)
     };
 }
 
