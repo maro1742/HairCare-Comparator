@@ -3,6 +3,7 @@ import type { Product } from '../types';
 import { formatPrice } from '../lib/format';
 import { HAIR_TYPE_LABELS } from '../lib/constants';
 import { trackEvents } from '../lib/track';
+import { useStore } from '../store/useStore';
 import StarRating from './StarRating';
 
 interface ProductCardProps {
@@ -11,11 +12,26 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, position }: ProductCardProps) {
+  const addToComparison = useStore((s) => s.addToComparison);
+  const removeFromComparison = useStore((s) => s.removeFromComparison);
+  const isInComparison = useStore((s) => s.isInComparison(product.id));
+  const comparisonCount = useStore((s) => s.comparisonProductIds.length);
+
   const bestOffer = product.offers.reduce((a, b) => a.price_pln < b.price_pln ? a : b);
 
   const handleOutboundClick = (e: React.MouseEvent, merchant: string, price: number) => {
     e.stopPropagation();
     trackEvents.outbound_click(product.id, merchant, 'product_card', position, price);
+  };
+
+  const handleComparisonToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isInComparison) {
+      removeFromComparison(product.id);
+    } else if (comparisonCount < 4) {
+      addToComparison(product.id);
+    }
   };
 
   const hairTypes = product.hair_type_fit
@@ -97,6 +113,20 @@ export default function ProductCard({ product, position }: ProductCardProps) {
           </div>
 
           <div className="flex items-center gap-2">
+            {/* COMPARISON TOGGLE */}
+            <button
+              onClick={handleComparisonToggle}
+              title={isInComparison ? "Usuń z porównania" : "Dodaj do porównania"}
+              className={`p-2.5 rounded-xl transition-all border flex items-center justify-center ${isInComparison
+                  ? 'bg-accent/10 border-accent text-accent-dark'
+                  : 'bg-gray-50 border-gray-200 text-gray-400 hover:text-gray-600 hover:bg-gray-100'
+                }`}
+            >
+              <svg className={`w-5 h-5 ${isInComparison ? 'fill-current' : 'fill-none'}`} stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </button>
+
             {/* 10. PRZYCISK SZCZEGÓŁY */}
             <Link
               to={`/produkt/${product.slug}`}
