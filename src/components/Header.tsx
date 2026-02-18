@@ -7,7 +7,6 @@ import { useStore } from '../store/useStore';
 import logo from '../assets/logo-wlosowa.png';
 
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
   const [suggestions, setSuggestions] = useState<Product[]>([]);
@@ -86,27 +85,27 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+    <header className="sticky top-0 z-50 bg-white border-b border-gray-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-24">
+        {/* Desktop Header */}
+        <div className="hidden md:flex items-center justify-between h-24">
           <Link to="/" className="flex items-center gap-3 group">
             <div className="w-32 h-16 flex items-center transition-transform group-hover:scale-105">
               <img src={logo} alt="Włosowa - Dobieramy pielęgnację" className="w-full h-full object-contain" />
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="flex items-center gap-8">
             <Link to="/porownaj" className="text-sm font-bold text-gray-600 hover:text-primary transition-colors uppercase tracking-wider">Porównywarka</Link>
             <Link to="/quiz" className="text-sm font-bold text-gray-600 hover:text-primary transition-colors uppercase tracking-wider">Quiz</Link>
             <Link to="/jak-dziala" className="text-sm font-bold text-gray-600 hover:text-primary transition-colors uppercase tracking-wider">Jak to działa</Link>
           </nav>
 
           <div className="flex items-center gap-3">
-            {/* Comparison Button - Desktop */}
             {comparisonCount > 0 && (
               <Link
                 to="/porownanie"
-                className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-primary/5 text-primary rounded-lg hover:bg-primary/10 transition-colors relative"
+                className="flex items-center gap-2 px-3 py-1.5 bg-primary/5 text-primary rounded-lg hover:bg-primary/10 transition-colors relative"
                 title="Porównaj produkty"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,7 +115,7 @@ export default function Header() {
               </Link>
             )}
 
-            <div className="hidden sm:block relative" ref={containerRef}>
+            <div className="relative" ref={containerRef}>
               <form onSubmit={handleSearch} className="flex items-center">
                 <input
                   type="text"
@@ -150,46 +149,35 @@ export default function Header() {
                 </div>
               )}
             </div>
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden p-2 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
-              aria-label="Menu"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {menuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
           </div>
         </div>
 
-        {menuOpen && (
-          <div className="md:hidden pb-6 border-t border-gray-50 px-4">
-            <form onSubmit={handleSearch} className="pt-4 pb-4">
-              <input
-                type="text"
-                placeholder="Szukaj produktu..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-100 text-gray-900 placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </form>
-            {comparisonCount > 0 && (
-              <Link to="/porownanie" onClick={() => setMenuOpen(false)} className="flex items-center justify-between px-4 py-2 text-sm text-primary hover:bg-primary/5 font-bold rounded-lg mb-2">
-                <span>Porównanie ({comparisonCount})</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </Link>
-            )}
-            <Link to="/porownaj" onClick={() => setMenuOpen(false)} className="block py-3 text-base font-medium text-gray-600 hover:text-primary border-b border-gray-50">Porównywarka</Link>
-            <Link to="/quiz" onClick={() => setMenuOpen(false)} className="block py-3 text-base font-medium text-gray-600 hover:text-primary border-b border-gray-50">Quiz</Link>
-            <Link to="/jak-dziala" onClick={() => setMenuOpen(false)} className="block py-3 text-base font-medium text-gray-600 hover:text-primary">Jak to działa</Link>
+        {/* Mobile Header (inspired by visualization) */}
+        <div className="flex md:hidden items-center justify-between h-16">
+          <button
+            onClick={() => navigate(-1)}
+            className="p-2 -ml-2 text-gray-600 hover:text-teal-500 transition-colors"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </button>
+
+          <div className="flex-1 text-center">
+            <h1 className="text-lg font-black text-gray-900 tracking-tight leading-none px-4 truncate">
+              Włosowa
+            </h1>
           </div>
-        )}
+
+          <Link
+            to="/porownaj"
+            className="p-2 -mr-2 text-gray-600 hover:text-teal-500 transition-colors"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </Link>
+        </div>
       </div>
     </header>
   );

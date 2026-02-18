@@ -12,6 +12,8 @@ import { useStore } from '../store/useStore';
 import { generateWhyMatchesBullets } from '../lib/scoring';
 import { trackEvents } from '../lib/track';
 import { getProductBySlug, getAllProducts } from '../services/productService';
+import { calculateAppCost } from '../utils/calculateAppCost';
+import { parsePEHFromDescription } from '../utils/pehParser';
 import type { Product as UIProduct } from '../types';
 
 // Helper to format raw text into paragraphs and list items
@@ -166,6 +168,25 @@ export default function Product() {
   const claimBadges = product.claims.map(c => CLAIM_LABELS[c]).filter(Boolean);
   const freeBadges = product.free_from.map(f => FREE_FROM_LABELS[f]).filter(Boolean);
 
+  // Cost per application calculation
+  const bestOffer = product.offers.reduce((a, b) => a.price_pln < b.price_pln ? a : b);
+  let costPerApp = null;
+  const isCalculatableCategory = ['shampoo', 'conditioner', 'mask', 'serum'].includes(product.category);
+  const hairLength = filters.hair_length || 'medium';
+
+  if (isCalculatableCategory && product.volume_ml && bestOffer.price_pln) {
+    costPerApp = calculateAppCost(
+      bestOffer.price_pln,
+      product.volume_ml,
+      product.category as any,
+      hairLength
+    );
+  }
+
+  // PEH calculation
+  const pehBreakdown = product.description ? parsePEHFromDescription(product.description) : null;
+  const hasPeh = pehBreakdown && (pehBreakdown.proteins > 0 || pehBreakdown.emollients > 0 || pehBreakdown.humectants > 0);
+
   const structuredData = {
     "@context": "https://schema.org/",
     "@type": "Product",
@@ -298,6 +319,34 @@ export default function Product() {
                     </ul>
                   </div>
                 )}
+
+                {/* PEH & Cost section for desktop */}
+                <div className="mt-6 flex flex-wrap gap-4">
+                  {costPerApp !== null && (
+                    <div
+                      className="flex flex-col bg-teal-50 border border-teal-100 rounded-2xl p-4 min-w-[140px] cursor-help"
+                      title="Szacowany koszt jednego użycia na podstawie ceny, pojemności produktu oraz wskazanej długości włosów."
+                    >
+                      <span className="text-[10px] font-black text-teal-600 uppercase tracking-widest mb-1">Koszt na mycie</span>
+                      <span className="text-xl font-black text-teal-700">{costPerApp.toFixed(2)} zł</span>
+                    </div>
+                  )}
+                  {hasPeh && (
+                    <div
+                      className="flex flex-col bg-gray-50 border border-gray-100 rounded-2xl p-4 min-w-[140px] cursor-help"
+                      title="Analiza składu na podstawie opisu: P (Proteiny) – odbudowa, E (Emolienty) – wygładzenie i ochrona, H (Humektanty) – nawilżenie."
+                    >
+                      <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Równowaga PEH</span>
+                      <div className="flex items-center gap-3 text-xs font-bold">
+                        <div className="flex flex-col">
+                          <span className="text-blue-600">P: {pehBreakdown.proteins}%</span>
+                          <span className="text-green-600">E: {pehBreakdown.emollients}%</span>
+                          <span className="text-orange-600">H: {pehBreakdown.humectants}%</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </header>

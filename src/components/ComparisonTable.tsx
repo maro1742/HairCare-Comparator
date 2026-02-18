@@ -4,6 +4,9 @@ import { formatPrice } from '../lib/format';
 import { matchScore } from '../lib/scoring';
 import { CLAIM_LABELS, FREE_FROM_LABELS } from '../lib/constants';
 import { useStore } from '../store/useStore';
+import { calculateAppCost } from '../utils/calculateAppCost';
+import { parsePEHFromDescription } from '../utils/pehParser';
+import StarRating from './StarRating';
 
 interface ComparisonTableProps {
     products: Product[];
@@ -26,6 +29,23 @@ export default function ComparisonTable({ products, filters }: ComparisonTablePr
                     const bestOffer = product.offers.reduce((a, b) => a.price_pln < b.price_pln ? a : b);
                     const claimBadges = product.claims.map(c => CLAIM_LABELS[c]).filter(Boolean);
                     const freeBadges = product.free_from.map(f => FREE_FROM_LABELS[f]).filter(Boolean);
+                    const hairLength = filters.hair_length || 'medium';
+
+                    // PEH Analysis
+                    const peh = product.description ? parsePEHFromDescription(product.description) : null;
+                    const hasPEH = peh && (peh.proteins > 0 || peh.emollients > 0 || peh.humectants > 0);
+
+                    // Cost per application
+                    let costPerApp = null;
+                    const isCalculatableCategory = ['shampoo', 'conditioner', 'mask', 'serum'].includes(product.category);
+                    if (isCalculatableCategory && product.volume_ml && bestOffer.price_pln) {
+                        costPerApp = calculateAppCost(
+                            bestOffer.price_pln,
+                            product.volume_ml,
+                            product.category as any,
+                            hairLength
+                        );
+                    }
 
                     return (
                         <div
@@ -58,10 +78,15 @@ export default function ComparisonTable({ products, filters }: ComparisonTablePr
                                         {product.brand}
                                     </p>
                                     <Link to={`/produkt/${product.slug}`}>
-                                        <h3 className="text-lg font-bold text-gray-900 leading-tight hover:text-teal-600 transition-colors line-clamp-2">
+                                        <h3 className="text-lg font-bold text-gray-900 leading-tight hover:text-teal-600 transition-colors line-clamp-2 mb-2">
                                             {product.name}
                                         </h3>
                                     </Link>
+                                    {product.rating && (
+                                        <div className="flex items-center gap-2">
+                                            <StarRating average={product.rating.average} count={product.rating.count} size="sm" />
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Match Score */}
@@ -117,6 +142,30 @@ export default function ComparisonTable({ products, filters }: ComparisonTablePr
                                     </div>
                                 )}
 
+                                {/* PEH Balance */}
+                                {hasPEH && (
+                                    <div>
+                                        <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-2">
+                                            Równowaga PEH
+                                        </h4>
+                                        <div
+                                            className="flex items-center gap-1.5 px-3 py-2 bg-gray-50 rounded-xl border border-gray-100 text-xs font-black uppercase tracking-wider cursor-help w-full justify-between"
+                                            title="Analiza składu na podstawie opisu: P (Proteiny) – odbudowa, E (Emolienty) – wygładzenie i ochrona, H (Humektanty) – nawilżenie."
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-blue-600">P: {peh.proteins}%</span>
+                                                <span className="text-gray-200">|</span>
+                                                <span className="text-green-600">E: {peh.emollients}%</span>
+                                                <span className="text-gray-200">|</span>
+                                                <span className="text-orange-600">H: {peh.humectants}%</span>
+                                            </div>
+                                            <svg className="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                )}
+
                                 {/* Key Ingredients */}
                                 {product.inci && (
                                     <div>
@@ -153,8 +202,18 @@ export default function ComparisonTable({ products, filters }: ComparisonTablePr
                                     <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-2">
                                         Cena
                                     </h4>
-                                    <div className="text-2xl font-black text-gray-900">
-                                        {formatPrice(bestOffer.price_pln)}
+                                    <div className="flex items-end justify-between">
+                                        <div className="text-2xl font-black text-gray-900">
+                                            {formatPrice(bestOffer.price_pln)}
+                                        </div>
+                                        {costPerApp !== null && (
+                                            <div
+                                                className="text-[10px] text-teal-600 font-bold mb-1 bg-teal-50 px-2 py-0.5 rounded-lg border border-teal-100 flex items-center gap-1 cursor-help"
+                                                title="Szacowany koszt jednego użycia na podstawie ceny, pojemności produktu oraz wskazanej długości włosów."
+                                            >
+                                                <span className="shrink-0">✨ {costPerApp.toFixed(2)} zł</span>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
 

@@ -9,12 +9,12 @@ import HowItWorks from './pages/HowItWorks';
 import Privacy from './pages/Privacy';
 import Cookies from './pages/Cookies';
 import Affiliate from './pages/Affiliate';
-import AnalyticsDebug from './components/AnalyticsDebug';
+import MobileNav from './components/MobileNav';
 
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-background text-primary font-sans">
+      <div className="min-h-screen bg-background text-primary font-sans pb-20 lg:pb-0">
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/porownaj" element={<Comparator />} />
@@ -27,7 +27,7 @@ export default function App() {
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/wspolpraca-affiliate" element={<Affiliate />} />
         </Routes>
-        <AnalyticsDebug />
+        <MobileNav />
       </div>
     </BrowserRouter>
   );

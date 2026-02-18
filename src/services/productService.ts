@@ -64,7 +64,7 @@ export async function getProductsByCategory(categoryName: string): Promise<any[]
 export async function searchProducts(query: string): Promise<DBProduct[]> {
     if (!query) return [];
 
-    const tables = ['products_bielenda', 'products_dsd_deluxe', 'products_natura'];
+    const tables = ['products_bielenda', 'products_dsd_deluxe', 'products_natura', 'products_ceneo'];
     const results = await Promise.all(tables.map(async (table) => {
         const { data, error } = await supabase
             .from(table)
@@ -93,7 +93,7 @@ function mapToUIProduct(p: DBProduct): UIProduct {
     // Priority check for technical products (force to 'other')
     if (nameLower.includes('rozjaśniacz') || nameLower.includes('rozjaśniaj') || nameLower.includes('farba') || nameLower.includes('trwała ondulacja') || nameLower.includes('utleniacz') || nameLower.includes('aktywator') || nameLower.includes('developer')) {
         category = 'other';
-    } else if (nameLower.includes('szampon') || nameLower.includes('shampoo') || nameLower.includes('wash') || nameLower.includes('cleanser')) {
+    } else if (nameLower.includes('szampon') || nameLower.includes('shampoo') || nameLower.includes('wash') || nameLower.includes('cleanser') || nameLower.includes('kąpiel')) {
         category = 'shampoo';
     } else if (nameLower.includes('odżywka') || nameLower.includes('conditioner')) {
         category = 'conditioner';
@@ -201,7 +201,13 @@ function mapToUIProduct(p: DBProduct): UIProduct {
         updated_at: new Date().toISOString().split('T')[0],
         description: p.description || 'Brak szczegółowego opisu produktu.',
         capacity: capacity || undefined,
-        rating: getMockRating(p.id)
+        rating: getMockRating(p.id),
+        // Technical comparison fields
+        volume_ml: p.volume_ml,
+        hair_porosity: p.hair_porosity,
+        category_type: p.category_type,
+        peh_ratio: p.peh_ratio,
+        recommended_season: p.recommended_season || 'all'
     };
 }
 

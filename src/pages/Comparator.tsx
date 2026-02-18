@@ -92,23 +92,28 @@ export default function Comparator() {
       <SEO title="Porównywarka kosmetyków" description="Porównaj kosmetyki do włosów — filtruj po składzie, typie włosów i cenie." />
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex flex-col gap-4 mb-6">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-900">Porównywarka</h1>
-            <div className="flex items-center gap-3">
+        <div className="flex flex-col gap-6 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Porównywarka produktów do włosów</h1>
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <SortDropdown />
               <button
                 onClick={() => setFiltersOpen(true)}
-                className="lg:hidden px-3 py-1.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50"
+                className="lg:hidden flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg text-sm font-bold text-gray-700 hover:bg-gray-50 bg-white shadow-sm transition-all"
               >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                </svg>
                 Filtry
               </button>
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <FilterChips />
-            <Link to="/quiz" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-teal-50 text-teal-700 rounded-lg text-sm font-medium hover:bg-teal-100 transition-colors">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <FilterChips />
+            </div>
+            <Link to="/quiz" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-teal-50 text-teal-700 rounded-xl text-sm font-black uppercase tracking-wider hover:bg-teal-100 transition-all border border-teal-100 shadow-sm shrink-0">
               Zrób quiz &rarr; ustaw filtry
             </Link>
           </div>

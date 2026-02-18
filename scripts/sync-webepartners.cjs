@@ -3,6 +3,7 @@ const xml2js = require('xml2js');
 const { createClient } = require('@supabase/supabase-js');
 const crypto = require('crypto');
 require('dotenv').config();
+const { getPorosityFromText } = require('../src/utils/porosityScanner.ts');
 
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -45,6 +46,38 @@ function mapCategory(name, description) {
         }
     }
     return 'other'; // default or unmapped
+}
+
+function extractTechnicalData(name, description) {
+    const text = (name + ' ' + description).toLowerCase();
+
+    // 1. Volume
+    const volumeMatch = (name + ' ' + description).match(/(\d+)\s*(ml|l|g)/i);
+    const volume = volumeMatch ? parseInt(volumeMatch[1]) : null;
+
+    // 2. Porosity
+    const porosity = getPorosityFromText(name, description);
+
+    // 3. Category Type
+    let catType = null;
+    if (text.includes('szampon') || text.includes('kąpiel')) catType = 'shampoo';
+    else if (text.includes('odżywka')) catType = 'conditioner';
+    else if (text.includes('maska')) catType = 'mask';
+    else if (text.includes('serum')) catType = 'serum';
+
+    // 4. Season
+    let season = 'all';
+    if (text.includes('zima')) season = 'winter';
+    else if (text.includes('lato') || text.includes('filtr uv') || text.includes('spf')) season = 'summer';
+    else if (text.includes('wiosna') || text.includes('jesień')) season = 'spring_fall';
+
+    // 5. PEH (Quick guessing)
+    let peh = null;
+    if (text.includes('protein')) peh = '70,20,10';
+    else if (text.includes('emolient')) peh = '10,80,10';
+    else if (text.includes('humektant')) peh = '10,20,70';
+
+    return { volume, porosity, catType, season, peh };
 }
 
 function extractFromDescription(html, sectionTitle) {
@@ -156,7 +189,13 @@ async function sync() {
                 cosmetic_function: cosmeticFunction,
                 usage: usage,
                 ingredient_categories: ingredientCats,
-                inci: inci
+                inci: inci,
+                // New technical comparison fields
+                volume_ml: extractTechnicalData(name, description).volume,
+                hair_porosity: extractTechnicalData(name, description).porosity,
+                category_type: extractTechnicalData(name, description).catType,
+                peh_ratio: extractTechnicalData(name, description).peh,
+                recommended_season: extractTechnicalData(name, description).season
             });
         }
 

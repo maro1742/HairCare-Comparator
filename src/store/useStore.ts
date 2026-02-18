@@ -32,7 +32,9 @@ const DEFAULT_FILTERS: Filters = {
   price_min: 10,
   price_max: 500,
   brands: [],
-  sort_by: 'match'
+  sort_by: 'match',
+  hair_length: 'medium',
+  hair_porosity: 'medium'
 };
 
 export const useStore = create<StoreState>()(

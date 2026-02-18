@@ -6,6 +6,8 @@ import { HAIR_TYPE_LABELS } from '../lib/constants';
 import { trackEvents } from '../lib/track';
 import { useStore } from '../store/useStore';
 import StarRating from './StarRating';
+import { calculateAppCost } from '../utils/calculateAppCost';
+import { parsePEHFromDescription } from '../utils/pehParser';
 
 interface ProductCardProps {
   product: Product;
@@ -18,8 +20,22 @@ export default function ProductCard({ product, position }: ProductCardProps) {
   const removeFromComparison = useStore((s) => s.removeFromComparison);
   const isInComparison = useStore((s) => s.isInComparison(product.id));
   const comparisonCount = useStore((s) => s.comparisonProductIds.length);
+  const hairLength = useStore((s) => s.filters.hair_length || 'medium');
 
   const bestOffer = product.offers.reduce((a, b) => a.price_pln < b.price_pln ? a : b);
+
+  // Cost per application calculation
+  let costPerApp = null;
+  const isCalculatableCategory = ['shampoo', 'conditioner', 'mask', 'serum'].includes(product.category);
+
+  if (isCalculatableCategory && product.volume_ml && bestOffer.price_pln) {
+    costPerApp = calculateAppCost(
+      bestOffer.price_pln,
+      product.volume_ml,
+      product.category as any,
+      hairLength
+    );
+  }
 
   const handleOutboundClick = (e: React.MouseEvent, merchant: string, price: number) => {
     e.stopPropagation();
@@ -114,6 +130,25 @@ export default function ProductCard({ product, position }: ProductCardProps) {
                 Włosy: {hairTypes}
               </span>
             )}
+            {product.description && (
+              (() => {
+                const peh = parsePEHFromDescription(product.description);
+                if (peh.proteins === 0 && peh.emollients === 0 && peh.humectants === 0) return null;
+                return (
+                  <div
+                    className="flex items-center gap-1.5 px-3 py-1 bg-gray-50 rounded-full border border-gray-100 text-[10px] font-black uppercase tracking-wider cursor-help"
+                    title="Analiza składu na podstawie opisu: P (Proteiny) – odbudowa, E (Emolienty) – wygładzenie i ochrona, H (Humektanty) – nawilżenie."
+                  >
+                    <span className="text-gray-400">PEH:</span>
+                    <span className="text-blue-600">P: {peh.proteins}%</span>
+                    <span className="text-gray-300">|</span>
+                    <span className="text-green-600">E: {peh.emollients}%</span>
+                    <span className="text-gray-300">|</span>
+                    <span className="text-orange-600">H: {peh.humectants}%</span>
+                  </div>
+                );
+              })()
+            )}
           </div>
 
         </div>
@@ -126,6 +161,15 @@ export default function ProductCard({ product, position }: ProductCardProps) {
             <span className="text-xl sm:text-3xl font-black text-gray-900 tracking-tighter">
               {formatPrice(bestOffer.price_pln)}
             </span>
+            {costPerApp !== null && (
+              <div
+                className="text-[10px] sm:text-xs text-teal-600 font-bold mt-1 bg-teal-50 px-2 py-0.5 rounded-lg border border-teal-100 inline-flex items-center gap-1 cursor-help"
+                title="Szacowany koszt jednego użycia na podstawie ceny, pojemności produktu oraz wskazanej długości włosów."
+              >
+                <span className="shrink-0">✨ Koszt na mycie:</span>
+                <span className="text-teal-700">{costPerApp.toFixed(2)} zł</span>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-2">

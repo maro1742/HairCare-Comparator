@@ -19,6 +19,13 @@ export interface Product {
   usage?: string;
   ingredient_categories?: string[];
 
+  // Technical comparison fields
+  volume_ml?: number;
+  hair_porosity?: 'LOW' | 'MEDIUM' | 'HIGH';
+  category_type?: 'shampoo' | 'conditioner' | 'mask' | 'serum';
+  peh_ratio?: string;
+  recommended_season?: 'all' | 'winter' | 'summer' | 'spring_fall';
+
   offers: Offer[];
   updated_at: string;
   description?: string;
@@ -56,6 +63,8 @@ export interface UserProfile {
   scalp_type: ScalpType;
   avoid_ingredients: FreeFrom[];
   prefers_vegan: boolean;
+  hair_length?: 'short' | 'medium' | 'long';
+  hair_porosity?: 'low' | 'medium' | 'high';
 }
 
 export interface Filters {
@@ -69,6 +78,8 @@ export interface Filters {
   price_max: number;
   brands: string[];
   sort_by: 'match' | 'price' | 'popularity';
+  hair_length?: 'short' | 'medium' | 'long';
+  hair_porosity?: 'low' | 'medium' | 'high';
 }
 
 export interface AnalyticsEvent {

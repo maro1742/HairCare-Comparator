@@ -1,6 +1,7 @@
 import { useStore } from '../store/useStore';
 import { HAIR_GOAL_LABELS, HAIR_TYPE_LABELS, SCALP_TYPE_LABELS, FREE_FROM_LABELS, CATEGORY_LABELS } from '../lib/constants';
 import type { HairGoal, HairType, ScalpType, FreeFrom } from '../types';
+import HairPreferencesSlider from './HairPreferencesSlider';
 
 interface FilterPanelProps {
   isOpen?: boolean;
@@ -26,6 +27,18 @@ export default function FilterPanel({ availableBrands }: FilterPanelProps) {
       <div className="flex items-center justify-between">
         <h3 className="font-semibold text-gray-900">Filtry</h3>
         <button onClick={clearFilters} className="text-sm text-teal-600 hover:text-teal-700">Wyczyść</button>
+      </div>
+
+      <div className="border-b border-gray-100 pb-6">
+        <h4 className="text-sm font-bold text-primary mb-3 uppercase tracking-wider">Twoje włosy</h4>
+        <HairPreferencesSlider
+          hairLength={filters.hair_length || 'medium'}
+          porosity={filters.hair_porosity || 'medium'}
+          onChange={(length, porosity) => {
+            updateFilter('hair_length', length);
+            updateFilter('hair_porosity', porosity);
+          }}
+        />
       </div>
 
       <div>

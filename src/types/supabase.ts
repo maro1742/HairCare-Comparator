@@ -11,4 +11,9 @@ export interface Product {
     usage?: string;
     ingredient_categories?: string; // Stored as comma-separated or JSON string
     inci?: string;
+    volume_ml?: number;
+    hair_porosity?: 'LOW' | 'MEDIUM' | 'HIGH';
+    category_type?: 'shampoo' | 'conditioner' | 'mask' | 'serum';
+    peh_ratio?: string;
+    recommended_season?: 'all' | 'winter' | 'summer' | 'spring_fall';
 }
