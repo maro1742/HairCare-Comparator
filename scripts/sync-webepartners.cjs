@@ -90,26 +90,27 @@ function extractFromDescription(html, sectionTitle) {
     let titleLength = 0;
 
     for (const term of searchTerms) {
-        const idx = lowerHtml.indexOf(term);
-        if (idx !== -1) {
-            startIndex = idx;
-            titleLength = term.length;
+        // Use regex for closer matching of titles (avoid matching partial words)
+        const termRegex = new RegExp(`\\b${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+        const match = html.match(termRegex);
+        if (match) {
+            startIndex = match.index;
+            titleLength = match[0].length;
             break;
         }
     }
 
     if (startIndex === -1) return '';
 
-    // Find the end of the header tag (e.g., </strong>, </h3>, </b>, or ###)
+    // Find the end of the header tag (e.g., </strong>, </h3>, <b>, or ###)
     let contentStart = html.indexOf('>', startIndex);
-    if (contentStart === -1 || contentStart > startIndex + titleLength + 20) {
+    if (contentStart === -1 || contentStart > startIndex + titleLength + 25) {
         contentStart = startIndex + titleLength;
     } else {
         contentStart += 1;
     }
 
     // Find the next likely header or the end of a major block
-    // We look for ### or <h[1-6] or <strong> or <b> that looks like a header (contains one of the typical section start words)
     const nextHeaderRegex = /(?:###|<h[1-6][^>]*>|<strong[^>]*>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania|Dla|UWAGA|Protip|INCI|Ingredients)|<b[^>]*>\s*(?:Jak|Sposób|Co|Odkryj|Działanie|Rezultat|Składniki|Skład|Wskazania|INCI|Ingredients))/i;
     const rest = html.substring(contentStart);
     const nextMatch = rest.match(nextHeaderRegex);
@@ -158,15 +159,15 @@ async function sync() {
 
             const ingredientCats = extractFromDescription(description, 'Odkryj moje wnętrze|Składniki aktywne|W moim składzie znajdziesz');
 
-            const inciMatch = description.match(/(?:\bINCI\b|Skład \(INCI\)|Skład|Ingredients):?\s*<\/strong>[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
-                description.match(/(?:\bINCI\b|Skład \(INCI\)|Skład|Ingredients):?\s*<\/h[1-6]>[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
-                description.match(/(?:\bINCI\b|Skład \(INCI\)|Skład|Ingredients):?[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i);
+            const inciMatch = description.match(/(?:\bINCI\b|\bSkład \(INCI\)\b|\bSkład\b|\bIngredients\b):?\s*<\/strong>[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
+                description.match(/(?:\bINCI\b|\bSkład \(INCI\)\b|\bSkład\b|\bIngredients\b):?\s*<\/h[1-6]>[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
+                description.match(/(?:\bINCI\b|\bSkład \(INCI\)\b|\bSkład\b|\bIngredients\b):?[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i);
 
             let inci = inciMatch ? inciMatch[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : '';
 
             // Post-process INCI to remove headers and validate content
-            if (inci && (inci.toLowerCase().startsWith('nikon') || inci.toLowerCase().startsWith('nikom'))) {
-                inci = ''; // Filter out false positives like "Składnikom..."
+            if (inci && (inci.toLowerCase().startsWith('nikon') || inci.toLowerCase().startsWith('nikom') || inci.toLowerCase().includes('składniki'))) {
+                inci = ''; // Filter out false positives
             }
 
             if (productsToInsert.length < 3) {

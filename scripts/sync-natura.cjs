@@ -89,10 +89,11 @@ function extractFromDescription(html, sectionTitle) {
     let titleLength = 0;
 
     for (const term of searchTerms) {
-        const idx = lowerHtml.indexOf(term);
-        if (idx !== -1) {
-            startIndex = idx;
-            titleLength = term.length;
+        const termRegex = new RegExp(`\\b${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+        const match = html.match(termRegex);
+        if (match) {
+            startIndex = match.index;
+            titleLength = match[0].length;
             break;
         }
     }
@@ -100,7 +101,7 @@ function extractFromDescription(html, sectionTitle) {
     if (startIndex === -1) return '';
 
     let contentStart = html.indexOf('>', startIndex);
-    if (contentStart === -1 || contentStart > startIndex + titleLength + 20) {
+    if (contentStart === -1 || contentStart > startIndex + titleLength + 25) {
         contentStart = startIndex + titleLength;
     } else {
         contentStart += 1;
@@ -183,9 +184,9 @@ async function sync() {
 
             const ingredientCats = extractFromDescription(description, 'Składniki aktywne|Active ingredients|W składzie');
 
-            const inciMatch = description.match(/(?:INCI|Skład \(INCI\)|Skład|Ingredients):?\s*<\/strong>[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
-                description.match(/(?:INCI|Skład \(INCI\)|Skład|Ingredients):?\s*<\/h[1-6]>[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
-                description.match(/(?:INCI|Skład \(INCI\)|Skład|Ingredients):?[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i);
+            const inciMatch = description.match(/(?:\bINCI\b|\bSkład \(INCI\)\b|\bSkład\b|\bIngredients\b):?\s*<\/strong>[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
+                description.match(/(?:\bINCI\b|\bSkład \(INCI\)\b|\bSkład\b|\bIngredients\b):?\s*<\/h[1-6]>[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i) ||
+                description.match(/(?:\bINCI\b|\bSkład \(INCI\)\b|\bSkład\b|\bIngredients\b):?[:\s-]*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i);
             const inci = inciMatch ? inciMatch[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : '';
 
             productsToInsert.push({
