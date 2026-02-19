@@ -1,4 +1,5 @@
 import { useStore } from '../store/useStore';
+import { pushToDataLayer } from '../utils/gtm';
 
 export function track(eventName: string, payload?: Record<string, unknown>) {
   const event = {
@@ -10,6 +11,7 @@ export function track(eventName: string, payload?: Record<string, unknown>) {
   console.log('[Analytics]', eventName, payload);
 
   useStore.getState().addAnalyticsEvent(event);
+  pushToDataLayer(eventName, payload);
 }
 
 export const trackEvents = {
