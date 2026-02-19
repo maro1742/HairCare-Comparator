@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { getAllProducts } from '../services/productService';
 import type { Product } from '../types';
 import { useStore } from '../store/useStore';
@@ -16,6 +16,7 @@ export default function Header() {
   const comparisonCount = useStore((s) => s.comparisonProductIds.length);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -153,28 +154,30 @@ export default function Header() {
         </div>
 
         {/* Mobile Header (inspired by visualization) */}
-        <div className="flex md:hidden items-center justify-between h-16">
-          <button
-            onClick={() => navigate(-1)}
-            className="p-2 -ml-2 text-gray-600 hover:text-teal-500 transition-colors"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-          </button>
+        <div className="flex md:hidden items-center h-16 px-1">
+          {location.pathname !== '/' && (
+            <button
+              onClick={() => navigate(-1)}
+              className="p-2 -ml-1 text-gray-600 hover:text-teal-500 transition-colors shrink-0"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+            </button>
+          )}
 
-          <div className="flex-1 flex justify-center">
+          <div className={`flex-1 flex ${location.pathname === '/' ? 'justify-start' : 'justify-start ml-1'}`}>
             <Link to="/" className="w-24 h-12 flex items-center transition-transform active:scale-95">
-              <img src={logo} alt="Włosowa - Dobieramy pielęgnację" className="w-full h-full object-contain" />
+              <img src={logo} alt="Włosowa - Dobieramy pielęgnację" className="w-full h-full object-contain object-left" />
             </Link>
           </div>
 
           <Link
             to="/porownaj"
-            className="p-2 -mr-2 text-gray-600 hover:text-teal-500 transition-colors"
+            className="p-2 -mr-1 text-gray-600 hover:text-teal-500 transition-colors shrink-0"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m4-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </Link>
         </div>

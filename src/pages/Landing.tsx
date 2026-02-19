@@ -38,7 +38,7 @@ export default function Landing() {
                 <span className="text-secondary italic">w Twoim domu</span>
               </h1>
               <p className="text-lg sm:text-xl text-primary/70 leading-relaxed max-w-2xl mb-10">
-                Wybierz idealny produkt w 30 sekund. Analizujemy składy, porównujemy ceny i dopasowujemy kosmetyki do porowatości Twoich włosów.
+                Wybierz idealny produkt w 30 sekund. Analizujemy składy, porównujemy ceny i dopasowujemy kosmetyki do potrzeb Twoich włosów.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link

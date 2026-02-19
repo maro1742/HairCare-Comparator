@@ -7,9 +7,10 @@ interface FilterPanelProps {
   isOpen?: boolean;
   onClose?: () => void;
   availableBrands: string[];
+  hideHeader?: boolean;
 }
 
-export default function FilterPanel({ availableBrands }: FilterPanelProps) {
+export default function FilterPanel({ availableBrands, hideHeader }: FilterPanelProps) {
   const filters = useStore((s) => s.filters);
   const updateFilter = useStore((s) => s.updateFilter);
   const clearFilters = useStore((s) => s.clearFilters);
@@ -24,10 +25,12 @@ export default function FilterPanel({ availableBrands }: FilterPanelProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-gray-900">Filtry</h3>
-        <button onClick={clearFilters} className="text-sm text-teal-600 hover:text-teal-700">Wyczyść</button>
-      </div>
+      {!hideHeader && (
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-gray-900">Filtry</h3>
+          <button onClick={clearFilters} className="text-sm text-teal-600 hover:text-teal-700">Wyczyść</button>
+        </div>
+      )}
 
       <div className="border-b border-gray-100 pb-6">
         <h4 className="text-sm font-bold text-primary mb-3 uppercase tracking-wider">Twoje włosy</h4>
@@ -39,6 +42,27 @@ export default function FilterPanel({ availableBrands }: FilterPanelProps) {
             updateFilter('hair_porosity', porosity);
           }}
         />
+      </div>
+
+      <div>
+        <h4 className="text-sm font-medium text-gray-700 mb-2">Cena (PLN)</h4>
+        <div className="flex items-center gap-2">
+          <input
+            type="number"
+            value={filters.price_min}
+            onChange={(e) => updateFilter('price_min', Number(e.target.value))}
+            className="w-20 px-2 py-1 text-sm border border-gray-200 rounded-lg"
+            min={0}
+          />
+          <span className="text-gray-400">—</span>
+          <input
+            type="number"
+            value={filters.price_max}
+            onChange={(e) => updateFilter('price_max', Number(e.target.value))}
+            className="w-20 px-2 py-1 text-sm border border-gray-200 rounded-lg"
+            min={0}
+          />
+        </div>
       </div>
 
       <div>
@@ -158,26 +182,6 @@ export default function FilterPanel({ availableBrands }: FilterPanelProps) {
         </div>
       )}
 
-      <div>
-        <h4 className="text-sm font-medium text-gray-700 mb-2">Cena (PLN)</h4>
-        <div className="flex items-center gap-2">
-          <input
-            type="number"
-            value={filters.price_min}
-            onChange={(e) => updateFilter('price_min', Number(e.target.value))}
-            className="w-20 px-2 py-1 text-sm border border-gray-200 rounded-lg"
-            min={0}
-          />
-          <span className="text-gray-400">—</span>
-          <input
-            type="number"
-            value={filters.price_max}
-            onChange={(e) => updateFilter('price_max', Number(e.target.value))}
-            className="w-20 px-2 py-1 text-sm border border-gray-200 rounded-lg"
-            min={0}
-          />
-        </div>
-      </div>
     </div>
   );
 }
