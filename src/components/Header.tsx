@@ -163,10 +163,10 @@ export default function Header() {
             </svg>
           </button>
 
-          <div className="flex-1 text-center">
-            <h1 className="text-lg font-black text-gray-900 tracking-tight leading-none px-4 truncate">
-              Włosowa
-            </h1>
+          <div className="flex-1 flex justify-center">
+            <Link to="/" className="w-24 h-12 flex items-center transition-transform active:scale-95">
+              <img src={logo} alt="Włosowa - Dobieramy pielęgnację" className="w-full h-full object-contain" />
+            </Link>
           </div>
 
           <Link

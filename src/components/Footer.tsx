@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import logo from '../assets/logo-wlosowa.png';
 
 export default function Footer() {
   return (
@@ -6,12 +7,16 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">HC</span>
+            <Link to="/" className="flex items-center gap-2 mb-4 group">
+              <div className="w-32 h-16 flex items-center transition-transform group-hover:scale-105">
+                <img
+                  src={logo}
+                  alt="Włosowa - Dobieramy pielęgnację"
+                  className="w-full h-full object-contain invert"
+                  style={{ mixBlendMode: 'screen' }}
+                />
               </div>
-              <span className="font-semibold text-white text-lg">HairCare</span>
-            </div>
+            </Link>
             <p className="text-sm text-gray-400">Profesjonalna porównywarka kosmetyków do włosów. Porównuj składy, ceny i opinie w jednym miejscu.</p>
           </div>
 
