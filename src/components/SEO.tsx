@@ -24,7 +24,7 @@ const SEO: React.FC<SEOProps> = ({
   ogImage,
   structuredData,
 }) => {
-  const siteTitle = 'HairCare Comparator';
+  const siteTitle = 'Dobór pielęgnacji wlosowa.pl';
   const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
 
   return (
