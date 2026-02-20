@@ -42,7 +42,7 @@ export default function Category() {
     } else if (filters.sort_by === 'popularity') {
       prods.sort((a, b) => b.popularity - a.popularity);
     } else {
-      prods.sort((a, b) => matchScore(b, filters) - matchScore(a, filters));
+      prods.sort((a, b) => matchScore(b, filters, category?.name) - matchScore(a, filters, category?.name));
     }
 
     return prods;

@@ -139,7 +139,8 @@ async function sync() {
 
         const productsToInsert = [];
 
-        for (const offer of offers) {
+        for (let i = 0; i < offers.length; i++) {
+            const offer = offers[i];
             const name = offer.name || '';
             const description = offer.description || '';
 
@@ -154,6 +155,12 @@ async function sync() {
             // 2. Try to find <img> in description
             // 3. Fallback to official logo
             let imageUrl = offer.image || '';
+
+            // Debugging image extraction
+            if (i === 0) {
+                console.log('First offer image value:', JSON.stringify(offer.image));
+            }
+
             if (!imageUrl || imageUrl.includes('placeholder')) {
                 const imgMatch = description.match(/<img[^>]+src="([^">]+)"/i);
                 if (imgMatch) {

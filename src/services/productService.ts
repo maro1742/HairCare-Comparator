@@ -11,7 +11,7 @@ import type { Product as UIProduct, HairGoal, HairType, ScalpType } from '../typ
  * Fetches products from both Bielenda and DSD Deluxe tables, optionally filtered by category.
  */
 export async function fetchDbProducts(categoryName?: string): Promise<DBProduct[]> {
-    const tables = ['products_bielenda', 'products_dsd_deluxe', 'products_natura', 'products_ceneo'];
+    const tables = ['products_bielenda', 'products_dsd_deluxe', 'products_natura', 'products_ceneo', 'products_insight'];
 
     const results = await Promise.all(tables.map(async (table) => {
         let query = supabase.from(table).select('*');
@@ -64,7 +64,7 @@ export async function getProductsByCategory(categoryName: string): Promise<any[]
 export async function searchProducts(query: string): Promise<DBProduct[]> {
     if (!query) return [];
 
-    const tables = ['products_bielenda', 'products_dsd_deluxe', 'products_natura', 'products_ceneo'];
+    const tables = ['products_bielenda', 'products_dsd_deluxe', 'products_natura', 'products_ceneo', 'products_insight'];
     const results = await Promise.all(tables.map(async (table) => {
         const { data, error } = await supabase
             .from(table)
@@ -120,8 +120,20 @@ function mapToUIProduct(p: DBProduct): UIProduct {
         hair_goals.push('hairloss', 'volume');
         hair_type_fit.push('fine');
     } else if (p.category === 'Łupież') {
-        hair_goals.push('dandruff', 'oily_scalp');
-        scalp_fit.push('dandruff', 'oily');
+        const isDandruffSpecific = nameLower.includes('łupież') || nameLower.includes('dandruff') || nameLower.includes('anti-dandruff');
+        const isOilySpecific = nameLower.includes('przetłuszcz') || nameLower.includes('normaliz') || nameLower.includes('brzozow') || nameLower.includes('oczyszcz');
+
+        if (isDandruffSpecific) {
+            hair_goals.push('dandruff');
+            scalp_fit.push('dandruff');
+            if (isOilySpecific) hair_goals.push('oily_scalp');
+        } else if (isOilySpecific) {
+            hair_goals.push('oily_scalp');
+            scalp_fit.push('oily');
+        } else {
+            hair_goals.push('dandruff', 'oily_scalp');
+            scalp_fit.push('dandruff', 'oily');
+        }
     } else if (p.category === 'Kręcone') {
         hair_goals.push('frizz');
         hair_type_fit.push('curly');
@@ -192,7 +204,9 @@ function mapToUIProduct(p: DBProduct): UIProduct {
         ingredient_categories: p.ingredient_categories ? p.ingredient_categories.split(',').map(s => s.trim()) : [],
         offers: [
             {
-                merchant: p.brand === 'DSD de Luxe' ? 'DSD' : (p.brand?.toLowerCase().includes('bielenda') ? 'Bielenda' : 'Sklep'),
+                merchant: p.brand === 'DSD de Luxe' ? 'DSD' :
+                    (p.brand?.toLowerCase().includes('bielenda') ? 'Bielenda' :
+                        (p.brand?.toLowerCase().includes('insight') ? 'Insight' : 'Sklep')),
                 price_pln: p.price,
                 url: p.affiliate_link,
                 last_checked: new Date().toISOString().split('T')[0]

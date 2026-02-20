@@ -2,9 +2,21 @@ import type { Product, Filters } from '../types';
 
 export function matchScore(
   product: Product,
-  filters: Filters
+  filters: Filters,
+  query: string = ''
 ): number {
   let score = 0;
+
+  // 0. Search Query boost (High priority)
+  if (query) {
+    const q = query.toLowerCase();
+    const name = product.name.toLowerCase();
+    const brand = product.brand.toLowerCase();
+
+    if (name.includes(q) || brand.includes(q)) {
+      score += 15; // Strong boost for direct matches
+    }
+  }
 
   if (filters.avoid_ingredients.length > 0) {
     for (const avoid of filters.avoid_ingredients) {

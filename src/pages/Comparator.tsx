@@ -67,7 +67,7 @@ export default function Comparator() {
       const bestPrice = Math.min(...p.offers.map(o => o.price_pln));
       if (bestPrice < filters.price_min || bestPrice > filters.price_max) return false;
 
-      const score = matchScore(p, filters);
+      const score = matchScore(p, filters, searchQuery);
       if (score <= -900) return false;
 
       return true;
@@ -78,7 +78,7 @@ export default function Comparator() {
     } else if (filters.sort_by === 'popularity') {
       result.sort((a, b) => b.popularity - a.popularity);
     } else {
-      result.sort((a, b) => matchScore(b, filters) - matchScore(a, filters));
+      result.sort((a, b) => matchScore(b, filters, searchQuery) - matchScore(a, filters, searchQuery));
     }
 
     return result;
