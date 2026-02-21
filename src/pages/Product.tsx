@@ -8,6 +8,7 @@ import ProductCarousel from '../components/ProductCarousel';
 import IngredientAnalysis from '../components/IngredientAnalysis';
 import StarRating from '../components/StarRating';
 import ComparisonWidget from '../components/ComparisonWidget';
+import PEHRadarChart from '../components/PEHRadarChart';
 import { CLAIM_LABELS, FREE_FROM_LABELS } from '../lib/constants';
 import { useStore } from '../store/useStore';
 import { generateWhyMatchesBullets } from '../lib/scoring';
@@ -387,7 +388,22 @@ export default function Product() {
               </section>
             )}
 
-            {/* 4. Składniki */}
+            {/* 4. Analiza PEH */}
+            {hasPeh && (
+              <section>
+                <div className="mb-4">
+                  <h2 className="text-xl font-black text-gray-900">Analiza PEH</h2>
+                  <p className="text-sm text-gray-500 mt-1">Równowaga protein, emolientów i humektantów w oparciu o analizę składu i głównych składników aktywnych produktu.</p>
+                </div>
+                <PEHRadarChart
+                  proteins={pehBreakdown.proteins}
+                  emollients={pehBreakdown.emollients}
+                  humectants={pehBreakdown.humectants}
+                />
+              </section>
+            )}
+
+            {/* 5. Składniki */}
             <section>
               <IngredientAnalysis inci={product.inci} categories={product.ingredient_categories} />
             </section>
