@@ -13,7 +13,9 @@ import ComparisonWidget from '../components/ComparisonWidget';
 const PSEOTemplate: React.FC = () => {
     const { category, attribute, problem } = useParams<{ category: string; attribute?: string; problem?: string }>();
     const [products, setProducts] = useState<any[]>([]);
+    const [allFetchedProducts, setAllFetchedProducts] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [activeFilter, setActiveFilter] = useState<'ranking' | 'najtansze' | 'naturalne' | 'profesjonalne'>('ranking');
 
     const comparisonProductIds = useStore((s) => s.comparisonProductIds);
     const addToComparison = useStore((s) => s.addToComparison);
@@ -159,13 +161,7 @@ const PSEOTemplate: React.FC = () => {
             try {
                 const results = await Promise.all(tables.map(fetchFromTable));
                 const allProducts = results.flat().map(mapToUIProduct);
-
-                // Sort by Rating (average descending, then count descending)
-                const sorted = allProducts.sort((a, b) =>
-                    ((b.rating?.average || 0) - (a.rating?.average || 0)) ||
-                    ((b.rating?.count || 0) - (a.rating?.count || 0))
-                );
-                setProducts(sorted.slice(0, 15));
+                setAllFetchedProducts(allProducts);
             } catch (err) {
                 console.error("Error fetching products from multiple tables:", err);
             }
@@ -175,6 +171,35 @@ const PSEOTemplate: React.FC = () => {
 
         fetchProducts();
     }, [category, attribute, problem]);
+
+    useEffect(() => {
+        if (!allFetchedProducts.length) return;
+
+        let filtered = [...allFetchedProducts];
+
+        if (activeFilter === 'naturalne') {
+            filtered = filtered.filter(p => !p.ingredient_flags.has_silicones && !p.ingredient_flags.has_sulfates && !p.ingredient_flags.has_parabens);
+        } else if (activeFilter === 'profesjonalne') {
+            filtered = filtered.filter(p => p.brand.toLowerCase().includes('insight') || p.brand.toLowerCase().includes('dsd'));
+        }
+
+        // Sorting
+        if (activeFilter === 'ranking') {
+            filtered.sort((a, b) =>
+                ((b.rating?.average || 0) - (a.rating?.average || 0)) ||
+                ((b.rating?.count || 0) - (a.rating?.count || 0))
+            );
+        } else if (activeFilter === 'najtansze') {
+            filtered.sort((a, b) => {
+                const priceA = a.offers?.[0]?.price_pln || 999;
+                const priceB = b.offers?.[0]?.price_pln || 999;
+                return priceA - priceB;
+            });
+        }
+
+        // Apply slicing (top 15)
+        setProducts(filtered.slice(0, 15));
+    }, [allFetchedProducts, activeFilter]);
 
     // Unique Intro/Outro Logic
     const generateIntro = () => {
@@ -268,10 +293,30 @@ const PSEOTemplate: React.FC = () => {
                     {/* Quick Filters */}
                     <div className="flex flex-wrap gap-2 mb-8">
                         <span className="text-xs font-bold text-primary/40 uppercase tracking-wider self-center mr-2">Szybki wybór:</span>
-                        <button className="px-4 py-1.5 bg-primary text-white text-xs font-bold rounded-full shadow-sm hover:shadow-md transition-all">Ranking 2026</button>
-                        <button className="px-4 py-1.5 bg-white text-primary/60 border border-primary/10 text-xs font-bold rounded-full hover:bg-primary/5 transition-all">Najtańsze</button>
-                        <button className="px-4 py-1.5 bg-white text-primary/60 border border-primary/10 text-xs font-bold rounded-full hover:bg-primary/5 transition-all">Naturalne</button>
-                        <button className="px-4 py-1.5 bg-white text-primary/60 border border-primary/10 text-xs font-bold rounded-full hover:bg-primary/5 transition-all">Profesjonalne</button>
+                        <button
+                            onClick={() => setActiveFilter('ranking')}
+                            className={`px-4 py-1.5 text-xs font-bold rounded-full shadow-sm transition-all ${activeFilter === 'ranking' ? 'bg-primary text-white hover:shadow-md' : 'bg-white text-primary/60 border border-primary/10 hover:bg-primary/5'}`}
+                        >
+                            Najwyżej oceniane
+                        </button>
+                        <button
+                            onClick={() => setActiveFilter('najtansze')}
+                            className={`px-4 py-1.5 text-xs font-bold rounded-full shadow-sm transition-all ${activeFilter === 'najtansze' ? 'bg-primary text-white hover:shadow-md' : 'bg-white text-primary/60 border border-primary/10 hover:bg-primary/5'}`}
+                        >
+                            Najtańsze
+                        </button>
+                        <button
+                            onClick={() => setActiveFilter('naturalne')}
+                            className={`px-4 py-1.5 text-xs font-bold rounded-full shadow-sm transition-all ${activeFilter === 'naturalne' ? 'bg-primary text-white hover:shadow-md' : 'bg-white text-primary/60 border border-primary/10 hover:bg-primary/5'}`}
+                        >
+                            Naturalne
+                        </button>
+                        <button
+                            onClick={() => setActiveFilter('profesjonalne')}
+                            className={`px-4 py-1.5 text-xs font-bold rounded-full shadow-sm transition-all ${activeFilter === 'profesjonalne' ? 'bg-primary text-white hover:shadow-md' : 'bg-white text-primary/60 border border-primary/10 hover:bg-primary/5'}`}
+                        >
+                            Profesjonalne
+                        </button>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
