@@ -23,6 +23,7 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-white mb-3 text-sm">Nawigacja</h3>
             <ul className="space-y-2">
+              <li><Link to="/ranking" className="text-sm hover:text-teal-400 border-b border-transparent hover:border-teal-400 transition-all font-bold text-white">Rankingi 2026</Link></li>
               <li><Link to="/porownaj" className="text-sm hover:text-teal-400 transition-colors">Porównywarka</Link></li>
               <li><Link to="/quiz" className="text-sm hover:text-teal-400 transition-colors">Quiz</Link></li>
               <li><Link to="/jak-dziala" className="text-sm hover:text-teal-400 transition-colors">Jak to działa</Link></li>

@@ -84,7 +84,7 @@ export async function searchProducts(query: string): Promise<DBProduct[]> {
 /**
  * Maps a database product to the UI Product format.
  */
-function mapToUIProduct(p: DBProduct): UIProduct {
+export function mapToUIProduct(p: DBProduct): UIProduct {
     const nameLower = p.name.toLowerCase();
 
     // Guess category from name

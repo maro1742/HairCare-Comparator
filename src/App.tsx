@@ -11,6 +11,8 @@ import HowItWorks from './pages/HowItWorks';
 import Privacy from './pages/Privacy';
 import Cookies from './pages/Cookies';
 import Affiliate from './pages/Affiliate';
+import PSEOTemplate from './pages/PSEOTemplate';
+import RankingHub from './pages/RankingHub';
 import MobileNav from './components/MobileNav';
 
 import { supabase } from './lib/supabaseClient';
@@ -64,6 +66,8 @@ export default function App() {
           <Route path="/kategoria/:slug" element={<Category />} />
           <Route path="/produkt/:slug" element={<Product />} />
           <Route path="/quiz" element={<Quiz />} />
+          <Route path="/ranking" element={<RankingHub />} />
+          <Route path="/ranking/:category/:attribute?/:problem?" element={<PSEOTemplate />} />
           <Route path="/jak-dziala" element={<HowItWorks />} />
           <Route path="/polityka-prywatnosci" element={<Privacy />} />
           <Route path="/cookies" element={<Cookies />} />

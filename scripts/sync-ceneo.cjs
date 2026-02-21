@@ -20,10 +20,12 @@ if (!SUPABASE_URL || (!SUPABASE_ANON_KEY && !SUPABASE_SERVICE_ROLE_KEY)) {
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY || SUPABASE_ANON_KEY);
 
 const ALLOWED_BRANDS = [
-    'Davines',
-    'Kevin Murphy',
-    'Joico',
-    'Authentic Beauty Concept'
+    'Davines', 'Kevin Murphy', 'Joico', 'Authentic Beauty Concept',
+    'Kerastase', 'Loreal', 'Matrix', 'Vichy', 'Pharmaceris', 'Radical',
+    'Anwen', 'OnlyBio', 'Hair of the day', 'Vis Plantis', 'Farmona',
+    'Biolage', 'Wella', 'Schwarzkopf', 'Redken', 'Olaplex', 'K18',
+    'Goldwell', 'Londa', 'Milk Shake', 'Moroccanoil', 'Nioxin',
+    'Phyto', 'Revlon', 'Sebastian', 'Tigi', 'Alfaparf'
 ];
 
 function generateUUID(str) {

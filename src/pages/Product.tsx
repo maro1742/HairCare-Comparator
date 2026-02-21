@@ -7,6 +7,7 @@ import SEO from '../components/SEO';
 import ProductCarousel from '../components/ProductCarousel';
 import IngredientAnalysis from '../components/IngredientAnalysis';
 import StarRating from '../components/StarRating';
+import ComparisonWidget from '../components/ComparisonWidget';
 import { CLAIM_LABELS, FREE_FROM_LABELS } from '../lib/constants';
 import { useStore } from '../store/useStore';
 import { generateWhyMatchesBullets } from '../lib/scoring';
@@ -436,6 +437,7 @@ export default function Product() {
         </article>
       </main>
 
+      <ComparisonWidget />
       <Footer />
 
       {/* Disclaimer fix padding for mobile */}
