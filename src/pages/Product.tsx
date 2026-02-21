@@ -9,6 +9,7 @@ import IngredientAnalysis from '../components/IngredientAnalysis';
 import StarRating from '../components/StarRating';
 import ComparisonWidget from '../components/ComparisonWidget';
 import PEHRadarChart from '../components/PEHRadarChart';
+import ProductBundles from '../components/ProductBundles';
 import { CLAIM_LABELS, FREE_FROM_LABELS } from '../lib/constants';
 import { useStore } from '../store/useStore';
 import { generateWhyMatchesBullets } from '../lib/scoring';
@@ -60,6 +61,7 @@ export default function Product() {
   const removeFromComparison = useStore((s) => s.removeFromComparison);
 
   const [product, setProduct] = useState<UIProduct | null>(null);
+  const [allProducts, setAllProducts] = useState<UIProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [relatedProducts, setRelatedProducts] = useState<UIProduct[]>([]);
 
@@ -84,6 +86,7 @@ export default function Product() {
           trackEvents.view_product(p.id);
           // Load related products
           const all = await getAllProducts();
+          setAllProducts(all);
           const related = all.filter(rp =>
             rp.id !== p.id &&
             rp.category === p.category
@@ -378,7 +381,10 @@ export default function Product() {
               </section>
             )}
 
-            {/* 3. Sposób użycia */}
+            {/* 3. Idealny Duet (Smart Recommendations) */}
+            <ProductBundles currentProduct={product} allProducts={allProducts} />
+
+            {/* 4. Sposób użycia */}
             {product.usage && (
               <section>
                 <h2 className="text-xs font-black text-primary uppercase tracking-widest mb-4">Sposób użycia</h2>

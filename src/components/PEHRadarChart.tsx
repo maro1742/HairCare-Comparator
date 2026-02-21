@@ -36,14 +36,14 @@ const PEHRadarChart: React.FC<PEHRadarChartProps> = ({ proteins, emollients, hum
     const polygonPoints = `${pCoords.x},${pCoords.y} ${eCoords.x},${eCoords.y} ${hCoords.x},${hCoords.y}`;
 
     // Determine dominant feature
-    let description = "Produkt neutralny PEH.";
-    if (proteins > 60) description = "Silnie proteinowy – idealny do odbudowy struktury włosa. Stosuj zamiennie z humektantami.";
-    else if (emollients > 60) description = "Emolientowa tarcza – świetnie wygładza, dociąża i chroni przed utratą wilgoci.";
-    else if (humectants > 60) description = "Bomba humektantowa – silnie nawilża. Idealny jako podkład przed olejowaniem.";
-    else if (proteins > 30 && emollients > 30 && humectants > 30) description = "Zrównoważony PEH – dostarcza włosom wszystkich niezbędnych składników w optymalnych proporcjach.";
-    else if (proteins > 40 && emollients > 40) description = "Mieszanka proteinowo-emolientowa – odbudowuje i natychmiastowo wygładza.";
-    else if (emollients > 40 && humectants > 40) description = "Mieszanka nawilżająco-emolientowa (EH) – głęboko nawilża i zamyka łuskę włosa.";
-    else if (proteins === 0 && emollients > 0 && humectants === 0) description = "Czysty emolient – idealny do zamykania pielęgnacji (O w metodzie OMO).";
+    let description = "Produkt uniwersalny – dostarcza po trochu wszystkiego.";
+    if (proteins > 60) description = "Bomba proteinowa – idealna, by odbudować strukturę włosa i dodać mu objętości. Stosuj zamiennie z nawilżaczami.";
+    else if (emollients > 60) description = "Tarcza ochronna – świetnie wygładza, dociąża i chroni włosy przed puszeniem oraz utratą wilgoci.";
+    else if (humectants > 60) description = "Turbo nawilżenie – idealny wybór, gdy Twoje włosy są przesuszone i brakuje im miękkości.";
+    else if (proteins > 30 && emollients > 30 && humectants > 30) description = "Złoty środek – dostarcza włosom wszystkich niezbędnych składników w idealnych proporcjach.";
+    else if (proteins > 40 && emollients > 40) description = "Odbudowa i wygładzenie – regeneruje zniszczenia i natychmiastowo domyka łuskę włosa.";
+    else if (emollients > 40 && humectants > 40) description = "Głębokie nawilżenie z ochroną – mocno nawilża i od razu zamyka wilgoć we włosie, by nie uciekła.";
+    else if (proteins === 0 && emollients > 0 && humectants === 0) description = "Czyste wygładzenie – idealny jako ostatni krok mycia, domyka nawilżenie i zapobiega puszeniu.";
 
     return (
         <div className="bg-white rounded-3xl border border-gray-100 p-6 shadow-sm">
@@ -93,7 +93,7 @@ const PEHRadarChart: React.FC<PEHRadarChartProps> = ({ proteins, emollients, hum
                 <div className="flex-1 space-y-4">
                     <div>
                         <div className="flex items-center justify-between mb-1">
-                            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Proteiny (P)</span>
+                            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Proteiny (Odbudowa)</span>
                             <span className="text-xs font-bold text-blue-700">{proteins}%</span>
                         </div>
                         <div className="w-full bg-blue-50 rounded-full h-1.5 overflow-hidden">
@@ -102,7 +102,7 @@ const PEHRadarChart: React.FC<PEHRadarChartProps> = ({ proteins, emollients, hum
                     </div>
                     <div>
                         <div className="flex items-center justify-between mb-1">
-                            <span className="text-xs font-bold text-green-600 uppercase tracking-wider">Emolienty (E)</span>
+                            <span className="text-xs font-bold text-green-600 uppercase tracking-wider">Emolienty (Wygładzenie)</span>
                             <span className="text-xs font-bold text-green-700">{emollients}%</span>
                         </div>
                         <div className="w-full bg-green-50 rounded-full h-1.5 overflow-hidden">
@@ -111,7 +111,7 @@ const PEHRadarChart: React.FC<PEHRadarChartProps> = ({ proteins, emollients, hum
                     </div>
                     <div>
                         <div className="flex items-center justify-between mb-1">
-                            <span className="text-xs font-bold text-orange-600 uppercase tracking-wider">Humektanty (H)</span>
+                            <span className="text-xs font-bold text-orange-600 uppercase tracking-wider">Humektanty (Nawilżenie)</span>
                             <span className="text-xs font-bold text-orange-700">{humectants}%</span>
                         </div>
                         <div className="w-full bg-orange-50 rounded-full h-1.5 overflow-hidden">

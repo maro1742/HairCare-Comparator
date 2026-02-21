@@ -9,7 +9,7 @@ export default function Landing() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "HairCare Comparator",
+    "name": "Włosowa.pl",
     "alternateName": "Włosowa",
     "url": "https://wlosowa.pl/",
     "potentialAction": {

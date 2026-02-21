@@ -15,11 +15,11 @@ interface QuizState {
 }
 
 const STEPS = [
-  { key: 'hair_goals', title: 'Jaki jest główny problem Twoich włosów?', subtitle: 'Możesz wybrać kilka opcji', multi: true },
-  { key: 'hair_type', title: 'Jaki typ włosów masz?', subtitle: 'Możesz wybrać kilka opcji', multi: true },
-  { key: 'scalp_type', title: 'Jak opisałbyś/opisałabyś swoją skórę głowy?', subtitle: 'Wybierz jedną opcję', multi: false },
-  { key: 'avoid_ingredients', title: 'Jakie składniki chcesz unikać?', subtitle: 'Możesz wybrać kilka lub pominąć', multi: true },
-  { key: 'prefers_vegan', title: 'Preferencje dodatkowe', subtitle: '', multi: false },
+  { key: 'hair_goals', title: 'Z czym Twoje włosy mają największy problem?', subtitle: 'Wybierz śmiało kilka opcji', multi: true },
+  { key: 'hair_type', title: 'Jakie masz włosy na co dzień?', subtitle: 'Zaznacz to, co najbardziej do Ciebie pasuje', multi: true },
+  { key: 'scalp_type', title: 'Jak zachowuje się Twoja skóra głowy?', subtitle: 'Wybierz jedną, główną cechę', multi: false },
+  { key: 'avoid_ingredients', title: 'Czego wolałabyś/wolałbyś unikać w składzie?', subtitle: 'Zaznacz tylko jeśli masz konkretne preferencje (możesz pominąć)', multi: true },
+  { key: 'prefers_vegan', title: 'Czy szukasz produktów z kategorii wegańskich?', subtitle: '', multi: false },
 ] as const;
 
 export default function QuizWizard({ onComplete }: QuizWizardProps) {

@@ -9,7 +9,7 @@ export default function HowItWorks() {
       <SEO title="Jak to działa" description="Dowiedz się, jak działają nasze porównania i rekomendacje kosmetyków do włosów." />
       <Header />
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Jak działa HairCare Comparator?</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">Jak działa Włosowa.pl?</h1>
 
         <div className="space-y-8">
           <section>

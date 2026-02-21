@@ -5,7 +5,7 @@ import SEO from '../components/SEO';
 export default function Privacy() {
   return (
     <>
-      <SEO title="Polityka prywatności" description="Polityka prywatności serwisu HairCare Comparator." />
+      <SEO title="Polityka prywatności" description="Polityka prywatności serwisu Włosowa.pl." />
       <Header />
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Polityka prywatności</h1>
@@ -13,7 +13,7 @@ export default function Privacy() {
         <div className="space-y-6 text-gray-600 leading-relaxed">
           <section>
             <h2 className="text-lg font-semibold text-gray-900 mb-2">1. Administrator danych</h2>
-            <p>Administratorem danych osobowych jest HairCare Comparator. Serwis nie zbiera danych osobowych użytkowników w sposób bezpośredni.</p>
+            <p>Administratorem danych osobowych jest Włosowa.pl. Serwis nie zbiera danych osobowych użytkowników w sposób bezpośredni.</p>
           </section>
 
           <section>

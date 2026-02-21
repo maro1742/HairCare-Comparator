@@ -5,7 +5,7 @@ import SEO from '../components/SEO';
 export default function Cookies() {
   return (
     <>
-      <SEO title="Polityka cookies" description="Informacje o plikach cookies w serwisie HairCare Comparator." />
+      <SEO title="Polityka cookies" description="Informacje o plikach cookies w serwisie Włosowa.pl." />
       <Header />
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Polityka cookies</h1>
@@ -18,7 +18,7 @@ export default function Cookies() {
 
           <section>
             <h2 className="text-lg font-semibold text-gray-900 mb-2">Jak używamy cookies?</h2>
-            <p>HairCare Comparator używa localStorage (technologia podobna do cookies) do przechowywania:</p>
+            <p>Włosowa.pl używa localStorage (technologia podobna do cookies) do przechowywania:</p>
             <ul className="list-disc ml-6 mt-2 space-y-1">
               <li>Twoich preferencji włosowych (wyniki quizu)</li>
               <li>Ustawień filtrów</li>

@@ -6,7 +6,7 @@ import SEO from '../components/SEO';
 export default function Affiliate() {
   return (
     <>
-      <SEO title="Współpraca affiliate" description="Informacje o programie afiliacyjnym HairCare Comparator." />
+      <SEO title="Współpraca affiliate" description="Informacje o programie afiliacyjnym Włosowa.pl." />
       <Header />
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Współpraca affiliate</h1>
@@ -14,7 +14,7 @@ export default function Affiliate() {
         <div className="space-y-6 text-gray-600 leading-relaxed">
           <section>
             <h2 className="text-lg font-semibold text-gray-900 mb-2">Jak zarabiamy?</h2>
-            <p>HairCare Comparator jest darmowym narzędziem. Utrzymujemy się dzięki programom afiliacyjnym — kiedy klikniesz w link do sklepu i dokonasz zakupu, otrzymujemy małą prowizję. Nie wpływa to na cenę produktu dla Ciebie.</p>
+            <p>Włosowa.pl jest darmowym narzędziem. Utrzymujemy się dzięki programom afiliacyjnym — kiedy klikniesz w link do sklepu i dokonasz zakupu, otrzymujemy małą prowizję. Nie wpływa to na cenę produktu dla Ciebie.</p>
           </section>
 
           <section>
