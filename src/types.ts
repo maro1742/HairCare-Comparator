@@ -3,7 +3,7 @@ export interface Product {
   slug: string;
   brand: string;
   name: string;
-  category: 'shampoo' | 'conditioner' | 'mask' | 'serum' | 'scalp_tonic' | 'supplement' | 'styling' | 'other';
+  category: 'shampoo' | 'conditioner' | 'mask' | 'serum' | 'oil' | 'milk' | 'scalp_tonic' | 'supplement' | 'styling' | 'other';
 
   hair_goals: HairGoal[];
   hair_type_fit: HairType[];
@@ -22,7 +22,7 @@ export interface Product {
   // Technical comparison fields
   volume_ml?: number;
   hair_porosity?: 'LOW' | 'MEDIUM' | 'HIGH';
-  category_type?: 'shampoo' | 'conditioner' | 'mask' | 'serum';
+  category_type?: 'shampoo' | 'conditioner' | 'mask' | 'serum' | 'oil' | 'milk';
   peh_ratio?: string;
   recommended_season?: 'all' | 'winter' | 'summer' | 'spring_fall';
 
@@ -74,8 +74,8 @@ export interface Filters {
   scalp_types: ScalpType[];
   avoid_ingredients: FreeFrom[];
   vegan_only: boolean;
-  price_min: number;
-  price_max: number;
+  price_min: number | '';
+  price_max: number | '';
   brands: string[];
   sort_by: 'match' | 'price' | 'popularity';
   hair_length?: 'short' | 'medium' | 'long';

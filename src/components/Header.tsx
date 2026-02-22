@@ -99,7 +99,7 @@ export default function Header() {
           </Link>
 
           <nav className="flex items-center gap-8">
-            <Link to="/porownaj" className="text-sm font-bold text-gray-600 hover:text-primary transition-colors uppercase tracking-wider">Porównywarka</Link>
+            <Link to="/porownaj?defaults=true" className="text-sm font-bold text-gray-600 hover:text-primary transition-colors uppercase tracking-wider">Porównywarka</Link>
             <Link to="/quiz" className="text-sm font-bold text-gray-600 hover:text-primary transition-colors uppercase tracking-wider">Quiz</Link>
             <Link to="/jak-dziala" className="text-sm font-bold text-gray-600 hover:text-primary transition-colors uppercase tracking-wider">Jak to działa</Link>
           </nav>

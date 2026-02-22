@@ -10,6 +10,7 @@ interface StoreState {
   setFilters: (filters: Filters) => void;
   updateFilter: <K extends keyof Filters>(key: K, value: Filters[K]) => void;
   clearFilters: () => void;
+  resetAllFilters: () => void;
 
   comparisonProductIds: string[];
   addToComparison: (productId: string) => void;
@@ -23,7 +24,7 @@ interface StoreState {
 }
 
 const DEFAULT_FILTERS: Filters = {
-  categories: [],
+  categories: ['shampoo', 'conditioner', 'mask', 'serum', 'oil', 'milk'],
   hair_goals: [],
   hair_types: [],
   scalp_types: [],
@@ -32,7 +33,7 @@ const DEFAULT_FILTERS: Filters = {
   price_min: 10,
   price_max: 500,
   brands: [],
-  sort_by: 'match',
+  sort_by: 'popularity',
   hair_length: 'medium',
   hair_porosity: 'medium'
 };
@@ -50,6 +51,7 @@ export const useStore = create<StoreState>()(
           filters: { ...state.filters, [key]: value }
         })),
       clearFilters: () => set({ filters: DEFAULT_FILTERS }),
+      resetAllFilters: () => set({ filters: { ...DEFAULT_FILTERS, categories: [], price_min: '', price_max: '' } }),
 
       comparisonProductIds: [],
       addToComparison: (productId) =>

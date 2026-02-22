@@ -4,7 +4,7 @@ import { HAIR_GOAL_LABELS, HAIR_TYPE_LABELS, SCALP_TYPE_LABELS, FREE_FROM_LABELS
 export default function FilterChips() {
   const filters = useStore((s) => s.filters);
   const updateFilter = useStore((s) => s.updateFilter);
-  const clearFilters = useStore((s) => s.clearFilters);
+  const resetAllFilters = useStore((s) => s.resetAllFilters);
 
   const chips: { label: string; onRemove: () => void }[] = [];
 
@@ -44,7 +44,7 @@ export default function FilterChips() {
   });
 
   if (filters.vegan_only) {
-    chips.push({ label: 'Weganskie', onRemove: () => updateFilter('vegan_only', false) });
+    chips.push({ label: 'Wegańskie', onRemove: () => updateFilter('vegan_only', false) });
   }
 
   if (chips.length === 0) return null;
@@ -61,8 +61,8 @@ export default function FilterChips() {
           </button>
         </span>
       ))}
-      <button onClick={clearFilters} className="text-xs text-gray-500 hover:text-teal-600 ml-1">
-        Wyczysc wszystko
+      <button onClick={resetAllFilters} className="text-xs text-gray-500 hover:text-teal-600 ml-1">
+        Wyczyść wszystko
       </button>
     </div>
   );

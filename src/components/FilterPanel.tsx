@@ -13,7 +13,7 @@ interface FilterPanelProps {
 export default function FilterPanel({ availableBrands, hideHeader }: FilterPanelProps) {
   const filters = useStore((s) => s.filters);
   const updateFilter = useStore((s) => s.updateFilter);
-  const clearFilters = useStore((s) => s.clearFilters);
+  const resetAllFilters = useStore((s) => s.resetAllFilters);
 
   const toggleArrayFilter = <T extends string>(key: 'categories' | 'hair_goals' | 'hair_types' | 'scalp_types' | 'avoid_ingredients' | 'brands', value: T) => {
     const current = filters[key] as string[];
@@ -28,7 +28,7 @@ export default function FilterPanel({ availableBrands, hideHeader }: FilterPanel
       {!hideHeader && (
         <div className="flex items-center justify-between">
           <h3 className="font-semibold text-gray-900">Filtry</h3>
-          <button onClick={clearFilters} className="text-sm text-teal-600 hover:text-teal-700">Wyczyść</button>
+          <button onClick={resetAllFilters} className="text-sm text-teal-600 hover:text-teal-700">Wyczyść</button>
         </div>
       )}
 
@@ -50,7 +50,7 @@ export default function FilterPanel({ availableBrands, hideHeader }: FilterPanel
           <input
             type="number"
             value={filters.price_min}
-            onChange={(e) => updateFilter('price_min', Number(e.target.value))}
+            onChange={(e) => updateFilter('price_min', e.target.value === '' ? '' : Number(e.target.value))}
             className="w-20 px-2 py-1 text-sm border border-gray-200 rounded-lg"
             min={0}
           />
@@ -58,7 +58,7 @@ export default function FilterPanel({ availableBrands, hideHeader }: FilterPanel
           <input
             type="number"
             value={filters.price_max}
-            onChange={(e) => updateFilter('price_max', Number(e.target.value))}
+            onChange={(e) => updateFilter('price_max', e.target.value === '' ? '' : Number(e.target.value))}
             className="w-20 px-2 py-1 text-sm border border-gray-200 rounded-lg"
             min={0}
           />

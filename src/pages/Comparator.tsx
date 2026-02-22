@@ -21,6 +21,15 @@ export default function Comparator() {
   const [searchParams] = useSearchParams();
   const filters = useStore((s) => s.filters);
   const clearFilters = useStore((s) => s.clearFilters);
+  const resetAllFilters = useStore((s) => s.resetAllFilters);
+
+  useEffect(() => {
+    if (searchParams.get('defaults') === 'true') {
+      clearFilters();
+      // Usunięcie parametru po zaaplikowaniu, aby odświeżenie strony nie resetowało znów filtrów
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, [searchParams, clearFilters]);
 
   useEffect(() => {
     async function loadProducts() {
@@ -49,12 +58,12 @@ export default function Comparator() {
       filters.scalp_types.length > 0 ||
       filters.avoid_ingredients.length > 0 ||
       filters.vegan_only ||
-      filters.price_min > 10 ||
-      filters.price_max < 500;
+      (filters.price_min !== '' && filters.price_min > 10) ||
+      (filters.price_max !== '' && filters.price_max < 500);
 
     if (!searchQuery && !hasActiveFilters) {
       return [...products]
-        .sort((a, b) => b.popularity - a.popularity)
+        .sort((a, b) => (b.rating?.count ?? b.popularity) - (a.rating?.count ?? a.popularity))
         .slice(0, 10);
     }
 
@@ -64,8 +73,14 @@ export default function Comparator() {
       if (filters.categories.length > 0 && !filters.categories.includes(p.category)) return false;
       if (filters.vegan_only && !p.claims.includes('vegan')) return false;
 
+      if (filters.hair_goals.length > 0 && !filters.hair_goals.some(g => p.hair_goals.includes(g))) return false;
+      if (filters.hair_types.length > 0 && !filters.hair_types.some(t => p.hair_type_fit.includes(t))) return false;
+      if (filters.scalp_types.length > 0 && !filters.scalp_types.some(s => p.scalp_fit.includes(s))) return false;
+
       const bestPrice = Math.min(...p.offers.map(o => o.price_pln));
-      if (bestPrice < filters.price_min || bestPrice > filters.price_max) return false;
+      const minPrice = filters.price_min === '' ? 0 : filters.price_min;
+      const maxPrice = filters.price_max === '' ? Infinity : filters.price_max;
+      if (bestPrice < minPrice || bestPrice > maxPrice) return false;
 
       const score = matchScore(p, filters, searchQuery);
       if (score <= -900) return false;
@@ -76,7 +91,7 @@ export default function Comparator() {
     if (filters.sort_by === 'price') {
       result.sort((a, b) => Math.min(...a.offers.map(o => o.price_pln)) - Math.min(...b.offers.map(o => o.price_pln)));
     } else if (filters.sort_by === 'popularity') {
-      result.sort((a, b) => b.popularity - a.popularity);
+      result.sort((a, b) => (b.rating?.count ?? b.popularity) - (a.rating?.count ?? a.popularity));
     } else {
       result.sort((a, b) => matchScore(b, filters, searchQuery) - matchScore(a, filters, searchQuery));
     }
@@ -137,7 +152,7 @@ export default function Comparator() {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-4">
                     <h2 className="font-semibold text-gray-900">Filtry</h2>
-                    <button onClick={clearFilters} className="text-sm text-teal-600 hover:text-teal-700">Wyczyść</button>
+                    <button onClick={resetAllFilters} className="text-sm text-teal-600 hover:text-teal-700">Wyczyść</button>
                   </div>
                   <button onClick={() => setFiltersOpen(false)} className="text-gray-500 hover:text-gray-700">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -158,7 +173,7 @@ export default function Comparator() {
             ) : filtered.length === 0 ? (
               <div className="text-center py-16">
                 <p className="text-gray-500 mb-2">Brak wyników — spróbuj poluzować filtry.</p>
-                <button onClick={() => useStore.getState().clearFilters()} className="text-sm text-teal-600 hover:text-teal-700">
+                <button onClick={() => useStore.getState().resetAllFilters()} className="text-sm text-teal-600 hover:text-teal-700">
                   Wyczyść filtry
                 </button>
               </div>

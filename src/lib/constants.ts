@@ -47,6 +47,8 @@ export const CATEGORY_LABELS: Record<string, string> = {
   conditioner: 'Odżywka',
   mask: 'Maska',
   serum: 'Serum',
+  oil: 'Olejek',
+  milk: 'Mleczko',
   scalp_tonic: 'Tonik do skóry głowy',
   supplement: 'Suplement',
   styling: 'Stylizacja',

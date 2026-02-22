@@ -154,7 +154,7 @@ export default function ProductCard({ product, position }: ProductCardProps) {
         </div>
 
         {/* Pricing & CTA Section */}
-        <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-50">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-6 pt-4 border-t border-gray-50">
           {/* 9. CENA */}
           <div className="flex flex-col">
             <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Cena od</span>
@@ -163,21 +163,21 @@ export default function ProductCard({ product, position }: ProductCardProps) {
             </span>
             {costPerApp !== null && (
               <div
-                className="text-[10px] sm:text-xs text-teal-600 font-bold mt-1 bg-teal-50 px-2 py-0.5 rounded-lg border border-teal-100 inline-flex items-center gap-1 cursor-help"
+                className="text-[10px] sm:text-xs text-teal-600 font-bold mt-1 bg-teal-50 px-2 py-0.5 rounded-lg border border-teal-100 inline-flex items-center gap-1 cursor-help self-start"
                 title="Szacowany koszt jednego użycia na podstawie ceny, pojemności produktu oraz wskazanej długości włosów."
               >
-                <span className="shrink-0">✨ Koszt na mycie:</span>
-                <span className="text-teal-700">{costPerApp.toFixed(2)} zł</span>
+                <span className="shrink-0">✨ Koszt jednego użycia:</span>
+                <span className="text-teal-700 whitespace-nowrap">{costPerApp.toFixed(2)} zł</span>
               </div>
             )}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-row items-center gap-2 w-full sm:w-auto mt-2 sm:mt-0">
 
             {/* 10. PRZYCISK SZCZEGÓŁY */}
             <Link
               to={`/produkt/${product.slug}`}
-              className="px-4 py-2.5 bg-gray-50 text-gray-700 text-xs font-black rounded-xl hover:bg-gray-100 transition-all border border-gray-200 uppercase tracking-wide"
+              className="flex-1 sm:flex-none flex items-center justify-center px-4 py-2.5 bg-gray-50 text-gray-700 text-xs font-black rounded-xl hover:bg-gray-100 transition-all border border-gray-200 uppercase tracking-wide text-center"
             >
               Szczegóły
             </Link>
@@ -188,10 +188,10 @@ export default function ProductCard({ product, position }: ProductCardProps) {
               target="_blank"
               rel="nofollow sponsored noopener"
               onClick={(e) => handleOutboundClick(e, bestOffer.merchant, bestOffer.price_pln)}
-              className="inline-flex items-center px-6 py-2.5 bg-primary text-white text-xs sm:text-sm font-black rounded-xl hover:bg-primary/90 transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5 transform active:scale-95 uppercase tracking-wider"
+              className="flex-[1.5] sm:flex-none inline-flex items-center justify-center px-4 sm:px-6 py-2.5 bg-primary text-white text-[11px] sm:text-sm font-black rounded-xl hover:bg-primary/90 transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5 transform active:scale-95 uppercase tracking-wider"
             >
               Do sklepu
-              <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="ml-1.5 w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </a>
