@@ -91,7 +91,14 @@ export default function Comparator() {
     if (filters.sort_by === 'price') {
       result.sort((a, b) => Math.min(...a.offers.map(o => o.price_pln)) - Math.min(...b.offers.map(o => o.price_pln)));
     } else if (filters.sort_by === 'popularity') {
-      result.sort((a, b) => (b.rating?.count ?? b.popularity) - (a.rating?.count ?? a.popularity));
+      result.sort((a, b) => {
+        const scoreA = matchScore(a, filters, searchQuery);
+        const scoreB = matchScore(b, filters, searchQuery);
+        if (Math.abs(scoreB - scoreA) >= 10) {
+          return scoreB - scoreA;
+        }
+        return (b.rating?.count ?? b.popularity) - (a.rating?.count ?? a.popularity);
+      });
     } else {
       result.sort((a, b) => matchScore(b, filters, searchQuery) - matchScore(a, filters, searchQuery));
     }

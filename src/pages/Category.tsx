@@ -40,7 +40,12 @@ export default function Category() {
       prods = prods.filter(p => p.offers.length > 0);
       prods.sort((a, b) => Math.min(...a.offers.map(o => o.price_pln)) - Math.min(...b.offers.map(o => o.price_pln)));
     } else if (filters.sort_by === 'popularity') {
-      prods.sort((a, b) => b.popularity - a.popularity);
+      prods.sort((a, b) => {
+        const scoreA = matchScore(a, filters, category?.name);
+        const scoreB = matchScore(b, filters, category?.name);
+        if (Math.abs(scoreB - scoreA) >= 10) return scoreB - scoreA;
+        return b.popularity - a.popularity;
+      });
     } else {
       prods.sort((a, b) => matchScore(b, filters, category?.name) - matchScore(a, filters, category?.name));
     }
