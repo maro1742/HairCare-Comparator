@@ -24,7 +24,7 @@ export default function MobileNav() {
         },
         {
             label: 'Produkty',
-            path: '/porownaj?defaults=true',
+            path: '/porownaj',
             icon: (
                 <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     {/* Outline of two product bottles */}

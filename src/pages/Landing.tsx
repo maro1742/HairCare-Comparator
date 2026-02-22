@@ -48,7 +48,7 @@ export default function Landing() {
                   Zrób quiz (30 sek)
                 </Link>
                 <Link
-                  to="/porownaj?defaults=true"
+                  to="/porownaj"
                   className="inline-flex items-center justify-center px-8 py-4 bg-white border border-primary/10 text-primary font-semibold rounded-2xl hover:bg-background transition-all shadow-sm hover:shadow-md"
                 >
                   Przejdź do porównywarki
