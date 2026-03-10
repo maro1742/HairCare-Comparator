@@ -1,6 +1,12 @@
 import { supabase } from '../lib/supabaseClient';
 import type { Product as DBProduct } from '../types/supabase';
 import type { Product as UIProduct, HairGoal, HairType, ScalpType } from '../types';
+import { GoogleGenAI } from '@google/genai';
+
+// Inicjalizacja klienta Gemini (wymaga klucza dla klienta lub proxy)
+// W środowisku produkcyjnym rekomendowane jest proxy przez własny backend by nie ujawniać klucza!
+const geminiApiKey = import.meta.env.VITE_GEMINI_API_KEY;
+const ai = geminiApiKey ? new GoogleGenAI({ apiKey: geminiApiKey }) : null;
 
 /**
  * Fetches products from the products_bielenda table, optionally filtered by category.
@@ -64,6 +70,76 @@ export async function getProductsByCategory(categoryName: string): Promise<any[]
 export async function searchProducts(query: string): Promise<DBProduct[]> {
     if (!query) return [];
 
+    let vectorResults: DBProduct[] = [];
+    let usedVectorSearch = false;
+
+    // 1. Zaczynamy od wyszukiwania wektorowego (RAG) jeśli mamy podpięty Gemini
+    if (ai) {
+        try {
+            console.log("Szukam wektora dla zapytania: ", query);
+            const embeddingResult = await ai.models.embedContent({
+                model: 'gemini-embedding-001',
+                contents: query,
+            });
+            if (!embeddingResult.embeddings || !embeddingResult.embeddings[0]) {
+                throw new Error("Pusta odpowiedź z modelu Embeddings");
+            }
+            const queryVector = embeddingResult.embeddings[0].values;
+            
+            // Wyszukujemy przez funkcję RPC
+            const { data, error } = await supabase.rpc('match_products', {
+                query_embedding: queryVector,
+                match_threshold: 0.5, // 50% podobieństwa
+                match_count: 20
+            });
+
+            if (error) {
+                console.error("Błąd wyszukiwania wektorowego (RPC):", error);
+            } else if (data && data.length > 0) {
+                // `match_products` zwraca (id, name, brand, table_source, similarity)
+                // Musimy dociągnąć pełne dane z konkretnych tabel dla wyników
+                usedVectorSearch = true;
+                
+                // Grupujemy IDki po tabeli źródłowej
+                const sourceMap = data.reduce((acc: any, row: any) => {
+                    if (!acc[row.table_source]) acc[row.table_source] = [];
+                    acc[row.table_source].push(row.id);
+                    return acc;
+                }, {});
+
+                // Pobieramy pełne produkty asynchronicznie
+                const fullDocsPromises = Object.keys(sourceMap).map(async (table) => {
+                    const { data: fullDocs } = await supabase
+                        .from(table)
+                        .select('*')
+                        .in('id', sourceMap[table]);
+                    return fullDocs || [];
+                });
+                
+                const docsMatrix = await Promise.all(fullDocsPromises);
+                vectorResults = docsMatrix.flat() as DBProduct[];
+                
+                // Sortujemy wg podobieństwa z powrotem
+                vectorResults.sort((a, b) => {
+                    const scoreA = data.find((d:any) => d.id === a.id)?.similarity || 0;
+                    const scoreB = data.find((d:any) => d.id === b.id)?.similarity || 0;
+                    return scoreB - scoreA;
+                });
+                
+                console.log(`Znaleziono (wektorami): ${vectorResults.length} produktów!`);
+            }
+        } catch (err) {
+            console.error("Błąd podczas odpytywania Gemini dla szukania wektorowego. Spadam do szukania klasycznego.", err);
+        }
+    }
+
+    // Zwracamy wektorowe wyniki jeśli poszło poprawnie
+    if (usedVectorSearch && vectorResults.length > 0) {
+        return vectorResults;
+    }
+
+    // 2. FALLBACK (Klasyczne szukanie ILIKE po polach tekstowych)
+    console.log("Fallback: Wyszukiwanie tradycyjne ILIKE...");
     const tables = ['products_bielenda', 'products_dsd_deluxe', 'products_natura', 'products_ceneo', 'products_insight'];
     const results = await Promise.all(tables.map(async (table) => {
         const { data, error } = await supabase
@@ -146,14 +222,14 @@ export function mapToUIProduct(p: DBProduct): UIProduct {
     const rawDesc = p.description || '';
     let inci = p.inci || '';
     if (!inci && (rawDesc.toLowerCase().includes('inci') || rawDesc.toLowerCase().includes('skład') || rawDesc.toLowerCase().includes('ingredients'))) {
-        const match = rawDesc.match(/(?:\bINCI\b|Skład \(INCI\)|Skład|Ingredients):?\s*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i);
+        const match = rawDesc.match(/(?:\bINCI\b|\bSkład \(INCI\)\b|\bSkład\b|\bSkładniki\b|\bIngredients\b):?\s*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i);
         if (match) inci = match[1].replace(/<[^>]+>/g, ' ').trim();
     }
 
     // Attempt to extract usage if missing
     let usage = p.usage || '';
     if (!usage && (rawDesc.toLowerCase().includes('stosowania') || rawDesc.toLowerCase().includes('użycia') || rawDesc.toLowerCase().includes('aplikacja'))) {
-        const match = rawDesc.match(/(?:Sposób użycia|Stosowanie|Aplikacja|Jak używać):?\s*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i);
+        const match = rawDesc.match(/(?:\bSposób użycia\b|\bStosowanie\b|\bAplikacja\b|\bJak używać\b):?\s*([\s\S]*?)(?=<br|<p|<\/p|###|$)/i);
         if (match) usage = match[1].replace(/<[^>]+>/g, ' ').trim();
     }
 
@@ -191,12 +267,19 @@ export function mapToUIProduct(p: DBProduct): UIProduct {
         claims: [],
         inci: inci || 'Informacja o składzie w opisie produktu.',
         ingredient_flags: {
-            has_silicones: false,
-            has_sulfates: false,
+            has_silicones: p.has_silicones || false,
+            has_sulfates: p.has_sulfates || false,
             has_parabens: false,
             has_drying_alcohols: false,
             has_fragrance: false
         },
+        has_proteins: p.has_proteins,
+        has_humectants: p.has_humectants,
+        has_emollients: p.has_emollients,
+        is_cg_approved: p.is_cg_approved,
+        peh_balance: p.peh_balance,
+        key_ingredients: typeof p.key_ingredients === 'string' ? JSON.parse(p.key_ingredients) : p.key_ingredients,
+        simplified_data: typeof p.simplified_data === 'string' ? JSON.parse(p.simplified_data) : p.simplified_data,
         images: p.image_url ? [p.image_url] : [],
         popularity: 70,
         cosmetic_function: p.cosmetic_function || 'Regeneracja i pielęgnacja włosów.',
