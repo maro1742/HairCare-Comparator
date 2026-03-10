@@ -35,7 +35,8 @@ const DEFAULT_FILTERS: Filters = {
   brands: [],
   sort_by: 'popularity',
   hair_length: 'medium',
-  hair_porosity: 'medium'
+  hair_porosity: 'medium',
+  peh_balance: []
 };
 
 export const useStore = create<StoreState>()(

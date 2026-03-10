@@ -10,7 +10,7 @@ import StarRating from '../components/StarRating';
 import ComparisonWidget from '../components/ComparisonWidget';
 import PEHRadarChart from '../components/PEHRadarChart';
 import ProductBundles from '../components/ProductBundles';
-import { CLAIM_LABELS, FREE_FROM_LABELS } from '../lib/constants';
+import { CLAIM_LABELS } from '../lib/constants';
 import { useStore } from '../store/useStore';
 import { generateWhyMatchesBullets } from '../lib/scoring';
 import { trackEvents } from '../lib/track';
@@ -19,12 +19,24 @@ import { calculateAppCost } from '../utils/calculateAppCost';
 import { parsePEHFromDescription } from '../utils/pehParser';
 import type { Product as UIProduct } from '../types';
 
+// Helper to add spaces before uppercase letters that follow lowercase letters 
+// (e.g. "regeneracji.Właściwości" -> "regeneracji. Właściwości")
+function addMissingSpaces(text: string) {
+  if (!text) return '';
+  return text
+    // Add space after period if followed by letter
+    .replace(/\.([a-zA-ZąćęłńóśźżA-ZĄĆĘŁŃÓŚŹŻ])/g, '. $1')
+    // Add space before camelCase-like joined words (lowercase followed by Uppercase)
+    .replace(/([a-ząćęłńóśźż])([A-ZĄĆĘŁŃÓŚŹŻ])/g, '$1 $2');
+}
+
 // Helper to format raw text into paragraphs and list items
 function FormatText({ text }: { text: string }) {
   if (!text) return null;
 
   // Split by common separators (newlines, bullet points)
-  const sections = text.split(/\n+/);
+  const cleanText = addMissingSpaces(text);
+  const sections = cleanText.split(/\n+/);
 
   return (
     <div className="space-y-4">
@@ -171,7 +183,17 @@ export default function Product() {
   }
 
   const claimBadges = product.claims.map(c => CLAIM_LABELS[c]).filter(Boolean);
-  const freeBadges = product.free_from.map(f => FREE_FROM_LABELS[f]).filter(Boolean);
+  
+  const freeBadges: string[] = [];
+  if (product.ingredient_flags?.has_silicones === false) freeBadges.push('Bez silikonów');
+  if (product.ingredient_flags?.has_sulfates === false) freeBadges.push('Bez mocnych siarczanów');
+  if (product.ingredient_flags?.has_parabens === false) freeBadges.push('Bez parabenów');
+
+  const pehBadges: string[] = [];
+  if (product.has_proteins) pehBadges.push('Proteiny');
+  if (product.has_emollients) pehBadges.push('Emolienty');
+  if (product.has_humectants) pehBadges.push('Humektanty');
+  if (product.is_cg_approved) pehBadges.push('CG Approved 🌸');
 
   // Cost per application calculation
   const bestOffer = product.offers.reduce((a, b) => a.price_pln < b.price_pln ? a : b);
@@ -303,6 +325,11 @@ export default function Product() {
                       {b}
                     </span>
                   ))}
+                  {pehBadges.map((b, i) => (
+                    <span key={i} className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-xs font-bold border border-blue-100 shadow-sm">
+                      {b}
+                    </span>
+                  ))}
                 </div>
 
                 {/* Match Section banner */}
@@ -365,14 +392,65 @@ export default function Product() {
                 <div className="bg-accent/5 rounded-2xl p-6 border border-accent/10">
                   <h2 className="text-xs font-black text-accent-dark uppercase tracking-widest mb-3">Główne działanie</h2>
                   <p className="text-sm text-gray-700 leading-relaxed font-medium italic">
-                    {product.cosmetic_function}
+                    {addMissingSpaces(product.cosmetic_function)}
                   </p>
                 </div>
               </section>
             )}
 
             {/* 2. Opis produktu */}
-            {cleanDescription && (
+            {product.simplified_data && product.simplified_data.benefits && product.simplified_data.key_ingredients ? (
+              <section className="product-simplified-card space-y-8">
+                {/* OPIS PRODUKTU */}
+                <div className="product-benefits">
+                  <h2 className="text-xl font-black text-gray-900 mb-4 flex items-center gap-2">
+                    Korzyści dla Twoich włosów
+                  </h2>
+                  <ul className="space-y-4 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                    {product.simplified_data.benefits.map((benefit, idx) => {
+                      // Oddzielamy pierwszą emotikonkę od reszty tekstu (zakładając strukturę 💧 **Prt:** Opis)
+                      const emojiMatch = benefit.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|\S)\s+(.*)/);
+                      const icon = emojiMatch ? emojiMatch[1] : '✨';
+                      const text = emojiMatch ? emojiMatch[2] : benefit;
+
+                      // Prost parsowanie boldów markdown (nieidealne, ale wystarczy do tego formatu)
+                      const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+                      return (
+                        <li key={idx} className="flex items-start gap-4 text-sm text-gray-700 leading-relaxed">
+                          <span className="text-xl leading-none mt-0.5" role="presentation">{icon}</span>
+                          <span dangerouslySetInnerHTML={{ __html: formattedText }} />
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+
+                {/* ANALIZA INCI */}
+                <div className="product-inci-analysis">
+                  <h2 className="text-xl font-black text-gray-900 mb-4 flex items-center gap-2">
+                    Kluczowe składniki aktywne
+                  </h2>
+                  <ul className="space-y-3 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                    {product.simplified_data.key_ingredients.map((ing, idx) => {
+                      // Split po myślniku jeśli występuje ("Składnik - Funkcja (szczegóły)")
+                      const parts = ing.split(/—|-/);
+                      const name = parts[0].trim();
+                      const desc = parts.slice(1).join('-').trim();
+
+                      return (
+                        <li key={idx} className="flex items-start gap-3 text-sm text-gray-700">
+                          <span className="mt-1.5 w-1.5 h-1.5 bg-primary rounded-full shrink-0" />
+                          <span>
+                            <strong>{name}</strong> {desc && `— ${desc}`}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </section>
+            ) : cleanDescription && (
               <section>
                 <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">O produkcie</h2>
                 <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">

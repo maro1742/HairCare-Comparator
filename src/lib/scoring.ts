@@ -125,12 +125,13 @@ export function generateWhyMatchesBullets(product: Product, filters: Filters): s
   if (filters.avoid_ingredients.length > 0) {
     const freeLabels: Record<string, string> = {
       silicones: 'bez silikonów — łatwiejsze domywanie',
-      sulfates: 'bez sulfatów — delikatne czyszczenie',
-      parabens: 'bez parabenów — naturalniejsza formuła',
+      sulfates: 'bez mocnych siarczanów — delikatne czyszczenie',
+      parabens: 'bez parabenów',
       drying_alcohols: 'bez wysuszających alkoholi'
     };
     filters.avoid_ingredients.forEach(ing => {
-      if (product.free_from.includes(ing) && freeLabels[ing]) {
+      const flagKey = `has_${ing}` as keyof typeof product.ingredient_flags;
+      if (product.ingredient_flags[flagKey] === false && freeLabels[ing]) {
         bullets.push(freeLabels[ing]);
       }
     });

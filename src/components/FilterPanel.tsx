@@ -15,13 +15,18 @@ export default function FilterPanel({ availableBrands, hideHeader }: FilterPanel
   const updateFilter = useStore((s) => s.updateFilter);
   const resetAllFilters = useStore((s) => s.resetAllFilters);
 
-  const toggleArrayFilter = <T extends string>(key: 'categories' | 'hair_goals' | 'hair_types' | 'scalp_types' | 'avoid_ingredients' | 'brands', value: T) => {
+  const toggleArrayFilter = <T extends string>(key: 'categories' | 'hair_goals' | 'hair_types' | 'scalp_types' | 'avoid_ingredients' | 'brands' | 'peh_balance', value: T) => {
     const current = filters[key] as string[];
     const updated = current.includes(value)
       ? current.filter(v => v !== value)
       : [...current, value];
     updateFilter(key, updated as never);
   };
+
+  const showPehFilter = filters.categories.length === 0 || 
+    filters.categories.includes('conditioner') || 
+    filters.categories.includes('mask') || 
+    filters.categories.includes('serum');
 
   return (
     <div className="space-y-6">
@@ -81,6 +86,42 @@ export default function FilterPanel({ availableBrands, hideHeader }: FilterPanel
           ))}
         </div>
       </div>
+
+      {showPehFilter && (
+        <div className="bg-gray-50/50 -mx-4 px-4 py-4 border-y border-gray-100/60 lg:rounded-xl lg:px-4 lg:mx-0 lg:border">
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="text-sm font-bold text-gray-900">Równowaga PEH</h4>
+            <div className="group relative">
+              <span className="text-gray-400 hover:text-gray-600 cursor-help">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </span>
+              <div className="absolute right-0 bottom-full mb-2 w-64 bg-gray-900 text-white text-[11px] p-3 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                Opcja szuka w bazie produktów spełniających wybrane kryteria (np. P - Proteiny, E - Emolienty, H - Humektanty). Zaznaczenie wielu zadziała logicznie (np. P+E).
+              </div>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            {[
+              { id: 'P', label: 'Proteiny', color: 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100', active: 'bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-200' },
+              { id: 'E', label: 'Emolienty', color: 'bg-green-50 text-green-700 border-green-200 hover:bg-green-100', active: 'bg-green-600 text-white border-green-600 shadow-sm shadow-green-200' },
+              { id: 'H', label: 'Humektanty', color: 'bg-orange-50 text-orange-700 border-orange-200 hover:bg-orange-100', active: 'bg-orange-500 text-white border-orange-500 shadow-sm shadow-orange-200' }
+            ].map((btn) => {
+              const isActive = filters.peh_balance.includes(btn.id);
+              return (
+                <button
+                  key={btn.id}
+                  onClick={() => toggleArrayFilter('peh_balance', btn.id)}
+                  className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold border transition-all duration-200 ${isActive ? btn.active : btn.color}`}
+                >
+                  {btn.id}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       <div>
         <h4 className="text-sm font-medium text-gray-700 mb-2">Problem / Cel</h4>

@@ -13,11 +13,21 @@ export interface Product {
 
   inci: string;
   ingredient_flags: IngredientFlags;
+  has_proteins?: boolean;
+  has_humectants?: boolean;
+  has_emollients?: boolean;
+  is_cg_approved?: boolean;
+  peh_balance?: string;
+  key_ingredients?: string[];
   images: string[];
   popularity: number;
   cosmetic_function?: string;
   usage?: string;
   ingredient_categories?: string[];
+  simplified_data?: {
+    benefits?: string[];
+    key_ingredients?: string[];
+  };
 
   // Technical comparison fields
   volume_ml?: number;
@@ -80,6 +90,7 @@ export interface Filters {
   sort_by: 'match' | 'price' | 'popularity';
   hair_length?: 'short' | 'medium' | 'long';
   hair_porosity?: 'low' | 'medium' | 'high';
+  peh_balance: string[];
 }
 
 export interface AnalyticsEvent {

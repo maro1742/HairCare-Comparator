@@ -23,6 +23,7 @@ export default function QuizResults({ products, profile, onRestart }: QuizResult
     price_max: 999,
     brands: [],
     sort_by: 'match',
+    peh_balance: [],
   };
 
   const scored = products

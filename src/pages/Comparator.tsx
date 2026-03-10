@@ -58,6 +58,7 @@ export default function Comparator() {
       filters.scalp_types.length > 0 ||
       filters.avoid_ingredients.length > 0 ||
       filters.vegan_only ||
+      filters.peh_balance.length > 0 ||
       (filters.price_min !== '' && filters.price_min > 10) ||
       (filters.price_max !== '' && filters.price_max < 500);
 
@@ -76,6 +77,15 @@ export default function Comparator() {
       if (filters.hair_goals.length > 0 && !filters.hair_goals.some(g => p.hair_goals.includes(g))) return false;
       if (filters.hair_types.length > 0 && !filters.hair_types.some(t => p.hair_type_fit.includes(t))) return false;
       if (filters.scalp_types.length > 0 && !filters.scalp_types.some(s => p.scalp_fit.includes(s))) return false;
+
+      // Filtr PEH logic
+      if (filters.peh_balance.length > 0) {
+        if (!p.peh_balance) return false;
+        
+        // Ensure ALL selected PEH letters are available in product's peh_balance string
+        const hasAllSelected = filters.peh_balance.every(letter => p.peh_balance?.includes(letter));
+        if (!hasAllSelected) return false;
+      }
 
       const bestPrice = Math.min(...p.offers.map(o => o.price_pln));
       const minPrice = filters.price_min === '' ? 0 : filters.price_min;
