@@ -23,10 +23,11 @@ export default function FilterPanel({ availableBrands, hideHeader }: FilterPanel
     updateFilter(key, updated as never);
   };
 
-  const showPehFilter = filters.categories.length === 0 || 
-    filters.categories.includes('conditioner') || 
-    filters.categories.includes('mask') || 
-    filters.categories.includes('serum');
+  const showPehFilter = false; // Tymczasowo wstrzymane: 
+  // filters.categories.length === 0 || 
+  // filters.categories.includes('conditioner') || 
+  // filters.categories.includes('mask') || 
+  // filters.categories.includes('serum');
 
   return (
     <div className="space-y-6">
