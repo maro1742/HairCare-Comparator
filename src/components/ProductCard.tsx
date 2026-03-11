@@ -21,6 +21,7 @@ export default function ProductCard({ product, position }: ProductCardProps) {
   const isInComparison = useStore((s) => s.isInComparison(product.id));
   const comparisonCount = useStore((s) => s.comparisonProductIds.length);
   const hairLength = useStore((s) => s.filters.hair_length || 'medium');
+  const pehFilter = useStore((s) => s.filters.peh_balance || []);
 
   const bestOffer = product.offers.reduce((a, b) => a.price_pln < b.price_pln ? a : b);
 
@@ -136,15 +137,15 @@ export default function ProductCard({ product, position }: ProductCardProps) {
                 if (peh.proteins === 0 && peh.emollients === 0 && peh.humectants === 0) return null;
                 return (
                   <div
-                    className="flex items-center gap-1.5 px-3 py-1 bg-gray-50 rounded-full border border-gray-100 text-[10px] font-black uppercase tracking-wider cursor-help"
+                    className="flex items-center gap-1.5 px-3 py-1 bg-gray-50 rounded-full border border-gray-100 text-[10px] font-black uppercase tracking-wider cursor-help my-0.5"
                     title="Analiza składu na podstawie opisu: P (Proteiny) – odbudowa, E (Emolienty) – wygładzenie i ochrona, H (Humektanty) – nawilżenie."
                   >
                     <span className="text-gray-400">PEH:</span>
-                    <span className="text-blue-600">P: {peh.proteins}%</span>
+                    <span className={`inline-block transition-all duration-300 ${pehFilter.includes('P') ? 'text-blue-700 bg-blue-100 px-2 py-0.5 rounded-md shadow-sm transform scale-110 z-10' : 'text-blue-600'}`}>P: {peh.proteins}%</span>
                     <span className="text-gray-300">|</span>
-                    <span className="text-green-600">E: {peh.emollients}%</span>
+                    <span className={`inline-block transition-all duration-300 ${pehFilter.includes('E') ? 'text-green-700 bg-green-100 px-2 py-0.5 rounded-md shadow-sm transform scale-110 z-10' : 'text-green-600'}`}>E: {peh.emollients}%</span>
                     <span className="text-gray-300">|</span>
-                    <span className="text-orange-600">H: {peh.humectants}%</span>
+                    <span className={`inline-block transition-all duration-300 ${pehFilter.includes('H') ? 'text-orange-700 bg-orange-100 px-2 py-0.5 rounded-md shadow-sm transform scale-110 z-10' : 'text-orange-600'}`}>H: {peh.humectants}%</span>
                   </div>
                 );
               })()

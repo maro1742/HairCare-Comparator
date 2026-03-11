@@ -16,18 +16,18 @@ export default function FilterPanel({ availableBrands, hideHeader }: FilterPanel
   const resetAllFilters = useStore((s) => s.resetAllFilters);
 
   const toggleArrayFilter = <T extends string>(key: 'categories' | 'hair_goals' | 'hair_types' | 'scalp_types' | 'avoid_ingredients' | 'brands' | 'peh_balance', value: T) => {
-    const current = filters[key] as string[];
+    const current = (filters[key] || []) as string[];
     const updated = current.includes(value)
       ? current.filter(v => v !== value)
       : [...current, value];
     updateFilter(key, updated as never);
   };
 
-  const showPehFilter = false; // Tymczasowo wstrzymane: 
-  // filters.categories.length === 0 || 
-  // filters.categories.includes('conditioner') || 
-  // filters.categories.includes('mask') || 
-  // filters.categories.includes('serum');
+  const showPehFilter = 
+    filters.categories.length === 0 || 
+    filters.categories.includes('conditioner') || 
+    filters.categories.includes('mask') || 
+    filters.categories.includes('serum');
 
   return (
     <div className="space-y-6">
@@ -109,7 +109,7 @@ export default function FilterPanel({ availableBrands, hideHeader }: FilterPanel
               { id: 'E', label: 'Emolienty', color: 'bg-green-50 text-green-700 border-green-200 hover:bg-green-100', active: 'bg-green-600 text-white border-green-600 shadow-sm shadow-green-200' },
               { id: 'H', label: 'Humektanty', color: 'bg-orange-50 text-orange-700 border-orange-200 hover:bg-orange-100', active: 'bg-orange-500 text-white border-orange-500 shadow-sm shadow-orange-200' }
             ].map((btn) => {
-              const isActive = filters.peh_balance.includes(btn.id);
+              const isActive = (filters.peh_balance || []).includes(btn.id);
               return (
                 <button
                   key={btn.id}

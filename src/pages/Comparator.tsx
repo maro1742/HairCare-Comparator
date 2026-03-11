@@ -13,6 +13,7 @@ import type { Product } from '../types';
 import { matchScore } from '../lib/scoring';
 import { formatDate } from '../lib/format';
 import { trackEvents } from '../lib/track';
+import { parsePEHFromDescription } from '../utils/pehParser';
 
 export default function Comparator() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -58,7 +59,7 @@ export default function Comparator() {
       filters.scalp_types.length > 0 ||
       filters.avoid_ingredients.length > 0 ||
       filters.vegan_only ||
-      filters.peh_balance.length > 0 ||
+      (filters.peh_balance || []).length > 0 ||
       (filters.price_min !== '' && filters.price_min > 10) ||
       (filters.price_max !== '' && filters.price_max < 500);
 
@@ -79,11 +80,12 @@ export default function Comparator() {
       if (filters.scalp_types.length > 0 && !filters.scalp_types.some(s => p.scalp_fit.includes(s))) return false;
 
       // Filtr PEH logic
-      if (filters.peh_balance.length > 0) {
+      const activePeh = filters.peh_balance || [];
+      if (activePeh.length > 0) {
         if (!p.peh_balance) return false;
         
         // Ensure ALL selected PEH letters are available in product's peh_balance string
-        const hasAllSelected = filters.peh_balance.every(letter => p.peh_balance?.includes(letter));
+        const hasAllSelected = activePeh.every(letter => p.peh_balance?.includes(letter));
         if (!hasAllSelected) return false;
       }
 
@@ -110,7 +112,28 @@ export default function Comparator() {
         return (b.rating?.count ?? b.popularity) - (a.rating?.count ?? a.popularity);
       });
     } else {
-      result.sort((a, b) => matchScore(b, filters, searchQuery) - matchScore(a, filters, searchQuery));
+      const activePeh = filters.peh_balance || [];
+      if (activePeh.length > 0) {
+        const pehCache = new Map<string, ReturnType<typeof parsePEHFromDescription>>();
+        const getPeh = (p: Product) => {
+          if (!pehCache.has(p.id)) pehCache.set(p.id, parsePEHFromDescription(p.description || ''));
+          return pehCache.get(p.id)!;
+        };
+
+        result.sort((a, b) => {
+          const pehA = getPeh(a);
+          const pehB = getPeh(b);
+          let sumA = 0; let sumB = 0;
+          if (activePeh.includes('P')) { sumA += pehA.proteins; sumB += pehB.proteins; }
+          if (activePeh.includes('E')) { sumA += pehA.emollients; sumB += pehB.emollients; }
+          if (activePeh.includes('H')) { sumA += pehA.humectants; sumB += pehB.humectants; }
+          
+          if (sumB !== sumA) return sumB - sumA;
+          return matchScore(b, filters, searchQuery) - matchScore(a, filters, searchQuery);
+        });
+      } else {
+        result.sort((a, b) => matchScore(b, filters, searchQuery) - matchScore(a, filters, searchQuery));
+      }
     }
 
     return result;
