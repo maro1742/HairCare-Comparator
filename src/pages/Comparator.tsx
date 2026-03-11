@@ -220,10 +220,20 @@ export default function Comparator() {
             ) : (
               <>
                 <div className="space-y-4">
-                  {filtered.map((product, i) => (
+                  {filtered.slice(0, 50).map((product, i) => (
                     <ProductCard key={product.id} product={product} position={i} />
                   ))}
                 </div>
+                {filtered.length > 50 && (
+                  <div className="text-center mt-8 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                    <p className="text-sm font-medium text-gray-600">
+                      Wyświetlamy pierwsze 50 z {filtered.length} wyników.
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Użyj filtrów lub wyszukiwarki, aby lepiej dopasować kosmetyki do swoich potrzeb.
+                    </p>
+                  </div>
+                )}
                 <p className="text-xs text-gray-400 mt-6 text-center">
                   Dane aktualizowane na: {formatDate('2026-02-12')}
                 </p>
