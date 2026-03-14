@@ -98,3 +98,13 @@ export interface AnalyticsEvent {
   timestamp: number;
   payload?: Record<string, unknown>;
 }
+
+export interface SurveyAnswer {
+  questionId: number;
+  answer: boolean;
+}
+
+export interface SurveyResult {
+  answers: SurveyAnswer[];
+  submittedAt: string;
+}

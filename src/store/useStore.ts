@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { UserProfile, Filters, AnalyticsEvent } from '../types';
+import type { UserProfile, Filters, AnalyticsEvent, SurveyResult } from '../types';
 
 interface StoreState {
   userProfile: UserProfile | null;
@@ -17,6 +17,9 @@ interface StoreState {
   removeFromComparison: (productId: string) => void;
   clearComparison: () => void;
   isInComparison: (productId: string) => boolean;
+
+  surveyResults: SurveyResult[];
+  addSurveyResult: (result: SurveyResult) => void;
 
   analyticsQueue: AnalyticsEvent[];
   addAnalyticsEvent: (event: AnalyticsEvent) => void;
@@ -68,6 +71,12 @@ export const useStore = create<StoreState>()(
       clearComparison: () => set({ comparisonProductIds: [] }),
       isInComparison: (productId: string): boolean => get().comparisonProductIds.includes(productId),
 
+      surveyResults: [],
+      addSurveyResult: (result) =>
+        set((state) => ({
+          surveyResults: [...state.surveyResults, result]
+        })),
+
       analyticsQueue: [],
       addAnalyticsEvent: (event) =>
         set((state) => ({
@@ -80,7 +89,8 @@ export const useStore = create<StoreState>()(
       partialize: (state) => ({
         userProfile: state.userProfile,
         filters: state.filters,
-        comparisonProductIds: state.comparisonProductIds
+        comparisonProductIds: state.comparisonProductIds,
+        surveyResults: state.surveyResults
       })
     }
   )

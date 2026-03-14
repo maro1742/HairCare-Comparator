@@ -13,6 +13,7 @@ import Cookies from './pages/Cookies';
 import Affiliate from './pages/Affiliate';
 import PSEOTemplate from './pages/PSEOTemplate';
 import RankingHub from './pages/RankingHub';
+import Survey from './pages/Survey';
 import MobileNav from './components/MobileNav';
 
 import { supabase } from './lib/supabaseClient';
@@ -73,6 +74,7 @@ export default function App() {
           <Route path="/polityka-prywatnosci" element={<Privacy />} />
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/wspolpraca-affiliate" element={<Affiliate />} />
+          <Route path="/ankieta" element={<Survey />} />
         </Routes>
         <MobileNav />
       </div>
