@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import { useStore } from '../store/useStore';
+import { supabase } from '../lib/supabaseClient';
 import type { SurveyAnswer } from '../types';
 
 const QUESTIONS = [
@@ -33,6 +34,8 @@ export default function Survey() {
     4: null,
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const addSurveyResult = useStore((s) => s.addSurveyResult);
 
   const allAnswered = Object.values(answers).every((a) => a !== null);
@@ -41,7 +44,7 @@ export default function Survey() {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!allAnswered) return;
 
     const surveyAnswers: SurveyAnswer[] = QUESTIONS.map((q) => ({
@@ -49,12 +52,30 @@ export default function Survey() {
       answer: answers[q.id]!,
     }));
 
-    addSurveyResult({
-      answers: surveyAnswers,
-      submittedAt: new Date().toISOString(),
-    });
+    setIsSubmitting(true);
+    setError(null);
 
-    setSubmitted(true);
+    try {
+      // Zapisujemy do Supabase
+      const { error: dbError } = await supabase
+        .from('survey_results')
+        .insert([{ answers: surveyAnswers }]);
+
+      if (dbError) throw dbError;
+
+      // Zapisujemy też lokalnie w store (localStorage)
+      addSurveyResult({
+        answers: surveyAnswers,
+        submittedAt: new Date().toISOString(),
+      });
+
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error('Error saving survey:', err);
+      setError('Wystąpił błąd podczas zapisywania ankiety. Spróbuj ponownie.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -134,13 +155,26 @@ export default function Survey() {
           ))}
         </div>
 
+        {error && (
+          <div className="mt-4 p-4 bg-red-50 text-red-600 rounded-lg text-sm text-center border border-red-100">
+            {error}
+          </div>
+        )}
+
         <div className="mt-8 text-center">
           <button
             onClick={handleSubmit}
-            disabled={!allAnswered}
-            className="px-8 py-3 bg-teal-500 text-white font-medium rounded-lg hover:bg-teal-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            disabled={!allAnswered || isSubmitting}
+            className="px-8 py-3 bg-teal-500 text-white font-medium rounded-lg hover:bg-teal-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center mx-auto min-w-[200px]"
           >
-            Wyslij odpowiedzi
+            {isSubmitting ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                Przesyłanie...
+              </>
+            ) : (
+              'Wyślij odpowiedzi'
+            )}
           </button>
         </div>
 
