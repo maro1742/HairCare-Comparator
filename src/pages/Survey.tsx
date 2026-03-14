@@ -9,19 +9,19 @@ import type { SurveyAnswer } from '../types';
 const QUESTIONS = [
   {
     id: 1,
-    text: 'Czy regularnie stosujesz odzywke lub maske po kazdym myciu wlosow?',
+    text: 'Czy dobór produktu do porowatości włosów jest istotny?',
   },
   {
     id: 2,
-    text: 'Czy zwracasz uwage na sklad INCI kupowanych kosmetykow?',
+    text: 'Czy dobór produktu do długości włosów jest istotny?',
   },
   {
     id: 3,
-    text: 'Czy Twoje wlosy sa farbowane lub rozjasniane?',
+    text: 'Czy odpowiednio dobrany poziom wskaźnika PEH jest istotny?',
   },
   {
     id: 4,
-    text: 'Czy chcialabys/chcialbys otrzymywac spersonalizowane rekomendacje produktow?',
+    text: 'Czy koszt jednego użycia jest istotny?',
   },
 ];
 
