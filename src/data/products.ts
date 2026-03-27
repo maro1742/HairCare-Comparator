@@ -140,11 +140,12 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['sulfates', 'parabens'],
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Disodium Laureth Sulfosuccinate, Cocamidopropyl Betaine, Glycerin, Roucou Oil, Tocopherol, Citric Acid, Sodium Benzoate, Parfum',
-    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-oi/400/400'],
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/36671/36671-37672.jpg?lm=1764052242'],
     popularity: 95,
     is_promoted: true,
     promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
     offers: [
+      { merchant: 'cybersalon', price_pln: 195.00, url: 'https://cybersalon.pl/catalog/product/davines-oi-szampon-refill-do-wlosow-shampoo-oi-500-ml', last_checked: '2026-03-27' },
       { merchant: 'notino', price_pln: 109.00, url: 'https://example.com/out/notino/davines-oi?aff=demo123', last_checked: '2026-02-12' }
     ],
     updated_at: '2026-03-27'
@@ -373,11 +374,12 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['sulfates', 'parabens'],
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Cetearyl Alcohol, Glycerin, Roucou Oil, Tocopherol, Behentrimonium Chloride, Citric Acid, Parfum',
-    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-oi-cond/400/400'],
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/432/36671-37672.jpg?lm=1763395249'],
     popularity: 92,
     is_promoted: true,
     promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
     offers: [
+      { merchant: 'cybersalon', price_pln: 126.20, url: 'https://cybersalon.pl/catalog/product/davines-oi-odzywka-do-wlosow-conditioner-250-ml', last_checked: '2026-03-27' },
       { merchant: 'notino', price_pln: 115.00, url: 'https://example.com/out/notino/davines-oi-cond?aff=demo123', last_checked: '2026-02-12' }
     ],
     updated_at: '2026-03-27'
@@ -914,12 +916,13 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['sulfates', 'parabens'],
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Sodium C14-16 Olefin Sulfonate, Sodium Lauroyl Methyl Isethionate, Cocamidopropyl Betaine, Sodium PCA, Decyl Glucoside, Sodium Methyl 2-Sulfolaurate, Lauramidopropylamine Oxide, Glyceryl Oleate, Coco-Glucoside, Cucumis Melo Fruit Extract, Panthenol, Tocopherol, ...',
-    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-momo/400/400'],
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/6036/6036-34885.jpg?lm=1742493021'],
     popularity: 88,
     is_promoted: true,
     promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
     cosmetic_function: 'Nawilżający szampon do włosów suchych lub odwodnionych.',
     offers: [
+      { merchant: 'cybersalon', price_pln: 91.79, url: 'https://cybersalon.pl/catalog/product/davines-essential-haircare-szampon-do-wlosow-momo-shampoo-250-ml', last_checked: '2026-03-27' },
       { merchant: 'notino', price_pln: 105.00, url: 'https://example.com/out/notino/davines-momo?aff=demo123', last_checked: '2026-03-27' }
     ],
     updated_at: '2026-03-27'
@@ -936,12 +939,13 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens'],
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Cetearyl Alcohol, Glycerin, Cetrimonium Chloride, Behenyl Alcohol, Behentrimonium Chloride, Cucumis Melo Fruit Extract, Panthenol, Tocopherol, ...',
-    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-momo-cond/400/400'],
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/6071/6071-34912.jpg?lm=1742493030'],
     popularity: 86,
     is_promoted: true,
     promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
     cosmetic_function: 'Nawilżająca odżywka ułatwiająca rozczesywanie włosów suchych.',
     offers: [
+      { merchant: 'cybersalon', price_pln: 108.81, url: 'https://cybersalon.pl/catalog/product/davines-essential-haircare-odzywka-do-wlosow-momo-conditioner-250-ml', last_checked: '2026-03-27' },
       { merchant: 'notino', price_pln: 112.00, url: 'https://example.com/out/notino/davines-momo-cond?aff=demo123', last_checked: '2026-03-27' }
     ],
     updated_at: '2026-03-27'
@@ -958,12 +962,13 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['sulfates', 'parabens'],
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Disodium Laureth Sulfosuccinate, Glycerin, Sodium Cocoyl Isethionate, Sodium Lauroyl Methyl Isethionate, Cocamidopropyl Betaine, Olive Fruit Extract, ...',
-    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-love/400/400'],
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/442/442-32439.jpg?lm=1742492807'],
     popularity: 90,
     is_promoted: true,
     promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
     cosmetic_function: 'Szampon wygładzający do włosów puszących się i niesfornych.',
     offers: [
+      { merchant: 'cybersalon', price_pln: 91.99, url: 'https://cybersalon.pl/catalog/product/davines-essential-haircare-szampon-do-wlosow-love-smooth-shampoo-250-ml', last_checked: '2026-03-27' },
       { merchant: 'notino', price_pln: 108.00, url: 'https://example.com/out/notino/davines-love?aff=demo123', last_checked: '2026-03-27' }
     ],
     updated_at: '2026-03-27'
@@ -980,12 +985,13 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens'],
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Cetearyl Alcohol, Glycerin, Behentrimonium Chloride, Cetyl Alcohol, Dimethicone, Cetrimonium Chloride, Olive Fruit Extract, ...',
-    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-love-cond/400/400'],
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/441/441-33999.jpg?lm=1742492805'],
     popularity: 89,
     is_promoted: true,
     promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
     cosmetic_function: 'Odżywka wygładzająca ułatwiająca kontrolę nad niesfornymi włosami.',
     offers: [
+      { merchant: 'cybersalon', price_pln: 108.99, url: 'https://cybersalon.pl/catalog/product/davines-essential-haircare-odzywka-do-wlosow-love-smooth-conditioner-250-ml', last_checked: '2026-03-27' },
       { merchant: 'notino', price_pln: 115.00, url: 'https://example.com/out/notino/davines-love-cond?aff=demo123', last_checked: '2026-03-27' }
     ],
     updated_at: '2026-03-27'
@@ -1002,12 +1008,13 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['parabens'],
     claims: ['protein', 'cruelty_free'],
     inci: 'Aqua, Cetearyl Alcohol, Glycerin, Behentrimonium Chloride, Cetrimonium Chloride, Hydrolyzed Keratin, Tomato Fruit Extract, ...',
-    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-nounou/400/400'],
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/433/433-31909.jpg?lm=1742492801'],
     popularity: 94,
     is_promoted: true,
     promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
     cosmetic_function: 'Odżywcza maska do włosów mocno zniszczonych i po zabiegach.',
     offers: [
+      { merchant: 'cybersalon', price_pln: 117.00, url: 'https://cybersalon.pl/catalog/product/davines-essential-haircare-maska-do-wlosow-nounou-hair-mask-250-ml', last_checked: '2026-03-27' },
       { merchant: 'notino', price_pln: 145.00, url: 'https://example.com/out/notino/davines-nounou?aff=demo123', last_checked: '2026-03-27' }
     ],
     updated_at: '2026-03-27'
@@ -1024,13 +1031,234 @@ const RAW_PRODUCTS: RawProduct[] = [
     free_from: ['sulfates', 'parabens'],
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Sodium Lauroyl Methyl Isethionate, Sodium Olivamphoacetate, Sodium Lauroyl Sarcosinate, Caffeine, Peppermint Oil, ...',
-    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-energizing/400/400'],
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/497/497-32468.jpg?lm=1742492880'],
     popularity: 91,
     is_promoted: true,
     promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
     cosmetic_function: 'Szampon stymulujący do skóry głowy i włosów ze skłonnością do wypadania.',
     offers: [
+      { merchant: 'cybersalon', price_pln: 125.00, url: 'https://cybersalon.pl/catalog/product/davines-naturaltech-szampon-do-wlosow-energizing-shampoo-250-ml', last_checked: '2026-03-27' },
       { merchant: 'notino', price_pln: 125.00, url: 'https://example.com/out/notino/davines-energizing?aff=demo123', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: 'davines-oi-all-in-one-milk',
+    slug: 'davines-oi-all-in-one-milk',
+    brand: 'Davines',
+    name: 'OI All In One Milk',
+    category: 'serum',
+    hair_goals: ['frizz', 'dryness'],
+    hair_type_fit: ['thick', 'curly', 'fine', 'straight'],
+    scalp_fit: ['normal'],
+    free_from: ['parabens'],
+    claims: ['cruelty_free'],
+    inci: 'aqua / water / eau, cetearyl alcohol, panthenol, parfum / fragrance, behentrimonium chloride, benzyl alcohol, tocopherol, cetyl alcohol, amodimethicone, cetrimonium chloride, diethylhexyl carbonate, octadecyl di-t-butyl-4-hydroxyhydrocinnamate, exotic ingredients...',
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/6105/6105-34957.jpg?lm=1742493038'],
+    popularity: 97,
+    cosmetic_function: 'Wielofunkcyjne mleczko bez spłukiwania do każdego rodzaju włosów.',
+    offers: [
+      { merchant: 'cybersalon', price_pln: 157.00, url: 'https://cybersalon.pl/catalog/product/davines-oi-mleczko-do-wlosow-milk-135-ml', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: 'davines-oi-hair-butter',
+    slug: 'davines-oi-hair-butter',
+    brand: 'Davines',
+    name: 'OI Hair Butter',
+    category: 'mask',
+    hair_goals: ['dryness', 'frizz'],
+    hair_type_fit: ['thick', 'curly'],
+    scalp_fit: ['normal'],
+    free_from: ['parabens'],
+    claims: ['cruelty_free'],
+    inci: 'AQUA / WATER / EAU, CETEARYL ALCOHOL, CETYL ALCOHOL, BEHENTRIMONIUM CHLORIDE, GLYCERIN, COCO-CAPRYLATE, CETYL ESTERS, CETRIMONIUM CHLORIDE, PARFUM / FRAGRANCE, HELIANTHUS ANNUUS SEED OIL / HELIANTHUS ANNUUS (SUNFLOWER) SEED OIL, BIXA ORELLANA SEED EXTRACT, etc.',
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/457/457-33751.jpg?lm=1742492824'],
+    popularity: 94,
+    cosmetic_function: 'Odżywcze masło do włosów zapewniające wyjątkową miękkość i blask.',
+    offers: [
+      { merchant: 'cybersalon', price_pln: 157.00, url: 'https://cybersalon.pl/catalog/product/davines-oi-maska-do-wlosow-hair-butter-250-ml', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: 'davines-oi-liquid-luster',
+    slug: 'davines-oi-liquid-luster',
+    brand: 'Davines',
+    name: 'OI Liquid Luster',
+    category: 'serum',
+    hair_goals: ['frizz'],
+    hair_type_fit: ['straight', 'thick', 'fine'],
+    scalp_fit: ['normal'],
+    free_from: ['parabens'],
+    claims: ['cruelty_free'],
+    inci: 'PROPYLENE GLYCOL, ALCOHOL DENAT., AQUA / WATER / EAU, MYRISTYL ALCOHOL, PARFUM / FRAGRANCE, SILICONE QUATERNIUM-8, CETRIMONIUM CHLORIDE, BEHENTRIMONIUM CHLORIDE, BIXA ORELLANA SEED EXTRACT, etc.',
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/13055/13055-35923.jpg?lm=1743435662'],
+    popularity: 92,
+    cosmetic_function: 'Kuracja o konsystencji wody nadająca włosom natychmiastowy blask i jedwabistość.',
+    offers: [
+      { merchant: 'cybersalon', price_pln: 235.00, url: 'https://cybersalon.pl/catalog/product/davines-oi-fluid-do-wlosow-oi-liquid-luster-300-ml', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: 'davines-love-curl-shampoo',
+    slug: 'davines-love-curl-shampoo',
+    brand: 'Davines',
+    name: 'Love Curl Shampoo',
+    category: 'shampoo',
+    hair_goals: ['frizz'],
+    hair_type_fit: ['curly'],
+    scalp_fit: ['normal'],
+    free_from: ['sulfates', 'parabens'],
+    claims: ['vegan', 'cruelty_free'],
+    inci: 'aqua / water / eau, sodium lauroyl methyl isethionate, cocamidopropyl betaine, glycerin, sodium lauryl sulfoacetate, disodium cocoamphodiacetate, decyl glucoside, sodium methyl isethionate, sodium chloride, lauric acid, etc.',
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/501/501-32475.jpg?lm=1743509833'],
+    popularity: 88,
+    cosmetic_function: 'Szampon do włosów kręconych i falowanych podkreślający skręt.',
+    offers: [
+      { merchant: 'cybersalon', price_pln: 91.79, url: 'https://cybersalon.pl/catalog/product/davines-essential-haircare-szampon-do-wlosow-love-curl-shampoo-250-ml', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: 'davines-heart-of-glass-shampoo',
+    slug: 'davines-heart-of-glass-shampoo',
+    brand: 'Davines',
+    name: 'Heart of Glass Silkening Shampoo',
+    category: 'shampoo',
+    hair_goals: ['damage'],
+    hair_type_fit: ['bleached', 'colored'],
+    scalp_fit: ['normal'],
+    free_from: ['sulfates', 'parabens'],
+    claims: ['vegan', 'cruelty_free'],
+    inci: 'Aqua/Water/Eau, Sodium Lauroyl Methyl Isethionate, Cocamidopropyl Betaine, Decyl Glucoside, Parfum/Fragrance, Sodium Cocoyl Alaninate, Polysorbate 20, Sodium Methyl Isethionate, Betaine, Lauric Acid, etc.',
+    images: ['https://davines.pl/hpeciai/ad0a12a04831d13772dd8edd24b4e336/pol_il_DAVINES-HEART-OF-GLASS-szampon-do-wlosow-blond-Silkening-Shampoo-250-ml-186.jpg'],
+    popularity: 90,
+    cosmetic_function: 'Wzmacniający szampon do włosów blond, oczyszcza i rozświetla.',
+    offers: [
+      { merchant: 'cybersalon', price_pln: 105.99, url: 'https://cybersalon.pl/catalog/product/davines-heart-of-glass-szampon-do-wlosow-blond-silkening-shampoo-250-ml', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: 'davines-minu-conditioner',
+    slug: 'davines-minu-conditioner',
+    brand: 'Davines',
+    name: 'Minu Conditioner',
+    category: 'conditioner',
+    hair_goals: ['dryness'],
+    hair_type_fit: ['colored'],
+    scalp_fit: ['normal'],
+    free_from: ['parabens'],
+    claims: ['vegan', 'cruelty_free'],
+    inci: 'AQUA / WATER / EAU, CETEARYL ALCOHOL, GLYCERIN, BEHENTRIMONIUM CHLORIDE, CETYL ALCOHOL, CETRIMONIUM CHLORIDE, PHENYLPROPYLDIMETHYLSILOXYSILICATE, PARFUM / FRAGRANCE, CAPPARIS SPINOSA FRUIT EXTRACT, etc.',
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/438/438-31914.jpg?lm=1743215306'],
+    popularity: 87,
+    cosmetic_function: 'Odżywka rozświetlająca do włosów farbowanych, chroni kolor.',
+    offers: [
+      { merchant: 'cybersalon', price_pln: 108.81, url: 'https://cybersalon.pl/catalog/product/davines-essential-haircare-odzywka-do-wlosow-minu-conditioner-250-ml', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: 'davines-minu-mask',
+    slug: 'davines-minu-mask',
+    brand: 'Davines',
+    name: 'Minu Hair Mask',
+    category: 'mask',
+    hair_goals: ['dryness'],
+    hair_type_fit: ['colored'],
+    scalp_fit: ['normal'],
+    free_from: ['parabens'],
+    claims: ['vegan', 'cruelty_free'],
+    inci: 'AQUA / WATER / EAU, CETEARYL ALCOHOL, GLYCERIN, BEHENTRIMONIUM CHLORIDE, CETYL ALCOHOL, CETRIMONIUM CHLORIDE, PHENYLPROPYLDIMETHYLSILOXYSILICATE, PARFUM / FRAGRANCE, CAPPARIS SPINOSA FRUIT EXTRACT, etc.',
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/432/432-31908.jpg?lm=1742492799'],
+    popularity: 89,
+    cosmetic_function: 'Maska rozświetlająca do włosów farbowanych, zapewnia intensywne nawilżenie.',
+    offers: [
+      { merchant: 'cybersalon', price_pln: 117.00, url: 'https://cybersalon.pl/catalog/product/davines-essential-haircare-maska-do-wlosow-minu-hair-mask-250-ml', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: 'davines-melu-shampoo',
+    slug: 'davines-melu-shampoo',
+    brand: 'Davines',
+    name: 'Melu Shampoo',
+    category: 'shampoo',
+    hair_goals: ['damage'],
+    hair_type_fit: ['thick'],
+    scalp_fit: ['normal'],
+    free_from: ['sulfates', 'parabens'],
+    claims: ['vegan', 'cruelty_free'],
+    inci: 'aqua / water / eau, disodium laureth sulfosuccinate, glycerin, sodium cocoamphodiacetate, sodium lauroyl methyl isethionate, cocamidopropyl betaine, sodium lauroyl sarcosinate, sodium chloride, etc.',
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/499/499-32472.jpg?lm=1742492882'],
+    popularity: 85,
+    cosmetic_function: 'Szampon do włosów długich lub zniszczonych, zapobiega łamliwości.',
+    offers: [
+      { merchant: 'cybersalon', price_pln: 91.79, url: 'https://cybersalon.pl/catalog/product/davines-essential-haircare-szampon-do-wlosow-melu-shampoo-250-ml', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: 'davines-volu-shampoo',
+    slug: 'davines-volu-shampoo',
+    brand: 'Davines',
+    name: 'Volu Shampoo',
+    category: 'shampoo',
+    hair_goals: ['volume'],
+    hair_type_fit: ['fine'],
+    scalp_fit: ['normal', 'oily'],
+    free_from: ['sulfates', 'parabens'],
+    claims: ['vegan', 'cruelty_free'],
+    inci: 'aqua, sodium c14-16 olefin sulfonate, sodium lauroyl methyl isethionate, cocamidopropyl betaine, sodium chloride, brassica rapa root extract / brassica rapa (turnip) root extract, etc.',
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/498/498-32470.jpg?lm=1742492881'],
+    popularity: 84,
+    cosmetic_function: 'Szampon nadający objętość włosom cienkim i delikatnym.',
+    offers: [
+      { merchant: 'cybersalon', price_pln: 91.99, url: 'https://cybersalon.pl/catalog/product/davines-essential-haircare-szampon-do-wlosow-volu-shampoo-250-ml', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: 'davines-solu-shampoo',
+    slug: 'davines-solu-shampoo',
+    brand: 'Davines',
+    name: 'Solu Shampoo',
+    category: 'shampoo',
+    hair_goals: ['oily_scalp'],
+    hair_type_fit: ['straight', 'thick', 'fine'],
+    scalp_fit: ['oily'],
+    free_from: ['sulfates', 'parabens'],
+    claims: ['vegan', 'cruelty_free'],
+    inci: 'aqua / water / eau, sodium c14-16 olefin sulfonate, sodium lauroyl methyl iethionate, cocamidopropyl betaine, decyl glucoside, sodium pca, sodium methyl 2-sulfolaurate, etc.',
+    images: ['https://davines.pl/hpeciai/e4d9994de56200375114809fc2ac9eab/pol_il_DAVINES-ESSENTIAL-HAIRCARE-szampon-do-wlosow-i-skory-glowy-SOLU-Shampoo-250-ml-152.jpg'],
+    popularity: 83,
+    cosmetic_function: 'Głęboko oczyszczający szampon odświeżający do wszystkich rodzajów włosów.',
+    offers: [
+      { merchant: 'cybersalon', price_pln: 91.99, url: 'https://cybersalon.pl/catalog/product/davines-essential-haircare-szampon-do-wlosow-i-skory-glowy-solu-shampoo-250-ml', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: 'davines-naturaltech-seasonal-superactive',
+    slug: 'davines-naturaltech-seasonal-superactive',
+    brand: 'Davines',
+    name: 'Naturaltech Energizing Seasonal Superactive',
+    category: 'scalp_tonic',
+    hair_goals: ['hairloss'],
+    hair_type_fit: ['fine'],
+    scalp_fit: ['normal', 'sensitive'],
+    free_from: ['parabens'],
+    claims: ['vegan', 'cruelty_free'],
+    inci: 'ALCOHOL DENAT., AQUA, EUCALYPTOL, MENTHOL, NIACINAMIDE, LIMONENE, VIGNA RADIATA SEED EXTRACT, Trifolium Pratense Extract, etc.',
+    images: ['https://pr.cybersalon.pl/modules/wkheadlessapi/views/img/resized/products/1080/463/463-31189.jpg?lm=1742492827'],
+    popularity: 91,
+    cosmetic_function: 'Sezonowa kuracja energetyzująca przeciw wypadaniu włosów.',
+    offers: [
+      { merchant: 'cybersalon', price_pln: 312.00, url: 'https://cybersalon.pl/catalog/product/davines-naturaltech-kuracja-sezonowa-energizing-seasonal-superactive-12-x-6-ml', last_checked: '2026-03-27' }
     ],
     updated_at: '2026-03-27'
   }
