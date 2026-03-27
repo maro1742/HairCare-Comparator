@@ -1,6 +1,7 @@
 import { supabase } from '../lib/supabaseClient';
 import type { Product as DBProduct } from '../types/supabase';
 import type { Product as UIProduct, HairGoal, HairType, ScalpType } from '../types';
+import { PRODUCTS } from '../data/products';
 import { GoogleGenAI } from '@google/genai';
 
 // Inicjalizacja klienta Gemini (wymaga klucza dla klienta lub proxy)
@@ -67,7 +68,7 @@ export async function getProductsByCategory(categoryName: string): Promise<any[]
 /**
  * Searches for products based on a query string across all product tables.
  */
-export async function searchProducts(query: string): Promise<DBProduct[]> {
+export async function searchProducts(query: string): Promise<UIProduct[]> {
     if (!query) return [];
 
     let vectorResults: DBProduct[] = [];
@@ -96,18 +97,14 @@ export async function searchProducts(query: string): Promise<DBProduct[]> {
             if (error) {
                 console.error("Błąd wyszukiwania wektorowego (RPC):", error);
             } else if (data && data.length > 0) {
-                // `match_products` zwraca (id, name, brand, table_source, similarity)
-                // Musimy dociągnąć pełne dane z konkretnych tabel dla wyników
                 usedVectorSearch = true;
                 
-                // Grupujemy IDki po tabeli źródłowej
                 const sourceMap = data.reduce((acc: any, row: any) => {
                     if (!acc[row.table_source]) acc[row.table_source] = [];
                     acc[row.table_source].push(row.id);
                     return acc;
                 }, {});
 
-                // Pobieramy pełne produkty asynchronicznie
                 const fullDocsPromises = Object.keys(sourceMap).map(async (table) => {
                     const { data: fullDocs } = await supabase
                         .from(table)
@@ -119,7 +116,6 @@ export async function searchProducts(query: string): Promise<DBProduct[]> {
                 const docsMatrix = await Promise.all(fullDocsPromises);
                 vectorResults = docsMatrix.flat() as DBProduct[];
                 
-                // Sortujemy wg podobieństwa z powrotem
                 vectorResults.sort((a, b) => {
                     const scoreA = data.find((d:any) => d.id === a.id)?.similarity || 0;
                     const scoreB = data.find((d:any) => d.id === b.id)?.similarity || 0;
@@ -133,9 +129,14 @@ export async function searchProducts(query: string): Promise<DBProduct[]> {
         }
     }
 
-    // Zwracamy wektorowe wyniki jeśli poszło poprawnie
     if (usedVectorSearch && vectorResults.length > 0) {
-        return vectorResults;
+        const mappedVector = vectorResults.map(mapToUIProduct);
+        // Połącz z ewentualnymi statycznymi trafieniami
+        const staticMatches = PRODUCTS.filter(p => 
+            p.name.toLowerCase().includes(query.toLowerCase()) || 
+            p.brand.toLowerCase().includes(query.toLowerCase())
+        );
+        return [...mappedVector, ...staticMatches];
     }
 
     // 2. FALLBACK (Klasyczne szukanie ILIKE po polach tekstowych)
@@ -154,7 +155,17 @@ export async function searchProducts(query: string): Promise<DBProduct[]> {
         return data || [];
     }));
 
-    return results.flat() as DBProduct[];
+    const dbResults = results.flat() as DBProduct[];
+    const mappedDb = dbResults.map(mapToUIProduct);
+
+    // Merge with static products that match the query
+    const staticMatches = PRODUCTS.filter(p => 
+        p.name.toLowerCase().includes(query.toLowerCase()) || 
+        p.brand.toLowerCase().includes(query.toLowerCase()) ||
+        (p.description || '').toLowerCase().includes(query.toLowerCase())
+    );
+
+    return [...mappedDb, ...staticMatches];
 }
 
 /**
@@ -317,10 +328,13 @@ export function mapToUIProduct(p: DBProduct): UIProduct {
 export async function getAllProducts(): Promise<UIProduct[]> {
     try {
         const dbProducts = await fetchDbProducts();
-        return dbProducts.map(mapToUIProduct);
+        const mappedDb = dbProducts.map(mapToUIProduct);
+        
+        // Merge with our hardcoded products (like Davines)
+        return [...mappedDb, ...PRODUCTS];
     } catch (e) {
         console.error('Error in getAllProducts:', e);
-        return [];
+        return PRODUCTS; // Fallback to at least show static products
     }
 }
 export async function getProductBySlug(slug: string): Promise<UIProduct | null> {

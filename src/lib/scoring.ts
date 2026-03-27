@@ -91,7 +91,11 @@ export function matchScore(
   if (filters.vegan_only && product.claims.includes('vegan')) {
     score += 1;
   }
-
+ 
+  if (product.is_promoted) {
+    score += 5;
+  }
+ 
   score += product.popularity / 100;
 
   return score;

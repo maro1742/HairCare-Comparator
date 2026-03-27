@@ -81,6 +81,18 @@ export default function ProductCard({ product, position }: ProductCardProps) {
         <div className="space-y-3">
           {/* 2. MARKA & 3. NAZWA PRODUKTU & 4. POJEMNOŚĆ */}
           <div className="space-y-1">
+            {product.is_promoted && (
+              <div className="flex items-center gap-1.5 mb-2">
+                <span className="px-2 py-0.5 bg-secondary text-white text-[9px] font-black uppercase tracking-widest rounded-md shadow-sm animate-pulse">
+                  Promocja
+                </span>
+                {product.promotion_text && (
+                  <span className="text-[10px] font-bold text-secondary italic">
+                    {product.promotion_text}
+                  </span>
+                )}
+              </div>
+            )}
             <div className="flex items-center justify-between gap-4">
               <span className="text-[10px] sm:text-xs font-black text-primary uppercase tracking-[0.2em]">
                 {product.brand}

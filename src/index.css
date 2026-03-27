@@ -14,6 +14,8 @@
   /* Golden Accent */
   --color-accent-dark: #A16207;
   /* Darker Gold */
+  --color-survey: #2D5A4C;
+  /* Muted Emerald for Survey */
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Playfair Display', serif;

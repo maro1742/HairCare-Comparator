@@ -141,11 +141,13 @@ const RAW_PRODUCTS: RawProduct[] = [
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Disodium Laureth Sulfosuccinate, Cocamidopropyl Betaine, Glycerin, Roucou Oil, Tocopherol, Citric Acid, Sodium Benzoate, Parfum',
     images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-oi/400/400'],
-    popularity: 78,
+    popularity: 95,
+    is_promoted: true,
+    promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
     offers: [
       { merchant: 'notino', price_pln: 109.00, url: 'https://example.com/out/notino/davines-oi?aff=demo123', last_checked: '2026-02-12' }
     ],
-    updated_at: '2026-02-12'
+    updated_at: '2026-03-27'
   },
   {
     id: '7',
@@ -372,11 +374,13 @@ const RAW_PRODUCTS: RawProduct[] = [
     claims: ['vegan', 'cruelty_free'],
     inci: 'Aqua, Cetearyl Alcohol, Glycerin, Roucou Oil, Tocopherol, Behentrimonium Chloride, Citric Acid, Parfum',
     images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-oi-cond/400/400'],
-    popularity: 76,
+    popularity: 92,
+    is_promoted: true,
+    promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
     offers: [
       { merchant: 'notino', price_pln: 115.00, url: 'https://example.com/out/notino/davines-oi-cond?aff=demo123', last_checked: '2026-02-12' }
     ],
-    updated_at: '2026-02-12'
+    updated_at: '2026-03-27'
   },
   {
     id: '19',
@@ -897,6 +901,138 @@ const RAW_PRODUCTS: RawProduct[] = [
       { merchant: 'notino', price_pln: 42.00, url: 'https://example.com/out/notino/plantur39?aff=demo123', last_checked: '2026-02-12' }
     ],
     updated_at: '2026-02-12'
+  },
+  {
+    id: '46',
+    slug: 'davines-momo-shampoo',
+    brand: 'Davines',
+    name: 'Momo Shampoo',
+    category: 'shampoo',
+    hair_goals: ['dryness'],
+    hair_type_fit: ['thick', 'curly', 'straight'],
+    scalp_fit: ['normal', 'dry'],
+    free_from: ['sulfates', 'parabens'],
+    claims: ['vegan', 'cruelty_free'],
+    inci: 'Aqua, Sodium C14-16 Olefin Sulfonate, Sodium Lauroyl Methyl Isethionate, Cocamidopropyl Betaine, Sodium PCA, Decyl Glucoside, Sodium Methyl 2-Sulfolaurate, Lauramidopropylamine Oxide, Glyceryl Oleate, Coco-Glucoside, Cucumis Melo Fruit Extract, Panthenol, Tocopherol, ...',
+    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-momo/400/400'],
+    popularity: 88,
+    is_promoted: true,
+    promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
+    cosmetic_function: 'Nawilżający szampon do włosów suchych lub odwodnionych.',
+    offers: [
+      { merchant: 'notino', price_pln: 105.00, url: 'https://example.com/out/notino/davines-momo?aff=demo123', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: '47',
+    slug: 'davines-momo-conditioner',
+    brand: 'Davines',
+    name: 'Momo Conditioner',
+    category: 'conditioner',
+    hair_goals: ['dryness'],
+    hair_type_fit: ['thick', 'curly', 'straight'],
+    scalp_fit: ['normal'],
+    free_from: ['parabens'],
+    claims: ['vegan', 'cruelty_free'],
+    inci: 'Aqua, Cetearyl Alcohol, Glycerin, Cetrimonium Chloride, Behenyl Alcohol, Behentrimonium Chloride, Cucumis Melo Fruit Extract, Panthenol, Tocopherol, ...',
+    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-momo-cond/400/400'],
+    popularity: 86,
+    is_promoted: true,
+    promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
+    cosmetic_function: 'Nawilżająca odżywka ułatwiająca rozczesywanie włosów suchych.',
+    offers: [
+      { merchant: 'notino', price_pln: 112.00, url: 'https://example.com/out/notino/davines-momo-cond?aff=demo123', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: '48',
+    slug: 'davines-love-smoothing-shampoo',
+    brand: 'Davines',
+    name: 'Love Smoothing Shampoo',
+    category: 'shampoo',
+    hair_goals: ['frizz'],
+    hair_type_fit: ['thick', 'curly'],
+    scalp_fit: ['normal'],
+    free_from: ['sulfates', 'parabens'],
+    claims: ['vegan', 'cruelty_free'],
+    inci: 'Aqua, Disodium Laureth Sulfosuccinate, Glycerin, Sodium Cocoyl Isethionate, Sodium Lauroyl Methyl Isethionate, Cocamidopropyl Betaine, Olive Fruit Extract, ...',
+    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-love/400/400'],
+    popularity: 90,
+    is_promoted: true,
+    promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
+    cosmetic_function: 'Szampon wygładzający do włosów puszących się i niesfornych.',
+    offers: [
+      { merchant: 'notino', price_pln: 108.00, url: 'https://example.com/out/notino/davines-love?aff=demo123', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: '49',
+    slug: 'davines-love-smoothing-conditioner',
+    brand: 'Davines',
+    name: 'Love Smoothing Conditioner',
+    category: 'conditioner',
+    hair_goals: ['frizz'],
+    hair_type_fit: ['thick', 'curly'],
+    scalp_fit: ['normal'],
+    free_from: ['parabens'],
+    claims: ['vegan', 'cruelty_free'],
+    inci: 'Aqua, Cetearyl Alcohol, Glycerin, Behentrimonium Chloride, Cetyl Alcohol, Dimethicone, Cetrimonium Chloride, Olive Fruit Extract, ...',
+    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-love-cond/400/400'],
+    popularity: 89,
+    is_promoted: true,
+    promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
+    cosmetic_function: 'Odżywka wygładzająca ułatwiająca kontrolę nad niesfornymi włosami.',
+    offers: [
+      { merchant: 'notino', price_pln: 115.00, url: 'https://example.com/out/notino/davines-love-cond?aff=demo123', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: '50',
+    slug: 'davines-nounou-mask',
+    brand: 'Davines',
+    name: 'NouNou Hair Mask',
+    category: 'mask',
+    hair_goals: ['damage', 'dryness'],
+    hair_type_fit: ['thick', 'colored', 'bleached'],
+    scalp_fit: ['normal'],
+    free_from: ['parabens'],
+    claims: ['protein', 'cruelty_free'],
+    inci: 'Aqua, Cetearyl Alcohol, Glycerin, Behentrimonium Chloride, Cetrimonium Chloride, Hydrolyzed Keratin, Tomato Fruit Extract, ...',
+    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-nounou/400/400'],
+    popularity: 94,
+    is_promoted: true,
+    promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
+    cosmetic_function: 'Odżywcza maska do włosów mocno zniszczonych i po zabiegach.',
+    offers: [
+      { merchant: 'notino', price_pln: 145.00, url: 'https://example.com/out/notino/davines-nounou?aff=demo123', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
+  },
+  {
+    id: '51',
+    slug: 'davines-naturaltech-energizing-shampoo',
+    brand: 'Davines',
+    name: 'Naturaltech Energizing Shampoo',
+    category: 'shampoo',
+    hair_goals: ['hairloss', 'volume'],
+    hair_type_fit: ['fine'],
+    scalp_fit: ['normal', 'oily'],
+    free_from: ['sulfates', 'parabens'],
+    claims: ['vegan', 'cruelty_free'],
+    inci: 'Aqua, Sodium Lauroyl Methyl Isethionate, Sodium Olivamphoacetate, Sodium Lauroyl Sarcosinate, Caffeine, Peppermint Oil, ...',
+    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=400&fit=crop&crop=facesdavines-energizing/400/400'],
+    popularity: 91,
+    is_promoted: true,
+    promotion_text: 'OFERTA SPECJALNA - Zrównoważone Piękno',
+    cosmetic_function: 'Szampon stymulujący do skóry głowy i włosów ze skłonnością do wypadania.',
+    offers: [
+      { merchant: 'notino', price_pln: 125.00, url: 'https://example.com/out/notino/davines-energizing?aff=demo123', last_checked: '2026-03-27' }
+    ],
+    updated_at: '2026-03-27'
   }
 ];
 

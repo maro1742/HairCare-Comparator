@@ -53,6 +53,12 @@ export default function Landing() {
                 >
                   Przejdź do porównywarki
                 </Link>
+                <Link
+                  to="/ankieta"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-survey text-white font-semibold rounded-2xl hover:opacity-90 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                >
+                  Ankieta
+                </Link>
               </div>
             </div>
           </div>

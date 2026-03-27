@@ -14,6 +14,7 @@ import Affiliate from './pages/Affiliate';
 import PSEOTemplate from './pages/PSEOTemplate';
 import RankingHub from './pages/RankingHub';
 import Survey from './pages/Survey';
+import SurveyResults from './pages/SurveyResults';
 import MobileNav from './components/MobileNav';
 
 import { supabase } from './lib/supabaseClient';
@@ -75,6 +76,7 @@ export default function App() {
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/wspolpraca-affiliate" element={<Affiliate />} />
           <Route path="/ankieta" element={<Survey />} />
+          <Route path="/ankieta-wyniki" element={<SurveyResults />} />
         </Routes>
         <MobileNav />
       </div>

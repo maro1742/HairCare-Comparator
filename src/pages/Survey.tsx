@@ -19,6 +19,7 @@ const QUESTIONS = [
   {
     id: 3,
     text: 'Czy odpowiednio dobrany poziom wskaźnika PEH jest istotny?',
+    description: 'PEH to skrót od Protein, Emolientów i Humektantów – trzech grup składników niezbędnych do zachowania równowagi włosów.',
   },
   {
     id: 4,
@@ -36,6 +37,7 @@ export default function Survey() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [startTime] = useState<number>(Date.now());
   const addSurveyResult = useStore((s) => s.addSurveyResult);
 
   const allAnswered = Object.values(answers).every((a) => a !== null);
@@ -56,10 +58,15 @@ export default function Survey() {
     setError(null);
 
     try {
+      const durationSeconds = Math.round((Date.now() - startTime) / 1000);
+
       // Zapisujemy do Supabase
       const { error: dbError } = await supabase
         .from('survey_results')
-        .insert([{ answers: surveyAnswers }]);
+        .insert([{ 
+          answers: surveyAnswers,
+          duration_seconds: durationSeconds
+        }]);
 
       if (dbError) throw dbError;
 
@@ -67,6 +74,7 @@ export default function Survey() {
       addSurveyResult({
         answers: surveyAnswers,
         submittedAt: new Date().toISOString(),
+        durationSeconds
       });
 
       setSubmitted(true);
@@ -81,7 +89,7 @@ export default function Survey() {
   if (submitted) {
     return (
       <>
-        <SEO title="Ankieta — dziekujemy!" description="Dziekujemy za wypelnienie ankiety." />
+        <SEO title="Ankieta — dziękujemy!" description="Dziękujemy za wypełnienie ankiety." />
         <Header />
         <main className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
           <div className="bg-teal-50 rounded-2xl p-10">
@@ -90,20 +98,20 @@ export default function Survey() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-3">Dziekujemy za odpowiedzi!</h1>
-            <p className="text-gray-600 mb-6">Twoja ankieta zostala zapisana. Dzieki Twoim odpowiedziom mozemy lepiej dopasowac nasze rekomendacje.</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-3">Dziękujemy za odpowiedzi!</h1>
+            <p className="text-gray-600 mb-6">Twoja ankieta została zapisana. Dzięki Twoim odpowiedziom możemy lepiej dopasować nasze rekomendacje.</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 to="/quiz"
                 className="inline-flex items-center justify-center px-6 py-3 bg-teal-500 text-white font-medium rounded-lg hover:bg-teal-600 transition-colors"
               >
-                Zrob quiz dopasowania
+                Zrób quiz dopasowania
               </Link>
               <Link
                 to="/porownaj"
                 className="inline-flex items-center justify-center px-6 py-3 border border-gray-200 text-gray-600 font-medium rounded-lg hover:bg-gray-50 transition-colors"
               >
-                Przejdz do porownywarki
+                Przejdź do porównywarki
               </Link>
             </div>
           </div>
@@ -115,12 +123,12 @@ export default function Survey() {
 
   return (
     <>
-      <SEO title="Ankieta" description="Wypelnij krotka ankiete o Twoich nawykach pielegnacyjnych." />
+      <SEO title="Ankieta" description="Wypełnij krótką ankietę o Twoich nawykach pielęgnacyjnych." />
       <Header />
       <main className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-10">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Ankieta</h1>
-          <p className="text-gray-500">Odpowiedz na 4 krotkie pytania o Twoje nawyki pielegnacyjne</p>
+          <p className="text-gray-500">Odpowiedz na 4 krótkie pytania o Twoje nawyki pielęgnacyjne</p>
         </div>
 
         <div className="space-y-6">
@@ -129,6 +137,11 @@ export default function Survey() {
               <p className="font-medium text-gray-900 mb-4">
                 {q.id}. {q.text}
               </p>
+              {q.id === 3 && (
+                <p className="text-sm text-gray-500 mb-4 bg-teal-50/50 p-3 rounded-lg border border-teal-100/50">
+                  { (q as any).description }
+                </p>
+              )}
               <div className="flex gap-3">
                 <button
                   onClick={() => handleAnswer(q.id, true)}
@@ -179,7 +192,7 @@ export default function Survey() {
         </div>
 
         <p className="text-xs text-gray-400 text-center mt-6">
-          Wyniki ankiety sa zapisywane lokalnie w Twojej przegladarce i nie sa przesylane na serwer.
+          Wyniki ankiety są zapisywane w celu ulepszania naszych rekomendacji i analizy potrzeb użytkowników.
         </p>
       </main>
       <Footer />

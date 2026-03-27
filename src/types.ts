@@ -44,6 +44,8 @@ export interface Product {
     average: number;
     count: number;
   };
+  is_promoted?: boolean;
+  promotion_text?: string;
 }
 
 export interface Offer {
@@ -107,4 +109,5 @@ export interface SurveyAnswer {
 export interface SurveyResult {
   answers: SurveyAnswer[];
   submittedAt: string;
+  durationSeconds?: number;
 }
