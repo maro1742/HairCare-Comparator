@@ -92,6 +92,10 @@ export function matchScore(
     score += 1;
   }
  
+  if (product.brand === 'Davines') {
+    score += 100;
+  }
+
   if (product.is_promoted) {
     score += 5;
   }
